@@ -81,6 +81,9 @@ public class SeedData implements CommandLineRunner
         u2.getUserposts()
                 .add(new Userpost(u2,
                         "I lost my dog!", 97222, "I think he fell in a pothole"));
+        u2.getUserposts()
+                .add(new Userpost(u2,
+                        "I lost my dog!", 97222, "His name is Joe"));
 //        u2.getUseremails()
 //          .add(new Useremail(u2,
 //                             "cinnamon@mymail.local"));
