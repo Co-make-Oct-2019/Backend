@@ -8,7 +8,7 @@ import java.util.List;
 public interface PostcommentService {
     List<Postcomment> findAll();
 
-    Userpost findPostcommentById(long id);
+    Postcomment findPostcommentById(long id);
 
     List<Postcomment> findByUserName(String username,
                                   boolean isAdmin);
@@ -19,7 +19,7 @@ public interface PostcommentService {
                 boolean isAdmin);
 
     //may need user id also to authenticate
-    Userpost update(long postcommentid,
+    Postcomment update(long postcommentid,
                     String title,
                     String line1,
                     String imageurl,
