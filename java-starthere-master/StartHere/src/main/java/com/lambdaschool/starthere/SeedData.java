@@ -77,6 +77,10 @@ public class SeedData implements CommandLineRunner
                            "1234567",
 //                           "cinnamon@lambdaschool.local",
                            datas);
+
+        u2.getUserposts()
+                .add(new Userpost(u2,
+                        "I lost my dog!", 97222, "I think he fell in a pothole"));
 //        u2.getUseremails()
 //          .add(new Useremail(u2,
 //                             "cinnamon@mymail.local"));
@@ -96,6 +100,10 @@ public class SeedData implements CommandLineRunner
                            "ILuvM4th!",
 //                           "barnbarn@lambdaschool.local",
                            users);
+
+        u3.getUserposts()
+                .add(new Userpost(u3,
+                        "Town center mural", 97222, "The mural is old and faded. Let's get a group together to repaint it.", "http://example.come/image.jpg"));
 //        u3.getUseremails()
 //          .add(new Useremail(u3,
 //                             "barnbarn@email.local"));
