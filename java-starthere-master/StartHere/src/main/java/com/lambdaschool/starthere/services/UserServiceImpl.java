@@ -22,8 +22,7 @@ import java.util.List;
 @Loggable
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService,
-        UserService
-{
+        UserService {
 
     @Autowired
     private UserRepository userrepos;
@@ -33,57 +32,49 @@ public class UserServiceImpl implements UserDetailsService,
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userrepos.findByUsername(username.toLowerCase());
-        if (user == null)
-        {
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername().toLowerCase(),
-                                                                      user.getPassword(),
-                                                                      user.getAuthority());
+                user.getPassword(),
+                user.getAuthority());
     }
 
-    public User findUserById(long id) throws ResourceNotFoundException
-    {
+    public User findUserById(long id) throws ResourceNotFoundException {
         return userrepos.findById(id)
-                        .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
     }
 
     @Override
     public List<User> findByNameContaining(String username,
-                                           Pageable pageable)
-    {
+                                           Pageable pageable) {
         return userrepos.findByUsernameContainingIgnoreCase(username.toLowerCase(),
-                                                            pageable);
+                pageable);
     }
 
     @Override
-    public List<User> findAll(Pageable pageable)
-    {
+    public List<User> findAll(Pageable pageable) {
         List<User> list = new ArrayList<>();
         userrepos.findAll(pageable)
-                 .iterator()
-                 .forEachRemaining(list::add);
+                .iterator()
+                .forEachRemaining(list::add);
         return list;
     }
 
     @Transactional
     @Override
-    public void delete(long id)
-    {
+    public void delete(long id) {
         userrepos.findById(id)
-                 .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
         userrepos.deleteById(id);
     }
 
     @Override
-    public User findByName(String name)
-    {
+    public User findByName(String name) {
         User uu = userrepos.findByUsername(name.toLowerCase());
-        if (uu == null)
-        {
+        if (uu == null) {
             throw new ResourceNotFoundException("User name " + name + " not found!");
         }
         return uu;
@@ -91,10 +82,8 @@ public class UserServiceImpl implements UserDetailsService,
 
     @Transactional
     @Override
-    public User save(User user)
-    {
-        if (userrepos.findByUsername(user.getUsername().toLowerCase()) != null)
-        {
+    public User save(User user) {
+        if (userrepos.findByUsername(user.getUsername().toLowerCase()) != null) {
             throw new ResourceFoundException(user.getUsername() + " is already taken!");
         }
 
@@ -104,21 +93,18 @@ public class UserServiceImpl implements UserDetailsService,
 //        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
-        for (UserRoles ur : user.getUserroles())
-        {
+        for (UserRoles ur : user.getUserroles()) {
             long id = ur.getRole()
-                        .getRoleid();
+                    .getRoleid();
             Role role = rolerepos.findById(id)
-                                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
             newRoles.add(new UserRoles(newUser,
-                                       ur.getRole()));
+                    ur.getRole()));
         }
         newUser.setUserroles(newRoles);
 
-                for (Userpost up : user.getUserposts())
-        {
-            System.out.println("**************************************************************");
-            System.out.println(up.getTitle());
+        for (Userpost up : user.getUserposts()) {
+
             newUser.getUserposts()
                     .add(new Userpost(newUser,
                             up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
@@ -138,24 +124,20 @@ public class UserServiceImpl implements UserDetailsService,
     @Override
     public User update(User user,
                        long id,
-                       boolean isAdmin)
-    {
+                       boolean isAdmin) {
         Authentication authentication = SecurityContextHolder.getContext()
-                                                             .getAuthentication();
+                .getAuthentication();
 
         User authenticatedUser = userrepos.findByUsername(authentication.getName());
 
-        if (id == authenticatedUser.getUserid() || isAdmin)
-        {
+        if (id == authenticatedUser.getUserid() || isAdmin) {
             User currentUser = findUserById(id);
 
-            if (user.getUsername() != null)
-            {
+            if (user.getUsername() != null) {
                 currentUser.setUsername(user.getUsername().toLowerCase());
             }
 
-            if (user.getPassword() != null)
-            {
+            if (user.getPassword() != null) {
                 currentUser.setPasswordNoEncrypt(user.getPassword());
             }
 
@@ -165,30 +147,26 @@ public class UserServiceImpl implements UserDetailsService,
 //            }
 
             if (user.getUserroles()
-                    .size() > 0)
-            {
+                    .size() > 0) {
                 throw new ResourceFoundException("User Roles are not updated through User. See endpoint POST: users/user/{userid}/role/{roleid}");
             }
 
-                        if (user.getUserposts()
-                    .size() > 0)
-            {
-                System.out.println("************* RIGHT HERE ********************");
-                for (Userpost up : user.getUserposts())
-                {
-                    System.out.println("**************************************************************");
-                    System.out.println(up.getTitle());
+            if (user.getUserposts()
+                    .size() > 0) {
+
+                for (Userpost up : user.getUserposts()) {
+
                     currentUser.getUserposts()
-                               .add(new Userpost(currentUser,
-                                                  up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+                            .add(new Userpost(currentUser,
+                                    up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
                 }
             } else {
-                            System.out.println("NOPE");
-                            System.out.println("NOPE");
-                            System.out.println("NOPE");
-                            System.out.println("NOPE");
-                            System.out.println("NOPE");
-                        }
+                System.out.println("NOPE");
+                System.out.println("NOPE");
+                System.out.println("NOPE");
+                System.out.println("NOPE");
+                System.out.println("NOPE");
+            }
 
 //            if (user.getUseremails()
 //                    .size() > 0)
@@ -202,8 +180,7 @@ public class UserServiceImpl implements UserDetailsService,
 //            }
 
             return userrepos.save(currentUser);
-        } else
-        {
+        } else {
             throw new ResourceNotFoundException(id + " Not current user");
         }
     }
@@ -211,21 +188,18 @@ public class UserServiceImpl implements UserDetailsService,
     @Transactional
     @Override
     public void deleteUserRole(long userid,
-                               long roleid)
-    {
+                               long roleid) {
         userrepos.findById(userid)
-                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         rolerepos.findById(roleid)
-                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
 
         if (rolerepos.checkUserRolesCombo(userid,
-                                          roleid)
-                     .getCount() > 0)
-        {
+                roleid)
+                .getCount() > 0) {
             rolerepos.deleteUserRoles(userid,
-                                      roleid);
-        } else
-        {
+                    roleid);
+        } else {
             throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
         }
     }
@@ -233,21 +207,18 @@ public class UserServiceImpl implements UserDetailsService,
     @Transactional
     @Override
     public void addUserRole(long userid,
-                            long roleid)
-    {
+                            long roleid) {
         userrepos.findById(userid)
-                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         rolerepos.findById(roleid)
-                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
 
         if (rolerepos.checkUserRolesCombo(userid,
-                                          roleid)
-                     .getCount() <= 0)
-        {
+                roleid)
+                .getCount() <= 0) {
             rolerepos.insertUserRoles(userid,
-                                      roleid);
-        } else
-        {
+                    roleid);
+        } else {
             throw new ResourceFoundException("Role and User Combination Already Exists");
         }
     }
