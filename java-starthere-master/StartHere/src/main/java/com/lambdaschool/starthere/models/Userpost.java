@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "userposts",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "userpostid"})})
-        
-public class Userpost extends Auditable{
+
+public class Userpost extends Auditable {
 
     @ApiModelProperty(name = "postid", value = "primary key for a post", required = true, example = "1")
     @Id
@@ -44,8 +44,7 @@ public class Userpost extends Auditable{
 //    @ApiModelProperty(name = "votes", value = "Number of votes", example = "12")
 //    private long votes;
 
-    public Userpost()
-    {
+    public Userpost() {
 
     }
 
