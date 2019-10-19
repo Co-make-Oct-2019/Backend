@@ -31,21 +31,21 @@ public class User extends Auditable
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(nullable = false,
-            unique = true)
-    @Email
-    private String primaryemail;
+//    @Column(nullable = false,
+//            unique = true)
+//    @Email
+//    private String primaryemail;
 
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<UserRoles> userroles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
-    @JsonIgnoreProperties("user")
-    private List<Useremail> useremails = new ArrayList<>();
+//    @OneToMany(mappedBy = "user",
+//               cascade = CascadeType.ALL,
+//               orphanRemoval = true)
+//    @JsonIgnoreProperties("user")
+//    private List<Useremail> useremails = new ArrayList<>();
 
     public User()
     {
@@ -53,12 +53,12 @@ public class User extends Auditable
 
     public User(String username,
                 String password,
-                String primaryemail,
+//                String primaryemail,
                 List<UserRoles> userRoles)
     {
         setUsername(username);
         setPassword(password);
-        this.primaryemail = primaryemail;
+//        this.primaryemail = primaryemail;
         for (UserRoles ur : userRoles)
         {
             ur.setUser(this);
@@ -92,21 +92,21 @@ public class User extends Auditable
         this.username = username.toLowerCase();
     }
 
-    public String getPrimaryemail()
-    {
-        if (primaryemail == null) // this is possible when updating a user
-        {
-            return null;
-        } else
-        {
-            return primaryemail.toLowerCase();
-        }
-    }
+//    public String getPrimaryemail()
+//    {
+//        if (primaryemail == null) // this is possible when updating a user
+//        {
+//            return null;
+//        } else
+//        {
+//            return primaryemail.toLowerCase();
+//        }
+//    }
 
-    public void setPrimaryemail(String primaryemail)
-    {
-        this.primaryemail = primaryemail.toLowerCase();
-    }
+//    public void setPrimaryemail(String primaryemail)
+//    {
+//        this.primaryemail = primaryemail.toLowerCase();
+//    }
 
     public String getPassword()
     {
@@ -134,15 +134,15 @@ public class User extends Auditable
         this.userroles = userroles;
     }
 
-    public List<Useremail> getUseremails()
-    {
-        return useremails;
-    }
-
-    public void setUseremails(List<Useremail> useremails)
-    {
-        this.useremails = useremails;
-    }
+//    public List<Useremail> getUseremails()
+//    {
+//        return useremails;
+//    }
+//
+//    public void setUseremails(List<Useremail> useremails)
+//    {
+//        this.useremails = useremails;
+//    }
 
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()
@@ -163,6 +163,7 @@ public class User extends Auditable
     @Override
     public String toString()
     {
-        return "User{" + "userid=" + userid + ", username='" + username + '\'' + ", password='" + password + '\'' + ", primaryEmail='" + primaryemail + '\'' + ", userroles=" + userroles + ", useremails=" + useremails + '}';
+        return "User{" + "userid=" + userid + ", username='" + username + '\'' + ", password='" + password + '\'' + ", userroles=" + userroles + ", useremails=" + '}';
     }
+    //removed email variables from toString
 }

@@ -49,14 +49,14 @@ public class SeedData implements CommandLineRunner
                                  r3));
         User u1 = new User("admin",
                            "password",
-                           "admin@lambdaschool.local",
+//                           "admin@lambdaschool.local",
                            admins);
-        u1.getUseremails()
-          .add(new Useremail(u1,
-                             "admin@email.local"));
-        u1.getUseremails()
-          .add(new Useremail(u1,
-                             "admin@mymail.local"));
+//        u1.getUseremails()
+//          .add(new Useremail(u1,
+//                             "admin@email.local"));
+//        u1.getUseremails()
+//          .add(new Useremail(u1,
+//                             "admin@mymail.local"));
 
         userService.save(u1);
 
@@ -68,17 +68,17 @@ public class SeedData implements CommandLineRunner
                                 r2));
         User u2 = new User("cinnamon",
                            "1234567",
-                           "cinnamon@lambdaschool.local",
+//                           "cinnamon@lambdaschool.local",
                            datas);
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "cinnamon@mymail.local"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "hops@mymail.local"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "bunny@email.local"));
+//        u2.getUseremails()
+//          .add(new Useremail(u2,
+//                             "cinnamon@mymail.local"));
+//        u2.getUseremails()
+//          .add(new Useremail(u2,
+//                             "hops@mymail.local"));
+//        u2.getUseremails()
+//          .add(new Useremail(u2,
+//                             "bunny@email.local"));
         userService.save(u2);
 
         // user
@@ -87,11 +87,11 @@ public class SeedData implements CommandLineRunner
                                 r2));
         User u3 = new User("barnbarn",
                            "ILuvM4th!",
-                           "barnbarn@lambdaschool.local",
+//                           "barnbarn@lambdaschool.local",
                            users);
-        u3.getUseremails()
-          .add(new Useremail(u3,
-                             "barnbarn@email.local"));
+//        u3.getUseremails()
+//          .add(new Useremail(u3,
+//                             "barnbarn@email.local"));
         userService.save(u3);
 
         users = new ArrayList<>();
@@ -99,7 +99,7 @@ public class SeedData implements CommandLineRunner
                                 r2));
         User u4 = new User("puttat",
                            "password",
-                           "puttat@school.lambda",
+//                           "puttat@school.lambda",
                            users);
         userService.save(u4);
 
@@ -108,7 +108,7 @@ public class SeedData implements CommandLineRunner
                                 r2));
         User u5 = new User("misskitty",
                            "password",
-                           "misskitty@school.lambda",
+//                           "misskitty@school.lambda",
                            users);
         userService.save(u5);
 
@@ -131,12 +131,12 @@ public class SeedData implements CommandLineRunner
             fakeUser = new User(nameFaker.name()
                                          .username(),
                                 "password",
-                                nameFaker.internet()
-                                         .emailAddress(),
+//                                nameFaker.internet()
+//                                         .emailAddress(),
                                 users);
-            fakeUser.getUseremails()
-                    .add(new Useremail(fakeUser,
-                                       fakeValuesService.bothify("????##@gmail.com")));
+//            fakeUser.getUseremails()
+//                    .add(new Useremail(fakeUser,
+//                                       fakeValuesService.bothify("????##@gmail.com")));
             userService.save(fakeUser);
         }
     }
