@@ -3,10 +3,7 @@ package com.lambdaschool.starthere.services;
 import com.lambdaschool.starthere.exceptions.ResourceFoundException;
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.logging.Loggable;
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.UserRoles;
-import com.lambdaschool.starthere.models.Useremail;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.repository.RoleRepository;
 import com.lambdaschool.starthere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +115,15 @@ public class UserServiceImpl implements UserDetailsService,
         }
         newUser.setUserroles(newRoles);
 
+                for (Userpost up : user.getUserposts())
+        {
+            System.out.println("**************************************************************");
+            System.out.println(up.getTitle());
+            newUser.getUserposts()
+                    .add(new Userpost(newUser,
+                            up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+        }
+
 //        for (Useremail ue : user.getUseremails())
 //        {
 //            newUser.getUseremails()
@@ -163,6 +169,26 @@ public class UserServiceImpl implements UserDetailsService,
             {
                 throw new ResourceFoundException("User Roles are not updated through User. See endpoint POST: users/user/{userid}/role/{roleid}");
             }
+
+                        if (user.getUserposts()
+                    .size() > 0)
+            {
+                System.out.println("************* RIGHT HERE ********************");
+                for (Userpost up : user.getUserposts())
+                {
+                    System.out.println("**************************************************************");
+                    System.out.println(up.getTitle());
+                    currentUser.getUserposts()
+                               .add(new Userpost(currentUser,
+                                                  up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+                }
+            } else {
+                            System.out.println("NOPE");
+                            System.out.println("NOPE");
+                            System.out.println("NOPE");
+                            System.out.println("NOPE");
+                            System.out.println("NOPE");
+                        }
 
 //            if (user.getUseremails()
 //                    .size() > 0)

@@ -3,10 +3,7 @@ package com.lambdaschool.starthere;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.UserRoles;
-import com.lambdaschool.starthere.models.Useremail;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +48,16 @@ public class SeedData implements CommandLineRunner
                            "password",
 //                           "admin@lambdaschool.local",
                            admins);
+                u1.getUserposts()
+          .add(new Userpost(u1,
+                             "We have too many potholes!", 97222, "Someone please help fix these potholes", "http://example.come/image.jpg"));
+        u1.getUserposts()
+                .add(new Userpost(u1,
+            "The park is too muddy", 97222, "If we planted grass, it would help with all the mud. Then it would be fun to play there.", "http://example.come/image.jpg"));
+//        User user, String title, long zip, String line1, String imageurl
+
+
+
 //        u1.getUseremails()
 //          .add(new Useremail(u1,
 //                             "admin@email.local"));
