@@ -118,6 +118,17 @@ public class UserpostController {
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Userpost> userposts = userpostService.findByNotUserid(id);
+
+
+        for(Userpost up: userposts)
+        {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if(checkMatch == true)
+            {
+                up.setVoted(true);
+            }
+        }
+
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
@@ -136,6 +147,15 @@ public class UserpostController {
 
         if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
             Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));
+
+
+
+                boolean checkMatch = userpostService.checkMatch(currentUser, returnPost);
+                if(checkMatch == true)
+                {
+                    returnPost.setVoted(true);
+                }
+
 
             return new ResponseEntity<>(returnPost, HttpStatus.OK);
 

@@ -94,8 +94,11 @@ public class UserpostServiceImplementation implements UserpostService {
             if (userpost.getImageurl() != null) {
                 userpostToEdit.setImageurl(userpost.getImageurl());
             }
+            if(userpost.getCount() != null)
+            {
+                userpostToEdit.setCount(userpost.getCount());
+            }
 
-            userpostToEdit.setCount(userpost.getCount());
 
             return userpostrepos.save(userpostToEdit);
         } else {

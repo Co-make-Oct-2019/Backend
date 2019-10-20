@@ -53,7 +53,7 @@ public class Userpost extends Auditable {
     private String location;
 
     @Column(nullable = false)
-    private int count;
+    private Integer count;
 
     @Column(nullable = false)
     private boolean voted;
@@ -93,11 +93,11 @@ public class Userpost extends Auditable {
         this.voted = false;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
