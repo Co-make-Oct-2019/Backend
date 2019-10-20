@@ -125,7 +125,7 @@ public class UserpostController {
         Userpost currentPost = new Userpost();
         currentPost = userpostService.findUserpostById(userpostid);
 
-        userpostService.increment(currentUser, currentPost);
+        currentPost = userpostService.increment(currentUser, currentPost);
 //
 //        if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
 //            Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));

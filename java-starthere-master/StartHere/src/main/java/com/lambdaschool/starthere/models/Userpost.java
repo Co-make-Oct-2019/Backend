@@ -23,7 +23,7 @@ public class Userpost extends Auditable {
     @OneToMany(mappedBy = "userpost",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonIgnoreProperties({"userpost"})
+    @JsonIgnoreProperties({"userpost", "postvotes"})
     private List<Postcomment> postcomments = new ArrayList<>();
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
@@ -43,7 +43,7 @@ public class Userpost extends Auditable {
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
-    @JsonIgnoreProperties({"userposts", "userroles"})
+    @JsonIgnoreProperties({"userposts", "userroles", "postvotes"})
     private User user;
 
 
@@ -59,7 +59,7 @@ public class Userpost extends Auditable {
 
     @OneToMany(mappedBy = "userpost",
             cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("userpost")
+    @JsonIgnoreProperties({"userpost", "postvotes"})
     private List<Postvotes> postvotes = new ArrayList<>();
 
 //

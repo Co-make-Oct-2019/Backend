@@ -107,9 +107,27 @@ public class UserpostServiceImplementation implements UserpostService {
     }
 
     @Override
+    public boolean checkMatch(User user, Userpost userpost) {
+
+
+        boolean matching =  userpostrepos.checkMatch(user.getUserid(), userpost.getUserpostid());
+        System.out.println("MATCHING FROM CHECKMATCH: " + matching);
+        return matching;
+//        return false;
+    }
+
+    @Override
     public Userpost increment(User user, Userpost userpost)
     {
-
+        boolean matching = checkMatch(user, userpost);
+        if(matching = true)
+        {
+            System.out.println("IT MATCHES");
+            userpost.setVoted(true);
+        } else {
+            System.out.println("IT DOES NOT MATCH");
+            userpost.setVoted(false);
+        }
         return userpost;
     }
 }
