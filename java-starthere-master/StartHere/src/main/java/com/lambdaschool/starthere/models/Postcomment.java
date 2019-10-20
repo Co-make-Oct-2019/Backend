@@ -18,7 +18,8 @@ public class Postcomment extends Auditable{
     private long postcommentid;
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "That's a good point")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10_000)
+    @Lob
     private String title;
 
     @ApiModelProperty(name = "imageurl", value = "Link to image", example = "http://example.com/img.jpg")
@@ -26,7 +27,8 @@ public class Postcomment extends Auditable{
     private String imageurl;
 
     @ApiModelProperty(name = "line1", value = "First line of comment", example = "You're right, we should do something!")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10_000)
+    @Lob
     private String line1;
 
     @ManyToOne

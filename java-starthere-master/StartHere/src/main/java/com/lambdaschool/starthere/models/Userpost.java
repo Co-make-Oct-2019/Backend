@@ -27,7 +27,8 @@ public class Userpost extends Auditable {
     private List<Postcomment> postcomments = new ArrayList<>();
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10_000)
+    @Lob
     private String title;
 
     @ApiModelProperty(name = "imageurl", value = "Link to image", example = "http://example.com/img.jpg")
@@ -35,7 +36,8 @@ public class Userpost extends Auditable {
     private String imageurl;
 
     @ApiModelProperty(name = "line1", value = "First line of post", example = "It is a big pothole")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10_000)
+    @Lob
     private String line1;
 
     @ManyToOne

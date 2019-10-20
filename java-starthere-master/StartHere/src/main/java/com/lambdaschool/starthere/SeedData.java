@@ -32,6 +32,10 @@ public class SeedData implements CommandLineRunner
     @Override
     public void run(String[] args) throws Exception
     {
+        FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"),
+                new RandomService());
+        Faker nameFaker = new Faker(new Locale("en-US"));
+
         Role r1 = new Role("admin");
         Role r2 = new Role("user");
         Role r3 = new Role("data");
@@ -54,10 +58,10 @@ public class SeedData implements CommandLineRunner
                            admins, "Miami");
                 u1.getUserposts()
           .add(new Userpost(u1,
-                             "We have too many potholes!", 97222, "Someone please help fix these potholes", "http://example.come/image.jpg"));
+                             "We have too many potholes!", 97222, "Someone please help fix these potholes", nameFaker.internet().avatar()));
         u1.getUserposts()
                 .add(new Userpost(u1,
-            "The park is too muddy", 97222, "If we planted grass, it would help with all the mud. Then it would be fun to play there.", "http://example.come/image.jpg"));
+            "The park is too muddy", 97222, "If we planted grass, it would help with all the mud. Then it would be fun to play there.", nameFaker.internet().avatar()));
 //        User user, String title, long zip, String line1, String imageurl
 
 
@@ -68,15 +72,16 @@ public class SeedData implements CommandLineRunner
 //        u1.getUseremails()
 //          .add(new Useremail(u1,
 //                             "admin@mymail.local"));
+        User firstUser = new User();
+        firstUser = userService.save(u1);
 
-        userService.save(u1);
+//        Userpost up1 = new Userpost();
+//        User thisUser = new User();
+//        thisUser = userService.findByName("admin");
 
-        Userpost up1 = new Userpost();
-        User thisUser = new User();
-        thisUser = userService.findByName("admin");
-
-        up1 = userpostService.findUserpostById(29);
-        up1.getPostcomments().add(new Postcomment(thisUser, up1, "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", "http://image.com/image.jpg"));
+//        up1 = userpostService.findUserpostById(29);
+        firstUser.getUserposts().get(0)
+        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().avatar()));
 //        userpostService.save(up1);
 
         // data, user
@@ -118,7 +123,7 @@ public class SeedData implements CommandLineRunner
 
         u3.getUserposts()
                 .add(new Userpost(u3,
-                        "Town center mural", 97222, "The mural is old and faded. Let's get a group together to repaint it.", "http://example.come/image.jpg"));
+                        "Town center mural", 97222, "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().avatar()));
 //        u3.getUseremails()
 //          .add(new Useremail(u3,
 //                             "barnbarn@email.local"));
@@ -146,9 +151,7 @@ public class SeedData implements CommandLineRunner
         // https://www.baeldung.com/java-faker
         // https://www.baeldung.com/regular-expressions-java
 
-        FakeValuesService fakeValuesService = new FakeValuesService(new Locale("en-US"),
-                                                                    new RandomService());
-        Faker nameFaker = new Faker(new Locale("en-US"));
+
 
         for (int i = 0; i < 10; i++)
         {
@@ -158,16 +161,20 @@ public class SeedData implements CommandLineRunner
             users = new ArrayList<>();
             users.add(new UserRoles(new User(),
                                     r2));
-            fakeUser = new User(nameFaker.name()
-                                         .username(),
+            fakeUser = new User(nameFaker.zelda().character(),
                                 "password",
-//                                nameFaker.internet()
-//                                         .emailAddress(),
                                 users, "Miami");
-//            fakeUser.getUseremails()
-//                    .add(new Useremail(fakeUser,
-//                                       fakeValuesService.bothify("????##@gmail.com")));
-            userService.save(fakeUser);
+
+            fakeUser.getUserposts()
+                    .add(new Userpost(fakeUser,
+                            nameFaker.chuckNorris().fact(), 97222, nameFaker.gameOfThrones().quote(), nameFaker.internet().avatar()));
+            User newUser = new User();
+
+            newUser = userService.save(fakeUser);
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.backToTheFuture().quote(), nameFaker.rickAndMorty().quote(), nameFaker.internet().avatar()));
         }
     }
 }
