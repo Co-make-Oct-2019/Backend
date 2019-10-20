@@ -48,7 +48,7 @@ public class UserpostServiceImplementation implements UserpostService {
     @Override
     public List<Userpost> findByCurrentLocation(String location) {
         List<Userpost> list = new ArrayList<>();
-        userpostrepos.findAllByLocation(location)
+        userpostrepos.findAllByLocationContainingIgnoreCase(location)
                 .iterator()
                 .forEachRemaining(list::add);
         return list;

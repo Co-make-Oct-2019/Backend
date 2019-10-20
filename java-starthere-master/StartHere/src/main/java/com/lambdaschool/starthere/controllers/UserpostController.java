@@ -79,13 +79,37 @@ public class UserpostController {
 
     @GetMapping(value = "/currentlocation",
             produces = {"application/json"})
-    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication) {
+    public ResponseEntity<?> findUserpostsByCurrentLocation(HttpServletRequest request, Authentication authentication) {
         String name;
         name = authentication.getName();
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
         User currentUser = userService.findByName(name);
         String location = currentUser.getLocation();
+
+        List<Userpost> userposts = userpostService.findByCurrentLocation(location);
+
+        for (Userpost up : userposts) {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+        }
+
+        return new ResponseEntity<>(userposts,
+                HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/location/{location}",
+            produces = {"application/json"})
+    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication, @PathVariable String location) {
+        String name;
+        name = authentication.getName();
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+        User currentUser = userService.findByName(name);
+//        String location = currentUser.getLocation();
 
         List<Userpost> userposts = userpostService.findByCurrentLocation(location);
 
