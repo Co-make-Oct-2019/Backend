@@ -23,7 +23,7 @@ public class Userpost extends Auditable {
     @OneToMany(mappedBy = "userpost",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    @JsonIgnoreProperties("userpost")
+    @JsonIgnoreProperties({"user", "userpost"})
     private List<Postcomment> postcomments = new ArrayList<>();
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
