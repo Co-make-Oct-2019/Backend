@@ -24,7 +24,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,6 +45,9 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    private TokenStore tokenStore;
 
     @Autowired
     private UserService userService;
@@ -209,7 +214,7 @@ public class UserController {
 
         newuser = userService.save(newuser);
 
-        
+
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -260,16 +265,25 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    // http://localhost:2019/users/user/14
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUserById(HttpServletRequest request,
-                                            @PathVariable
-                                                    long id) {
+
+    @DeleteMapping("/user")
+    public ResponseEntity<?> deleteCurrentUser(HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        userService.delete(id);
+        User user = userService.findByName(authentication.getName());
+        userService.delete(user.getUserid());
+
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null)
+        {
+            String tokenValue = authHeader.replace("Bearer",
+                    "")
+                    .trim();
+            OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
+            tokenStore.removeAccessToken(accessToken);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
