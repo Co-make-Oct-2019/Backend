@@ -8,14 +8,18 @@ import com.lambdaschool.starthere.repository.RoleRepository;
 import com.lambdaschool.starthere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +95,6 @@ public class UserServiceImpl implements UserDetailsService,
         newUser.setUsername(user.getUsername().toLowerCase());
         newUser.setLocation(user.getLocation());
         newUser.setPasswordNoEncrypt(user.getPassword());
-//        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
         for (UserRoles ur : user.getUserroles()) {
@@ -111,13 +114,6 @@ public class UserServiceImpl implements UserDetailsService,
                             up.getTitle(), up.getLocation(), up.getLine1(), up.getImageurl()));
         }
 
-//        for (Useremail ue : user.getUseremails())
-//        {
-//            newUser.getUseremails()
-//                   .add(new Useremail(newUser,
-//                                      ue.getUseremail()));
-//        }
-
         return userrepos.save(newUser);
     }
 
@@ -134,38 +130,22 @@ public class UserServiceImpl implements UserDetailsService,
         if (id == authenticatedUser.getUserid() || isAdmin) {
             User currentUser = findUserById(id);
 
-            if (user.getUsername() != null) {
-                currentUser.setUsername(user.getUsername().toLowerCase());
-            }
+//            if (user.getUsername() != null) {
+//                currentUser.setUsername(user.getUsername().toLowerCase());
+//            }
             if (user.getLocation() != null) {
                 currentUser.setLocation(user.getLocation());
+            }
+            if(user.getLine1() != null){
+                currentUser.setLine1(user.getLine1());
+            }
+            if(user.getImageurl() != null)
+            {
+                currentUser.setImageurl(user.getImageurl());
             }
 
             if (user.getPassword() != null) {
                 currentUser.setPasswordNoEncrypt(user.getPassword());
-            }
-
-//            if (user.getPrimaryemail() != null)
-//            {
-//                currentUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
-//            }
-
-            if (user.getUserroles()
-                    .size() > 0) {
-                throw new ResourceFoundException("User Roles are not updated through User. See endpoint POST: users/user/{userid}/role/{roleid}");
-            }
-
-            if (user.getUserposts()
-                    .size() > 0) {
-
-                for (Userpost up : user.getUserposts()) {
-
-                    currentUser.getUserposts()
-                            .add(new Userpost(currentUser,
-                                    up.getTitle(), up.getLocation(), up.getLine1(), up.getImageurl()));
-                }
-            } else {
-
             }
 
             return userrepos.save(currentUser);

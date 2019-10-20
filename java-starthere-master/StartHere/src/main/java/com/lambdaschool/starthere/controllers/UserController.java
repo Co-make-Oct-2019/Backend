@@ -15,11 +15,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,6 +41,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    AuthenticationManager authManager;
 
     // http://localhost:2019/users/users/?page=1&size=1
     // http://localhost:2019/users/users/?sort=username,desc&sort=<field>,asc
@@ -160,10 +171,12 @@ public class UserController {
             produces = {"application/json"})
     public ResponseEntity<?> getCurrentUserInfo(HttpServletRequest request,
                                                 Authentication authentication) {
+
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
+        System.out.println("1st spot");
         User u = userService.findByName(authentication.getName());
+        System.out.println("2nd spot");
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
@@ -196,38 +209,39 @@ public class UserController {
     }
 
 
-    // http://localhost:2019/users/user/7
-//        {
-//            "userid": 7,
-//                "username": "cinnamon",
-//                "primaryemail": "cinnamon@lambdaschool.home",
-//                "useremails": [
-//            {
-//                    "useremail": "cinnamon@mymail.local"
-//            },
-//            {
-//                    "useremail": "hops@mymail.local"
-//            },
-//            {
-//                    "useremail": "bunny@email.local"
-//            }
-//        ]
-//        }
-    @PutMapping(value = "/user/{id}")
+    @PutMapping(value = "/user/profile/edit")
     public ResponseEntity<?> updateUser(HttpServletRequest request,
                                         @RequestBody
-                                                User updateUser,
-                                        @PathVariable
-                                                long id) {
+                                                User updateUser, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        userService.update(updateUser,
+        User currentUser = new User();
+        currentUser = userService.findByName(authentication.getName());
+        long id = currentUser.getUserid();
+
+        User updatedUser = userService.update(updateUser,
                 id,
                 request.isUserInRole("ADMIN"));
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
+//        UsernamePasswordAuthenticationToken authReq
+//                = new UsernamePasswordAuthenticationToken(updatedUser.getUsername(), updatedUser.getPassword(), updatedUser.getAuthority());
+//        System.out.println(updatedUser.getPassword());
+//        authReq.setDetails(updatedUser);
+//        Authentication auth = authManager.authenticate(authReq);
+//        SecurityContext sc = SecurityContextHolder.getContext();
+//        sc.setAuthentication(auth);
+//        UsernamePasswordAuthenticationToken authReq =
+
+//
+//        Authentication auth = new UsernamePasswordAuthenticationToken(updatedUser.getUsername(), updatedUser.getPassword());
+//        SecurityContext sc = SecurityContextHolder.getContext();
+//        sc.setAuthentication(auth);
+//        HttpSession session = request.getSession(true);
+//        session.setAttribute("SPRING_SECURITY_CONTEXT", sc);
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
 
     // http://localhost:2019/users/user/14
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

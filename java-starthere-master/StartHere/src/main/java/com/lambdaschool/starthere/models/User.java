@@ -53,11 +53,6 @@ public class User extends Auditable
     @JsonIgnore
     private List<UserRoles> userroles = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user",
-//               cascade = CascadeType.ALL,
-//               orphanRemoval = true)
-//    @JsonIgnoreProperties("user")
-//    private List<Useremail> useremails = new ArrayList<>();
 
         @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL,
@@ -71,7 +66,6 @@ public class User extends Auditable
 
     public User(String username,
                 String password,
-//                String primaryemail,
                 List<UserRoles> userRoles, String location)
     {
         setUsername(username);
@@ -117,22 +111,6 @@ public class User extends Auditable
     {
         this.username = username.toLowerCase();
     }
-
-//    public String getPrimaryemail()
-//    {
-//        if (primaryemail == null) // this is possible when updating a user
-//        {
-//            return null;
-//        } else
-//        {
-//            return primaryemail.toLowerCase();
-//        }
-//    }
-
-//    public void setPrimaryemail(String primaryemail)
-//    {
-//        this.primaryemail = primaryemail.toLowerCase();
-//    }
 
     public String getPassword()
     {
@@ -185,16 +163,6 @@ public class User extends Auditable
         this.userposts = userposts;
     }
 
-    //    public List<Useremail> getUseremails()
-//    {
-//        return useremails;
-//    }
-//
-//    public void setUseremails(List<Useremail> useremails)
-//    {
-//        this.useremails = useremails;
-//    }
-
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()
     {
@@ -216,5 +184,4 @@ public class User extends Auditable
     {
         return "User{" + "userid=" + userid + ", username='" + username + '\'' + ", password='" + password + '\'' + ", userroles=" + userroles + ", useremails=" + '}';
     }
-    //removed email variables from toString
 }
