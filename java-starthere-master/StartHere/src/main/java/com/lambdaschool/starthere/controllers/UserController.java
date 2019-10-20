@@ -90,7 +90,6 @@ public class UserController {
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
 
-
         List<User> myUsers = userService.findAll(pageable);
 
         User currentUser = userService.findByName(authentication.getName());
@@ -280,7 +279,6 @@ public class UserController {
         newuser.setUserroles(newRoles);
 
         newuser = userService.save(newuser);
-
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
