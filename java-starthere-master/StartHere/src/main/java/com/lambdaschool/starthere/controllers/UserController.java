@@ -195,7 +195,6 @@ public class UserController {
     }
 
 
-
     @PostMapping(value = "/user",
             consumes = {"application/json"},
             produces = {"application/json"})
@@ -245,7 +244,6 @@ public class UserController {
                 request.isUserInRole("ADMIN"));
 
 
-
 //        UsernamePasswordAuthenticationToken authReq
 //                = new UsernamePasswordAuthenticationToken(updatedUser.getUsername(), updatedUser.getPassword(), updatedUser.getAuthority());
 //        System.out.println(updatedUser.getPassword());
@@ -275,8 +273,7 @@ public class UserController {
         userService.delete(user.getUserid());
 
         String authHeader = request.getHeader("Authorization");
-        if (authHeader != null)
-        {
+        if (authHeader != null) {
             String tokenValue = authHeader.replace("Bearer",
                     "")
                     .trim();
