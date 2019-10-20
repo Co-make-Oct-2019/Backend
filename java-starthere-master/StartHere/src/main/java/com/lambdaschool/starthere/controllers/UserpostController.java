@@ -1,6 +1,7 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.Postcomment;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.services.UserService;
@@ -8,13 +9,18 @@ import com.lambdaschool.starthere.services.UserpostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Loggable
@@ -142,5 +148,32 @@ public class UserpostController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping(value = "/post",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewUserpost(HttpServletRequest request,
+                                        @Valid
+                                        @RequestBody
+                                                Userpost newuserpost, Authentication authentication) throws URISyntaxException {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User user = new User();
+        user = userService.findByName(authentication.getName());
+
+        newuserpost = userpostService.save(newuserpost, user);
+
+        // set the location header for the newly created resource
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{userid}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(newuserpost,
+                HttpStatus.CREATED);
     }
 }

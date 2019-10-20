@@ -20,14 +20,15 @@ public class UserpostServiceImplementation implements UserpostService {
     @Autowired
     private UserpostRepository userpostrepos;
 
-
     @Override
-    public Userpost save(Userpost userpost) {
+    public Userpost save(Userpost userpost, User user) {
+
         Userpost newUserpost = new Userpost();
         newUserpost.setImageurl(userpost.getImageurl());
         newUserpost.setLine1(userpost.getLine1());
         newUserpost.setLocation(userpost.getLocation());
         newUserpost.setTitle(userpost.getTitle());
+        newUserpost.setUser(user);
 
         return userpostrepos.save(newUserpost);
     }

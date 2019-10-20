@@ -9,7 +9,7 @@ public interface UserpostService {
 
     List<Userpost> findAll();
 
-    Userpost save(Userpost userpost);
+    Userpost save(Userpost userpost, User user);
 
     Userpost findUserpostById(long id);
 
