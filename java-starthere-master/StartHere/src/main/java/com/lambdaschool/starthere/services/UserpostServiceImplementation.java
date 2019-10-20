@@ -105,4 +105,11 @@ public class UserpostServiceImplementation implements UserpostService {
             throw new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!");
         }
     }
+
+    @Override
+    public Userpost increment(User user, Userpost userpost)
+    {
+
+        return userpost;
+    }
 }

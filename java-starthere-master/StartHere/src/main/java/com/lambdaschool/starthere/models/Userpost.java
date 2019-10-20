@@ -50,6 +50,18 @@ public class Userpost extends Auditable {
     @ApiModelProperty(name = "location", value = "City", example = "Los Angeles")
     @Column(nullable = false)
     private String location;
+
+    @Column(nullable = false)
+    private int count;
+
+    @Column(nullable = false)
+    private boolean voted;
+
+    @OneToMany(mappedBy = "userpost",
+            cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("userpost")
+    private List<Postvotes> postvotes = new ArrayList<>();
+
 //
 //    @ApiModelProperty(name = "votes", value = "Number of votes", example = "12")
 //    private long votes;
@@ -65,6 +77,8 @@ public class Userpost extends Auditable {
         this.location = location;
         this.line1 = line1;
         this.imageurl = imageurl;
+        this.count = 0;
+        this.voted = false;
 
     }
 
@@ -73,6 +87,24 @@ public class Userpost extends Auditable {
         this.title = title;
         this.location = location;
         this.line1 = line1;
+        this.count = 0;
+        this.voted = false;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public boolean isVoted() {
+        return voted;
+    }
+
+    public void setVoted(boolean voted) {
+        this.voted = voted;
     }
 
     public List<Postcomment> getPostcomments() {
@@ -131,7 +163,15 @@ public class Userpost extends Auditable {
         this.location = location;
     }
 
-//    public long getVotes() {
+    public List<Postvotes> getPostvotes() {
+        return postvotes;
+    }
+
+    public void setPostvotes(List<Postvotes> postvotes) {
+        this.postvotes = postvotes;
+    }
+
+    //    public long getVotes() {
 //        return votes;
 //    }
 //

@@ -54,6 +54,15 @@ public class User extends Auditable
     private List<UserRoles> userroles = new ArrayList<>();
 
 
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<Postvotes> postvotes = new ArrayList<>();
+
+
+
+
         @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL,
                orphanRemoval = true)
@@ -161,6 +170,14 @@ public class User extends Auditable
 
     public void setUserposts(List<Userpost> userposts) {
         this.userposts = userposts;
+    }
+
+    public List<Postvotes> getPostvotes() {
+        return postvotes;
+    }
+
+    public void setPostvotes(List<Postvotes> postvotes) {
+        this.postvotes = postvotes;
     }
 
     @JsonIgnore

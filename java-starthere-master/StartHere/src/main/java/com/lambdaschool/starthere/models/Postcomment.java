@@ -26,6 +26,7 @@ public class Postcomment extends Auditable{
     @Column(nullable = true)
     private String imageurl;
 
+
     @ApiModelProperty(name = "line1", value = "First line of comment", example = "You're right, we should do something!")
     @Column(nullable = false, length = 10_000)
     @Lob
@@ -55,6 +56,7 @@ public class Postcomment extends Auditable{
         this.imageurl = imageurl;
         this.line1 = line1;
         this.userpost = userpost;
+
     }
 
     public Postcomment(User user, Userpost userpost, String title, String line1) {
@@ -62,7 +64,10 @@ public class Postcomment extends Auditable{
         this.title = title;
         this.line1 = line1;
         this.userpost = userpost;
+
     }
+
+
 
     public User getUser() {
         return user;

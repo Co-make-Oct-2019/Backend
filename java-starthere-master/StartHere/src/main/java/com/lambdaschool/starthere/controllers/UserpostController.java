@@ -114,6 +114,29 @@ public class UserpostController {
         }
     }
 
+    @PutMapping(value = "/post/increment/{userpostid}")
+    public ResponseEntity<?> incrementPostCount(@PathVariable long userpostid, HttpServletRequest request,Authentication authentication) {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+        User currentUser = new User();
+        currentUser = userService.findByName(authentication.getName());
+
+        Userpost currentPost = new Userpost();
+        currentPost = userpostService.findUserpostById(userpostid);
+
+        userpostService.increment(currentUser, currentPost);
+//
+//        if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
+//            Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));
+
+            return new ResponseEntity<>(currentPost, HttpStatus.OK);
+
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+    }
+
     @GetMapping(value = "/post/{userpostid}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserPostById(HttpServletRequest request,
