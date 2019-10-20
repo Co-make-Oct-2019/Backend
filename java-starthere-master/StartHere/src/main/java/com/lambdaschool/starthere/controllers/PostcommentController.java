@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Loggable
 @RestController
@@ -53,6 +54,17 @@ public class PostcommentController {
 
         if (currentPostcomment.getUser().getUserid() == currentUser.getUserid()) {
             Postcomment returnPostcomment = postcommentService.update(updatedPostcomment, postcommentid);
+
+
+            Userpost up = returnPostcomment.getUserpost();
+
+
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+
 
             return new ResponseEntity<>(returnPostcomment, HttpStatus.OK);
 
@@ -101,6 +113,17 @@ public class PostcommentController {
         userpost = userpostService.findUserpostById(userpostid);
 
         newpostcomment = postcommentService.save(newpostcomment, user, userpost);
+
+
+        Userpost up = newpostcomment.getUserpost();
+
+
+        boolean checkMatch = userpostService.checkMatch(user, up);
+
+        if (checkMatch == true) {
+            up.setVoted(true);
+        }
+
 
         return new ResponseEntity<>(newpostcomment,
                 HttpStatus.CREATED);
