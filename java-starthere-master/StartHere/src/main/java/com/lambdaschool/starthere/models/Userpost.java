@@ -5,6 +5,8 @@ import com.lambdaschool.starthere.logging.Loggable;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Loggable
 @Entity
@@ -17,6 +19,12 @@ public class Userpost extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userpostid;
+
+    @OneToMany(mappedBy = "userpost",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties("userpost")
+    private List<Postcomment> postcomments = new ArrayList<>();
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
     @Column(nullable = false)
@@ -63,6 +71,14 @@ public class Userpost extends Auditable {
         this.title = title;
         this.zip = zip;
         this.line1 = line1;
+    }
+
+    public List<Postcomment> getPostcomments() {
+        return postcomments;
+    }
+
+    public void setPostcomments(List<Postcomment> postcomments) {
+        this.postcomments = postcomments;
     }
 
     public User getUser() {

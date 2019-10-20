@@ -10,4 +10,6 @@ public interface UserpostRepository extends PagingAndSortingRepository<Userpost,
 
     List<Userpost> findAllByUser_Username(String name);
 
+//    Userpost findByUserpostid(long id);
+
 }

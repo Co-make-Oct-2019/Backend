@@ -6,6 +6,7 @@ import com.github.javafaker.service.RandomService;
 import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
+import com.lambdaschool.starthere.services.UserpostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserpostService userpostService;
 
 
     @Override
@@ -66,6 +70,10 @@ public class SeedData implements CommandLineRunner
 //                             "admin@mymail.local"));
 
         userService.save(u1);
+
+        Userpost up1 = new Userpost();
+        up1 = userpostService.findUserpostById(29);
+
 
         // data, user
         ArrayList<UserRoles> datas = new ArrayList<>();

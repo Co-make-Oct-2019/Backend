@@ -1,5 +1,6 @@
 package com.lambdaschool.starthere.services;
 
+import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface UserpostService {
 
     List<Userpost> findAll();
+
+    Userpost save(Userpost userpost);
 
     Userpost findUserpostById(long id);
 

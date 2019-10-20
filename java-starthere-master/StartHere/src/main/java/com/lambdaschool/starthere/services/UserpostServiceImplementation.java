@@ -2,8 +2,7 @@ package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.logging.Loggable;
-import com.lambdaschool.starthere.models.Useremail;
-import com.lambdaschool.starthere.models.Userpost;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.repository.UseremailRepository;
 import com.lambdaschool.starthere.repository.UserpostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,46 @@ public class UserpostServiceImplementation implements UserpostService{
 
 
     @Override
+    public Userpost save(Userpost userpost) {
+        Userpost newUserpost = new Userpost();
+        newUserpost.setImageurl(userpost.getImageurl());
+        newUserpost.setLine1(userpost.getLine1());
+        newUserpost.setZip(userpost.getZip());
+        newUserpost.setTitle(userpost.getTitle());
+//        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
+
+//        ArrayList<UserRoles> newRoles = new ArrayList<>();
+//        for (UserRoles ur : user.getUserroles()) {
+//            long id = ur.getRole()
+//                    .getRoleid();
+//            Role role = rolerepos.findById(id)
+//                    .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
+//            newRoles.add(new UserRoles(newUser,
+//                    ur.getRole()));
+//        }
+//        newUser.setUserroles(newRoles);
+
+//        for (Userpost up : user.getUserposts()) {
+//
+//            newUser.getUserposts()
+//                    .add(new Userpost(newUser,
+//                            up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+//        }
+
+//        for (Useremail ue : user.getUseremails())
+//        {
+//            newUser.getUseremails()
+//                   .add(new Useremail(newUser,
+//                                      ue.getUseremail()));
+//        }
+        System.out.println("MEOW MOEW *********************************************************");
+        System.out.println("MEOW MOEW *********************************************************");
+        System.out.println("MEOW MOEW *********************************************************");
+        System.out.println("MEOW MOEW *********************************************************");
+        return userpostrepos.save(newUserpost);
+    }
+
+    @Override
     public List<Userpost> findAll() {
         List<Userpost> list = new ArrayList<>();
         userpostrepos.findAll()
@@ -32,9 +71,10 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
-    public Userpost findUserpostById(long id) {
-        return userpostrepos.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Userpost with id " + id + " Not Found!"));
+    public Userpost findUserpostById(long userpostid) {
+        return userpostrepos.findById(userpostid)
+//        return userpostrepos.findByUserpostid(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!"));
     }
 
     @Override
