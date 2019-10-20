@@ -100,6 +100,9 @@ public class UserpostServiceImplementation implements UserpostService {
             if (userpost.getImageurl() != null) {
                 userpostToEdit.setImageurl(userpost.getImageurl());
             }
+
+                userpostToEdit.setCount(userpost.getCount());
+
             return userpostrepos.save(userpostToEdit);
         } else {
             throw new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!");
@@ -132,6 +135,7 @@ public class UserpostServiceImplementation implements UserpostService {
         }
         int myCount = getCount(userpost);
         userpost.setCount(myCount);
+        update(userpost, userpost.getUserpostid(), true);
         userpost.setVoted(true);
         return userpost;
     }
@@ -151,6 +155,7 @@ public class UserpostServiceImplementation implements UserpostService {
         }
         int myCount = getCount(userpost);
         userpost.setCount(myCount);
+        update(userpost, userpost.getUserpostid(), true);
         userpost.setVoted(false);
         return userpost;
     }
