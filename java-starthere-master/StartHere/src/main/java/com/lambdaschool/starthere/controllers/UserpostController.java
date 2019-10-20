@@ -9,17 +9,14 @@ import com.lambdaschool.starthere.services.UserpostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -36,15 +33,27 @@ public class UserpostController {
     @Autowired
     UserService userService;
 
-    // http://localhost:2019/useremails/useremails
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    // http://localhost:2019/posts/allposts
     @GetMapping(value = "/allposts",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllUserposts(HttpServletRequest request) {
+    public ResponseEntity<?> listAllUserposts(HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
+
+
         List<Userpost> allUserposts = userpostService.findAll();
+
+        User user = userService.findByName(authentication.getName());
+        for(Userpost up: allUserposts)
+        {
+            boolean checkMatch = userpostService.checkMatch(user, up);
+            if(checkMatch == true)
+            {
+                up.setVoted(true);
+            }
+        }
+
         return new ResponseEntity<>(allUserposts,
                 HttpStatus.OK);
     }
@@ -58,6 +67,17 @@ public class UserpostController {
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Userpost> userposts = userpostService.findByUserName(name);
+
+        User user = userService.findByName(authentication.getName());
+        for(Userpost up: userposts)
+        {
+            boolean checkMatch = userpostService.checkMatch(user, up);
+            if(checkMatch == true)
+            {
+                up.setVoted(true);
+            }
+        }
+
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
@@ -73,6 +93,16 @@ public class UserpostController {
         String location = currentUser.getLocation();
 
         List<Userpost> userposts = userpostService.findByCurrentLocation(location);
+
+        for(Userpost up: userposts)
+        {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if(checkMatch == true)
+            {
+                up.setVoted(true);
+            }
+        }
+
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }

@@ -3,11 +3,8 @@ package com.lambdaschool.starthere.services;
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.logging.Loggable;
 import com.lambdaschool.starthere.models.*;
-import com.lambdaschool.starthere.repository.UseremailRepository;
 import com.lambdaschool.starthere.repository.UserpostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,7 +47,6 @@ public class UserpostServiceImplementation implements UserpostService {
 
     @Override
     public List<Userpost> findByCurrentLocation(String location) {
-//        return userpostrepos.findAllByLocation(location);
         List<Userpost> list = new ArrayList<>();
         userpostrepos.findAllByLocation(location)
                 .iterator()
@@ -60,9 +56,7 @@ public class UserpostServiceImplementation implements UserpostService {
 
     @Override
     public List<Userpost> findByUserName(String username) {
-
         return userpostrepos.findAllByUser_Username(username.toLowerCase());
-
     }
 
     @Override
@@ -101,7 +95,7 @@ public class UserpostServiceImplementation implements UserpostService {
                 userpostToEdit.setImageurl(userpost.getImageurl());
             }
 
-                userpostToEdit.setCount(userpost.getCount());
+            userpostToEdit.setCount(userpost.getCount());
 
             return userpostrepos.save(userpostToEdit);
         } else {
@@ -113,25 +107,19 @@ public class UserpostServiceImplementation implements UserpostService {
     public boolean checkMatch(User user, Userpost userpost) {
 
 
-        boolean matching =  userpostrepos.checkMatch(user.getUserid(), userpost.getUserpostid());
-        System.out.println("MATCHING FROM CHECKMATCH: " + matching);
+        boolean matching = userpostrepos.checkMatch(user.getUserid(), userpost.getUserpostid());
         return matching;
-//        return false;
     }
 
     @Override
-    public Userpost increment(User user, Userpost userpost)
-    {
+    public Userpost increment(User user, Userpost userpost) {
         boolean matching = checkMatch(user, userpost);
         System.out.println("Matching from increment: " + matching);
-        if(matching != true)
-        {
+        if (matching != true) {
             userpostrepos.addVote(user.getUserid(), userpost.getUserpostid());
             System.out.println("Vote added");
-
         } else {
             System.out.println("You already upvoted this post");
-
         }
         int myCount = getCount(userpost);
         userpost.setCount(myCount);
@@ -141,15 +129,12 @@ public class UserpostServiceImplementation implements UserpostService {
     }
 
     @Override
-    public Userpost decrement(User user, Userpost userpost)
-    {
+    public Userpost decrement(User user, Userpost userpost) {
         boolean matching = checkMatch(user, userpost);
         System.out.println("Matching from increment: " + matching);
-        if(matching == true)
-        {
+        if (matching == true) {
             userpostrepos.removeVote(user.getUserid(), userpost.getUserpostid());
             System.out.println("Vote removed");
-
         } else {
             System.out.println("You haven't upvoted this yet");
         }
@@ -162,7 +147,7 @@ public class UserpostServiceImplementation implements UserpostService {
 
     @Override
     public int getCount(Userpost userpost) {
-        int myCount =  userpostrepos.getCount(userpost.getUserpostid());
+        int myCount = userpostrepos.getCount(userpost.getUserpostid());
         System.out.println("COUNT: " + myCount);
         return myCount;
     }
