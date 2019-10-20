@@ -41,7 +41,7 @@ public class Userpost extends Auditable {
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
-    @JsonIgnoreProperties("userposts")
+    @JsonIgnoreProperties({"userposts", "userroles"})
     private User user;
 
 

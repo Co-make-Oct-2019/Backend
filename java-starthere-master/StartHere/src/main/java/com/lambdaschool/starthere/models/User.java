@@ -33,18 +33,6 @@ public class User extends Auditable
 
     @Column(nullable = true,
             unique = false)
-    private String line2;
-
-    @Column(nullable = true,
-            unique = false)
-    private String line3;
-
-    @Column(nullable = true,
-            unique = false)
-    private String line4;
-
-    @Column(nullable = true,
-            unique = false)
     private String imageurl;
 
     @Column(nullable = false)
@@ -58,7 +46,7 @@ public class User extends Auditable
 
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties({"user", "userroles", "userrole"})
     private List<UserRoles> userroles = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "user",
@@ -168,29 +156,6 @@ public class User extends Auditable
         this.line1 = line1;
     }
 
-    public String getLine2() {
-        return line2;
-    }
-
-    public void setLine2(String line2) {
-        this.line2 = line2;
-    }
-
-    public String getLine3() {
-        return line3;
-    }
-
-    public void setLine3(String line3) {
-        this.line3 = line3;
-    }
-
-    public String getLine4() {
-        return line4;
-    }
-
-    public void setLine4(String line4) {
-        this.line4 = line4;
-    }
 
     public String getImageurl() {
         return imageurl;

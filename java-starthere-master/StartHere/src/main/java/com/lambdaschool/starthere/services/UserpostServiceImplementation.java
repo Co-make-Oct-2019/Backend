@@ -91,6 +91,15 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
+    public List<Userpost> findByNotUserid(long id) {
+        System.out.println("*****************************************************");
+        System.out.println("*****************************************************");
+        System.out.println("*****************************************************");
+        System.out.println(id);
+        return userpostrepos.findByNotUserid(id);
+    }
+
+    @Override
     public void delete(long id, boolean isAdmin) {
         if (userpostrepos.findById(id)
                 .isPresent())

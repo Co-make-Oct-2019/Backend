@@ -1,8 +1,10 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Useremail;
 import com.lambdaschool.starthere.models.Userpost;
+import com.lambdaschool.starthere.services.UserService;
 import com.lambdaschool.starthere.services.UseremailService;
 import com.lambdaschool.starthere.services.UserpostService;
 import org.slf4j.Logger;
@@ -30,6 +32,9 @@ public class UserpostController {
     @Autowired
     UserpostService userpostService;
 
+    @Autowired
+    UserService userService;
+
     // http://localhost:2019/useremails/useremails
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/allposts",
@@ -56,6 +61,25 @@ public class UserpostController {
 
         List<Userpost> userposts = userpostService.findByUserName(name,
                 request.isUserInRole("ADMIN"));
+        return new ResponseEntity<>(userposts,
+                HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/otherposts",
+            produces = {"application/json"})
+    public ResponseEntity<?> findAllOtherUserpostsExceptMine(HttpServletRequest request, Authentication authentication)
+    {
+//        String name;
+//        long id = authentication.getName();
+        User currentUser = new User();
+        currentUser = userService.findByName(authentication.getName());
+        long id = currentUser.getUserid();
+
+//        System.out.println(name);
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        List<Userpost> userposts = userpostService.findByNotUserid(id);
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
