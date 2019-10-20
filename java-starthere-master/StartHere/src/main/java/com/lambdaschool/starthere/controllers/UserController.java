@@ -44,7 +44,7 @@ import java.util.List;
 
 @Loggable
 @RestController
-@RequestMapping("/users")
+//@RequestMapping("/users")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -80,7 +80,7 @@ public class UserController {
             paramType = "query",
             value = "Sorting criteria in the format: property(,asc|desc). " + "Default sort order is ascending. " + "Multiple sort criteria are supported.")})
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/users",
+    @GetMapping(value = "/users/users",
             produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request,
                                           @PageableDefault(page = 0,
@@ -128,7 +128,7 @@ public class UserController {
 
     // http://localhost:2019/users/user/7
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/user/{userId}",
+    @GetMapping(value = "/users/user/{userId}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserById(HttpServletRequest request,
                                          @PathVariable
@@ -155,7 +155,7 @@ public class UserController {
 
     // http://localhost:2019/users/user/name/cinnamon
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/user/name/{userName}",
+    @GetMapping(value = "/users/user/name/{userName}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserByName(HttpServletRequest request,
                                            @PathVariable
@@ -195,7 +195,7 @@ public class UserController {
             paramType = "query",
             value = "Sorting criteria in the format: property(,asc|desc). " + "Default sort order is ascending. " + "Multiple sort criteria are supported.")})
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/user/name/like/{userName}",
+    @GetMapping(value = "/users/user/name/like/{userName}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserLikeName(HttpServletRequest request,
                                              @PathVariable
@@ -239,7 +239,7 @@ public class UserController {
 //    }
 
     // http://localhost:2019/users/getuserinfo
-    @GetMapping(value = "/getuserinfo",
+    @GetMapping(value = "/users/getuserinfo",
             produces = {"application/json"})
     public ResponseEntity<?> getCurrentUserInfo(HttpServletRequest request,
                                                 Authentication authentication) {
@@ -262,7 +262,7 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/user",
+    @PostMapping(value = "/newuser/createnewuser",
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request,
@@ -294,7 +294,7 @@ public class UserController {
     }
 
 
-    @PutMapping(value = "/user/profile/edit")
+    @PutMapping(value = "/users/user/profile/edit")
     public ResponseEntity<?> updateUser(HttpServletRequest request,
                                         @RequestBody
                                                 User updateUser, Authentication authentication) {
@@ -340,7 +340,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/user")
+    @DeleteMapping("/users/user")
     public ResponseEntity<?> deleteCurrentUser(HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
@@ -362,7 +362,7 @@ public class UserController {
 
     // http://localhost:2019/users/user/15/role/2
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/user/{userid}/role/{roleid}")
+    @DeleteMapping("/users/user/{userid}/role/{roleid}")
     public ResponseEntity<?> deleteUserRoleByIds(HttpServletRequest request,
                                                  @PathVariable
                                                          long userid,
