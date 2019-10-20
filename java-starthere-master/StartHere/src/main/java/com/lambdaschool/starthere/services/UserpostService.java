@@ -19,8 +19,7 @@ public interface UserpostService {
 
     List<Userpost> findByNotUserid(long id);
 
-    void delete(long id,
-                boolean isAdmin);
+    void delete(long id);
 //    User user, String title, long zip, String line1, String imageurl
     Userpost update(Userpost userpost, long userpostid, boolean isAdmin);
 }

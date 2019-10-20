@@ -122,5 +122,38 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @DeleteMapping("/post/{userpostid}")
+    public ResponseEntity<?> deleteUserpostById(HttpServletRequest request,
+                                                 @PathVariable
+                                                         long userpostid, Authentication authentication)
+    {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User currentUser = new User();
+        currentUser = userService.findByName(authentication.getName());
+
+        Userpost currentPost = new Userpost();
+        currentPost = userpostService.findUserpostById(userpostid);
+
+
+
+        if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
+            userpostService.delete(userpostid);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
+
+
+
+
+    }
+
 
 }

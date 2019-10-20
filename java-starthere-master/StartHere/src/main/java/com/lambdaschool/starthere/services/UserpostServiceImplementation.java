@@ -70,22 +70,12 @@ public class UserpostServiceImplementation implements UserpostService {
     }
 
     @Override
-    public void delete(long id, boolean isAdmin) {
+    public void delete(long id) {
         if (userpostrepos.findById(id)
                 .isPresent()) {
-            Authentication authentication = SecurityContextHolder.getContext()
-                    .getAuthentication();
-            if (userpostrepos.findById(id)
-                    .get()
-                    .getUser()
-                    .getUsername()
-                    .equalsIgnoreCase(authentication.getName()) || isAdmin) {
-                userpostrepos.deleteById(id);
-            } else {
-                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-            }
+            userpostrepos.deleteById(id);
         } else {
-            throw new ResourceNotFoundException("Useremail with id " + id + " Not Found!");
+            throw new ResourceNotFoundException("Userpost with id " + id + " Not Found!");
         }
     }
 
