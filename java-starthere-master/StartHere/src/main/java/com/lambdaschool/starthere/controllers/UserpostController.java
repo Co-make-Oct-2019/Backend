@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +32,7 @@ public class UserpostController {
 
     // http://localhost:2019/useremails/useremails
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/posts",
+    @GetMapping(value = "/allposts",
             produces = {"application/json"})
     public ResponseEntity<?> listAllUserposts(HttpServletRequest request)
     {
@@ -41,4 +43,22 @@ public class UserpostController {
         return new ResponseEntity<>(allUserposts,
                 HttpStatus.OK);
     }
+
+    @GetMapping(value = "/myposts",
+            produces = {"application/json"})
+    public ResponseEntity<?> findUserpostsByUserName(HttpServletRequest request, Authentication authentication)
+    {
+        String name;
+        name = authentication.getName();
+//        System.out.println(name);
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        List<Userpost> userposts = userpostService.findByUserName(name,
+                request.isUserInRole("ADMIN"));
+        return new ResponseEntity<>(userposts,
+                HttpStatus.OK);
+    }
+
+
 }
