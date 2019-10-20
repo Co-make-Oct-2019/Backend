@@ -72,8 +72,12 @@ public class SeedData implements CommandLineRunner
         userService.save(u1);
 
         Userpost up1 = new Userpost();
-        up1 = userpostService.findUserpostById(29);
+        User thisUser = new User();
+        thisUser = userService.findByName("admin");
 
+        up1 = userpostService.findUserpostById(29);
+        up1.getPostcomments().add(new Postcomment(thisUser, up1, "This is a comment title", "Line 1 text", "http://image.com/image.jpg"));
+//        userpostService.save(up1);
 
         // data, user
         ArrayList<UserRoles> datas = new ArrayList<>();
