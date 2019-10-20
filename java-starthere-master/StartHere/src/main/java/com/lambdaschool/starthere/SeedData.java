@@ -51,7 +51,7 @@ public class SeedData implements CommandLineRunner
         User u1 = new User("admin",
                            "password",
 //                           "admin@lambdaschool.local",
-                           admins);
+                           admins, "Miami");
                 u1.getUserposts()
           .add(new Userpost(u1,
                              "We have too many potholes!", 97222, "Someone please help fix these potholes", "http://example.come/image.jpg"));
@@ -76,7 +76,7 @@ public class SeedData implements CommandLineRunner
         thisUser = userService.findByName("admin");
 
         up1 = userpostService.findUserpostById(29);
-        up1.getPostcomments().add(new Postcomment(thisUser, up1, "This is a comment title", "Line 1 text", "http://image.com/image.jpg"));
+        up1.getPostcomments().add(new Postcomment(thisUser, up1, "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", "http://image.com/image.jpg"));
 //        userpostService.save(up1);
 
         // data, user
@@ -88,7 +88,7 @@ public class SeedData implements CommandLineRunner
         User u2 = new User("cinnamon",
                            "1234567",
 //                           "cinnamon@lambdaschool.local",
-                           datas);
+                           datas, "Miami");
 
         u2.getUserposts()
                 .add(new Userpost(u2,
@@ -114,7 +114,7 @@ public class SeedData implements CommandLineRunner
         User u3 = new User("barnbarn",
                            "ILuvM4th!",
 //                           "barnbarn@lambdaschool.local",
-                           users);
+                           users, "Miami");
 
         u3.getUserposts()
                 .add(new Userpost(u3,
@@ -130,7 +130,7 @@ public class SeedData implements CommandLineRunner
         User u4 = new User("puttat",
                            "password",
 //                           "puttat@school.lambda",
-                           users);
+                           users, "Miami");
         userService.save(u4);
 
         users = new ArrayList<>();
@@ -139,7 +139,7 @@ public class SeedData implements CommandLineRunner
         User u5 = new User("misskitty",
                            "password",
 //                           "misskitty@school.lambda",
-                           users);
+                           users, "New York");
         userService.save(u5);
 
         // using JavaFaker create a bunch of regular users
@@ -150,7 +150,7 @@ public class SeedData implements CommandLineRunner
                                                                     new RandomService());
         Faker nameFaker = new Faker(new Locale("en-US"));
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
             new User();
             User fakeUser;
@@ -163,7 +163,7 @@ public class SeedData implements CommandLineRunner
                                 "password",
 //                                nameFaker.internet()
 //                                         .emailAddress(),
-                                users);
+                                users, "Miami");
 //            fakeUser.getUseremails()
 //                    .add(new Useremail(fakeUser,
 //                                       fakeValuesService.bothify("????##@gmail.com")));

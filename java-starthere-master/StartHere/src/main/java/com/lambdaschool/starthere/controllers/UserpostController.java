@@ -61,21 +61,48 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+//    @GetMapping(value = "/myposts",
+//            produces = {"application/json"})
+//    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication) {
+//        String name;
+//        name = authentication.getName();
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//        User currentUser = userService.findByName(name);
+////        long zipcode = currentUser.getUserid()
+//
+//        List<Userpost> userposts = userpostService.findByUserName(name);
+//        return new ResponseEntity<>(userposts,
+//                HttpStatus.OK);
+//    }
+
     @GetMapping(value = "/otherposts",
             produces = {"application/json"})
     public ResponseEntity<?> findAllOtherUserpostsExceptMine(HttpServletRequest request, Authentication authentication) {
-//        String name;
-//        long id = authentication.getName();
         User currentUser = new User();
         currentUser = userService.findByName(authentication.getName());
         long id = currentUser.getUserid();
 
-//        System.out.println(name);
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<Userpost> userposts = userpostService.findByNotUserid(id);
         return new ResponseEntity<>(userposts,
+                HttpStatus.OK);
+    }
+
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping(value = "/post/{userpostid}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getUserPostById(HttpServletRequest request,
+                                              @PathVariable
+                                                      Long userpostid)
+    {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        Userpost up = userpostService.findUserpostById(userpostid);
+        return new ResponseEntity<>(up,
                 HttpStatus.OK);
     }
 

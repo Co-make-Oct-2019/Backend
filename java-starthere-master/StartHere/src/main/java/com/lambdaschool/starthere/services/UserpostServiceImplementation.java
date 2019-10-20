@@ -73,7 +73,6 @@ public class UserpostServiceImplementation implements UserpostService{
     @Override
     public Userpost findUserpostById(long userpostid) {
         return userpostrepos.findById(userpostid)
-//        return userpostrepos.findByUserpostid(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!"));
     }
 

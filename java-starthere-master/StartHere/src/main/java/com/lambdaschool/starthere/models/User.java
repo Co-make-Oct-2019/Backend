@@ -27,6 +27,9 @@ public class User extends Auditable
             unique = true)
     private String username;
 
+    @Column(nullable = false)
+    private String location;
+
     @Column(nullable = true,
             unique = false)
     private String line1;
@@ -68,16 +71,24 @@ public class User extends Auditable
     public User(String username,
                 String password,
 //                String primaryemail,
-                List<UserRoles> userRoles)
+                List<UserRoles> userRoles, String location)
     {
         setUsername(username);
         setPassword(password);
-//        this.primaryemail = primaryemail;
+        setLocation(location);
         for (UserRoles ur : userRoles)
         {
             ur.setUser(this);
         }
         this.userroles = userRoles;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public long getUserid()

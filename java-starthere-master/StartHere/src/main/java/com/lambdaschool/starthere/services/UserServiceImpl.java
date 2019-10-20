@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserDetailsService,
 
         User newUser = new User();
         newUser.setUsername(user.getUsername().toLowerCase());
+        newUser.setLocation(user.getLocation());
         newUser.setPasswordNoEncrypt(user.getPassword());
 //        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
 
@@ -135,6 +136,9 @@ public class UserServiceImpl implements UserDetailsService,
 
             if (user.getUsername() != null) {
                 currentUser.setUsername(user.getUsername().toLowerCase());
+            }
+            if (user.getLocation() != null) {
+                currentUser.setLocation(user.getLocation());
             }
 
             if (user.getPassword() != null) {
