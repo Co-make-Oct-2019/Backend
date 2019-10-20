@@ -4,8 +4,10 @@ import com.lambdaschool.starthere.logging.Loggable;
 import com.lambdaschool.starthere.models.Role;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserRoles;
+import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
+import com.lambdaschool.starthere.services.UserpostService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -53,6 +55,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private UserpostService userpostService;
+
+    @Autowired
     private RoleService roleService;
 
     @Autowired
@@ -80,40 +85,71 @@ public class UserController {
     public ResponseEntity<?> listAllUsers(HttpServletRequest request,
                                           @PageableDefault(page = 0,
                                                   size = 10_000)
-                                                  Pageable pageable) {
+                                                  Pageable pageable, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
+
+
         List<User> myUsers = userService.findAll(pageable);
+
+        User currentUser = userService.findByName(authentication.getName());
+        for (User u : myUsers) {
+            List<Userpost> userposts = u.getUserposts();
+            for (Userpost up : userposts) {
+                boolean checkMatch = userpostService.checkMatch(currentUser, up);
+                if (checkMatch == true) {
+                    up.setVoted(true);
+                }
+            }
+
+        }
+
+
+//
+
+
         return new ResponseEntity<>(myUsers,
                 HttpStatus.OK);
     }
 
     // http://localhost:2019/users/users/all
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/users/all",
-            produces = {"application/json"})
-    public ResponseEntity<?> reallyListAllUsers(HttpServletRequest request) {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        List<User> myUsers = userService.findAll(Pageable.unpaged());
-        return new ResponseEntity<>(myUsers,
-                HttpStatus.OK);
-    }
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    @GetMapping(value = "/users/all",
+//            produces = {"application/json"})
+//    public ResponseEntity<?> reallyListAllUsers(HttpServletRequest request) {
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+//        List<User> myUsers = userService.findAll(Pageable.unpaged());
+//        return new ResponseEntity<>(myUsers,
+//                HttpStatus.OK);
+//    }
 
 
     // http://localhost:2019/users/user/7
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/user/{userId}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserById(HttpServletRequest request,
                                          @PathVariable
-                                                 Long userId) {
+                                                 Long userId, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         User u = userService.findUserById(userId);
+
+        User currentUser = userService.findByName(authentication.getName());
+
+        List<Userpost> userposts = u.getUserposts();
+        for (Userpost up : userposts) {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+        }
+
+
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
@@ -124,11 +160,22 @@ public class UserController {
             produces = {"application/json"})
     public ResponseEntity<?> getUserByName(HttpServletRequest request,
                                            @PathVariable
-                                                   String userName) {
+                                                   String userName, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         User u = userService.findByName(userName);
+
+        User currentUser = userService.findByName(authentication.getName());
+
+        List<Userpost> userposts = u.getUserposts();
+        for (Userpost up : userposts) {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+        }
+
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
@@ -156,28 +203,41 @@ public class UserController {
                                                      String userName,
                                              @PageableDefault(page = 0,
                                                      size = 5)
-                                                     Pageable pageable) {
+                                                     Pageable pageable, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         List<User> u = userService.findByNameContaining(userName,
                 pageable);
+
+
+        User currentUser = userService.findByName(authentication.getName());
+        for (User u1 : u) {
+            List<Userpost> userposts = u1.getUserposts();
+            for (Userpost up : userposts) {
+                boolean checkMatch = userpostService.checkMatch(currentUser, up);
+                if (checkMatch == true) {
+                    up.setVoted(true);
+                }
+            }
+        }
+
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
 
     // http://localhost:2019/users/getusername
-    @GetMapping(value = "/getusername",
-            produces = {"application/json"})
-    @ResponseBody
-    public ResponseEntity<?> getCurrentUserName(HttpServletRequest request,
-                                                Authentication authentication) {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        return new ResponseEntity<>(authentication.getPrincipal(),
-                HttpStatus.OK);
-    }
+//    @GetMapping(value = "/getusername",
+//            produces = {"application/json"})
+//    @ResponseBody
+//    public ResponseEntity<?> getCurrentUserName(HttpServletRequest request,
+//                                                Authentication authentication) {
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+//        return new ResponseEntity<>(authentication.getPrincipal(),
+//                HttpStatus.OK);
+//    }
 
     // http://localhost:2019/users/getuserinfo
     @GetMapping(value = "/getuserinfo",
@@ -187,9 +247,17 @@ public class UserController {
 
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
-        System.out.println("1st spot");
         User u = userService.findByName(authentication.getName());
-        System.out.println("2nd spot");
+
+        List<Userpost> userposts = u.getUserposts();
+        for (Userpost up : userposts) {
+            boolean checkMatch = userpostService.checkMatch(u, up);
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+        }
+
+
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
     }
@@ -260,6 +328,16 @@ public class UserController {
 //        HttpSession session = request.getSession(true);
 //        session.setAttribute("SPRING_SECURITY_CONTEXT", sc);
 
+        List<Userpost> userposts = currentUser.getUserposts();
+
+        for (Userpost up : userposts) {
+            boolean checkMatch = userpostService.checkMatch(currentUser, up);
+            if (checkMatch == true) {
+                up.setVoted(true);
+            }
+        }
+
+
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
@@ -303,19 +381,19 @@ public class UserController {
 
 
     // http://localhost:2019/users/user/15/role/2
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PostMapping("/user/{userid}/role/{roleid}")
-    public ResponseEntity<?> postUserRoleByIds(HttpServletRequest request,
-                                               @PathVariable
-                                                       long userid,
-                                               @PathVariable
-                                                       long roleid) {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        userService.addUserRole(userid,
-                roleid);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    @PostMapping("/user/{userid}/role/{roleid}")
+//    public ResponseEntity<?> postUserRoleByIds(HttpServletRequest request,
+//                                               @PathVariable
+//                                                       long userid,
+//                                               @PathVariable
+//                                                       long roleid) {
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+//        userService.addUserRole(userid,
+//                roleid);
+//
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 }

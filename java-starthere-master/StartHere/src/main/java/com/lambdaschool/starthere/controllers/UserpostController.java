@@ -41,15 +41,12 @@ public class UserpostController {
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
 
-
         List<Userpost> allUserposts = userpostService.findAll();
 
         User user = userService.findByName(authentication.getName());
-        for(Userpost up: allUserposts)
-        {
+        for (Userpost up : allUserposts) {
             boolean checkMatch = userpostService.checkMatch(user, up);
-            if(checkMatch == true)
-            {
+            if (checkMatch == true) {
                 up.setVoted(true);
             }
         }
@@ -69,11 +66,9 @@ public class UserpostController {
         List<Userpost> userposts = userpostService.findByUserName(name);
 
         User user = userService.findByName(authentication.getName());
-        for(Userpost up: userposts)
-        {
+        for (Userpost up : userposts) {
             boolean checkMatch = userpostService.checkMatch(user, up);
-            if(checkMatch == true)
-            {
+            if (checkMatch == true) {
                 up.setVoted(true);
             }
         }
@@ -94,11 +89,9 @@ public class UserpostController {
 
         List<Userpost> userposts = userpostService.findByCurrentLocation(location);
 
-        for(Userpost up: userposts)
-        {
+        for (Userpost up : userposts) {
             boolean checkMatch = userpostService.checkMatch(currentUser, up);
-            if(checkMatch == true)
-            {
+            if (checkMatch == true) {
                 up.setVoted(true);
             }
         }
@@ -120,11 +113,9 @@ public class UserpostController {
         List<Userpost> userposts = userpostService.findByNotUserid(id);
 
 
-        for(Userpost up: userposts)
-        {
+        for (Userpost up : userposts) {
             boolean checkMatch = userpostService.checkMatch(currentUser, up);
-            if(checkMatch == true)
-            {
+            if (checkMatch == true) {
                 up.setVoted(true);
             }
         }
@@ -149,12 +140,10 @@ public class UserpostController {
             Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));
 
 
-
-                boolean checkMatch = userpostService.checkMatch(currentUser, returnPost);
-                if(checkMatch == true)
-                {
-                    returnPost.setVoted(true);
-                }
+            boolean checkMatch = userpostService.checkMatch(currentUser, returnPost);
+            if (checkMatch == true) {
+                returnPost.setVoted(true);
+            }
 
 
             return new ResponseEntity<>(returnPost, HttpStatus.OK);
@@ -165,7 +154,7 @@ public class UserpostController {
     }
 
     @PutMapping(value = "/post/increment/{userpostid}")
-    public ResponseEntity<?> incrementPostCount(@PathVariable long userpostid, HttpServletRequest request,Authentication authentication) {
+    public ResponseEntity<?> incrementPostCount(@PathVariable long userpostid, HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
         User currentUser = new User();
@@ -176,7 +165,7 @@ public class UserpostController {
 
         currentPost = userpostService.increment(currentUser, currentPost);
 
-            return new ResponseEntity<>(currentPost, HttpStatus.OK);
+        return new ResponseEntity<>(currentPost, HttpStatus.OK);
     }
 
     @PutMapping(value = "/post/decrement/{userpostid}")
@@ -208,8 +197,7 @@ public class UserpostController {
         Userpost up = userpostService.findUserpostById(userpostid);
         User user = userService.findByName(authentication.getName());
         boolean checkMatch = userpostService.checkMatch(user, up);
-        if(checkMatch == true)
-        {
+        if (checkMatch == true) {
             up.setVoted(true);
         }
 
@@ -244,9 +232,9 @@ public class UserpostController {
             consumes = {"application/json"},
             produces = {"application/json"})
     public ResponseEntity<?> addNewUserpost(HttpServletRequest request,
-                                        @Valid
-                                        @RequestBody
-                                                Userpost newuserpost, Authentication authentication) throws URISyntaxException {
+                                            @Valid
+                                            @RequestBody
+                                                    Userpost newuserpost, Authentication authentication) throws URISyntaxException {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
