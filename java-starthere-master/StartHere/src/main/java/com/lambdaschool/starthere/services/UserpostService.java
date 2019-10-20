@@ -23,6 +23,8 @@ public interface UserpostService {
 
     boolean checkMatch(User user, Userpost userpost);
 
+    int getCount(Userpost userpost);
+
     void delete(long id);
 //    User user, String title, long zip, String line1, String imageurl
     Userpost update(Userpost userpost, long userpostid, boolean isAdmin);

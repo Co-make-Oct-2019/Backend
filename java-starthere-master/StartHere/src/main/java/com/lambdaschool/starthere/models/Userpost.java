@@ -1,5 +1,6 @@
 package com.lambdaschool.starthere.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
 import io.swagger.annotations.ApiModelProperty;
@@ -60,6 +61,7 @@ public class Userpost extends Auditable {
     @OneToMany(mappedBy = "userpost",
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"userpost", "postvotes"})
+    @JsonIgnore
     private List<Postvotes> postvotes = new ArrayList<>();
 
 //

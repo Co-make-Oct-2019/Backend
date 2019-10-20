@@ -120,14 +120,25 @@ public class UserpostServiceImplementation implements UserpostService {
     public Userpost increment(User user, Userpost userpost)
     {
         boolean matching = checkMatch(user, userpost);
-        if(matching = true)
+        System.out.println("Matching from increment: " + matching);
+        if(matching != true)
         {
-            System.out.println("IT MATCHES");
-            userpost.setVoted(true);
+            userpostrepos.addVote(user.getUserid(), userpost.getUserpostid());
+            System.out.println("Vote added");
+
         } else {
-            System.out.println("IT DOES NOT MATCH");
-            userpost.setVoted(false);
+            System.out.println("You already upvoted this post");
+
         }
+        getCount(userpost);
+        userpost.setVoted(true);
         return userpost;
+    }
+
+    @Override
+    public int getCount(Userpost userpost) {
+        int myCount =  userpostrepos.getCount(userpost.getUserpostid());
+        System.out.println("COUNT: " + myCount);
+        return myCount;
     }
 }

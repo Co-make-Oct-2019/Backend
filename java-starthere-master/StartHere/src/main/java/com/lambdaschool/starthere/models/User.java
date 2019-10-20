@@ -58,6 +58,7 @@ public class User extends Auditable
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user", "postvotes"})
+    @JsonIgnore
     private List<Postvotes> postvotes = new ArrayList<>();
 
 
@@ -66,7 +67,7 @@ public class User extends Auditable
         @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL,
                orphanRemoval = true)
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties({"user", "postvotes"})
     private List<Userpost> userposts = new ArrayList<>();
 
     public User()
