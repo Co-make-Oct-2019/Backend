@@ -130,7 +130,8 @@ public class UserpostServiceImplementation implements UserpostService {
             System.out.println("You already upvoted this post");
 
         }
-        getCount(userpost);
+        int myCount = getCount(userpost);
+        userpost.setCount(myCount);
         userpost.setVoted(true);
         return userpost;
     }
