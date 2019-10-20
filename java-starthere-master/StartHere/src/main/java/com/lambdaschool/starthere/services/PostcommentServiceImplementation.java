@@ -74,30 +74,30 @@ public class PostcommentServiceImplementation implements PostcommentService{
     }
 
     @Override
-    public Postcomment update(long postcommentid, String title, String line1, String imageurl, boolean isAdmin) {
+    public Postcomment update(Postcomment newPostcomment, long postcommentid) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (postcommentrepos.findById(postcommentid)
                 .isPresent())
         {
-            if (postcommentrepos.findById(postcommentid)
-                    .get()
-                    .getUser()
-                    .getUsername()
-                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
-            {
-                Postcomment postcomment = findPostcommentById(postcommentid);
-                postcomment.setTitle(title);
-                postcomment.setImageurl(imageurl);
-                postcomment.setLine1(line1);
-                return postcommentrepos.save(postcomment);
+
+            Postcomment postcommentToEdit = findPostcommentById(postcommentid);
+
+            if (newPostcomment.getTitle() != null) {
+                postcommentToEdit.setTitle(newPostcomment.getTitle());
+            }
+            if (newPostcomment.getImageurl() != null) {
+                postcommentToEdit.setImageurl(newPostcomment.getImageurl());
+            }
+            if (newPostcomment.getLine1() != null) {
+                postcommentToEdit.setLine1(newPostcomment.getLine1());
+            }
+
+                return postcommentrepos.save(postcommentToEdit);
             } else
             {
                 throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
             }
-        } else
-        {
-            throw new ResourceNotFoundException("Useremail with id " + postcommentid + " Not Found!");
-        }
+
     }
 }

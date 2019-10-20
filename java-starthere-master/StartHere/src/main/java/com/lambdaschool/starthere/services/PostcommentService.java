@@ -19,9 +19,5 @@ public interface PostcommentService {
                 boolean isAdmin);
 
     //may need user id also to authenticate
-    Postcomment update(long postcommentid,
-                    String title,
-                    String line1,
-                    String imageurl,
-                    boolean isAdmin);
+    Postcomment update(Postcomment postcomment, long postcommentid);
 }

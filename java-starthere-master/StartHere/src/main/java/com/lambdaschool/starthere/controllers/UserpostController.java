@@ -2,10 +2,8 @@ package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
 import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.Useremail;
 import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.services.UserService;
-import com.lambdaschool.starthere.services.UseremailService;
 import com.lambdaschool.starthere.services.UserpostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,8 +98,7 @@ public class UserpostController {
         currentPost = userpostService.findUserpostById(userpostid);
         currentUser = userService.findByName(authentication.getName());
 
-        if(currentPost.getUser().getUserid()==currentUser.getUserid())
-        {
+        if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
             Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));
 
             return new ResponseEntity<>(returnPost, HttpStatus.OK);
@@ -109,18 +106,14 @@ public class UserpostController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-
-
     }
 
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/post/{userpostid}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserPostById(HttpServletRequest request,
-                                              @PathVariable
-                                                      Long userpostid)
-    {
+                                             @PathVariable
+                                                     Long userpostid) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
