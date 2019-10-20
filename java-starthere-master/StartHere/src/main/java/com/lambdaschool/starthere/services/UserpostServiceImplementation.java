@@ -15,7 +15,7 @@ import java.util.List;
 
 @Loggable
 @Service(value = "userpostService")
-public class UserpostServiceImplementation implements UserpostService{
+public class UserpostServiceImplementation implements UserpostService {
 
     @Autowired
     private UserpostRepository userpostrepos;
@@ -60,7 +60,7 @@ public class UserpostServiceImplementation implements UserpostService{
     @Override
     public List<Userpost> findByUserName(String username) {
 
-            return userpostrepos.findAllByUser_Username(username.toLowerCase());
+        return userpostrepos.findAllByUser_Username(username.toLowerCase());
 
     }
 
@@ -72,23 +72,19 @@ public class UserpostServiceImplementation implements UserpostService{
     @Override
     public void delete(long id, boolean isAdmin) {
         if (userpostrepos.findById(id)
-                .isPresent())
-        {
+                .isPresent()) {
             Authentication authentication = SecurityContextHolder.getContext()
                     .getAuthentication();
             if (userpostrepos.findById(id)
                     .get()
                     .getUser()
                     .getUsername()
-                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
-            {
+                    .equalsIgnoreCase(authentication.getName()) || isAdmin) {
                 userpostrepos.deleteById(id);
-            } else
-            {
+            } else {
                 throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
             }
-        } else
-        {
+        } else {
             throw new ResourceNotFoundException("Useremail with id " + id + " Not Found!");
         }
     }
@@ -96,42 +92,25 @@ public class UserpostServiceImplementation implements UserpostService{
     @Override
     public Userpost update(Userpost userpost, long userpostid, boolean isAdmin) {
 
-//        Authentication authentication = SecurityContextHolder.getContext()
-//                .getAuthentication();
         if (userpostrepos.findById(userpostid)
-                .isPresent())
-        {
-//            if (userpostrepos.findById(userpostid)
-//                    .get()
-//                    .getUser()
-//                    .getUsername()
-//                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
-//            {
-                Userpost userpostToEdit = findUserpostById(userpostid);
+                .isPresent()) {
 
-                if (userpost.getTitle() != null){
-                    userpostToEdit.setTitle(userpost.getTitle());
-                }
-            if (userpost.getLocation() != null){
+            Userpost userpostToEdit = findUserpostById(userpostid);
+
+            if (userpost.getTitle() != null) {
+                userpostToEdit.setTitle(userpost.getTitle());
+            }
+            if (userpost.getLocation() != null) {
                 userpostToEdit.setLocation(userpost.getLocation());
             }
-            if (userpost.getLine1() != null){
+            if (userpost.getLine1() != null) {
                 userpostToEdit.setLine1(userpost.getLine1());
             }
-            if (userpost.getImageurl() != null){
+            if (userpost.getImageurl() != null) {
                 userpostToEdit.setImageurl(userpost.getImageurl());
             }
-
-
-
-                return userpostrepos.save(userpostToEdit);
-
-//            } else
-//            {
-//                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-//            }
-        } else
-        {
+            return userpostrepos.save(userpostToEdit);
+        } else {
             throw new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!");
         }
     }
