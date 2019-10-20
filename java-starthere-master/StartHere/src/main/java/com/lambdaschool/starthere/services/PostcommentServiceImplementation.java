@@ -16,7 +16,7 @@ import java.util.List;
 
 @Loggable
 @Service(value = "postcommentService")
-public class PostcommentServiceImplementation implements PostcommentService{
+public class PostcommentServiceImplementation implements PostcommentService {
 
     @Autowired
     private PostcommentRepository postcommentrepos;
@@ -40,35 +40,19 @@ public class PostcommentServiceImplementation implements PostcommentService{
     public List<Postcomment> findByUserName(String username, boolean isAdmin) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
-        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin)
-        {
+        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin) {
             return postcommentrepos.findAllByUser_Username(username.toLowerCase());
-        } else
-        {
+        } else {
             throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
         }
     }
 
     @Override
-    public void delete(long id, boolean isAdmin) {
+    public void delete(long id) {
         if (postcommentrepos.findById(id)
-                .isPresent())
-        {
-            Authentication authentication = SecurityContextHolder.getContext()
-                    .getAuthentication();
-            if (postcommentrepos.findById(id)
-                    .get()
-                    .getUser()
-                    .getUsername()
-                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
-            {
-                postcommentrepos.deleteById(id);
-            } else
-            {
-                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-            }
-        } else
-        {
+                .isPresent()) {
+            postcommentrepos.deleteById(id);
+        } else {
             throw new ResourceNotFoundException("Postcomment with id " + id + " Not Found!");
         }
     }
@@ -78,8 +62,7 @@ public class PostcommentServiceImplementation implements PostcommentService{
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (postcommentrepos.findById(postcommentid)
-                .isPresent())
-        {
+                .isPresent()) {
 
             Postcomment postcommentToEdit = findPostcommentById(postcommentid);
 
@@ -93,11 +76,10 @@ public class PostcommentServiceImplementation implements PostcommentService{
                 postcommentToEdit.setLine1(newPostcomment.getLine1());
             }
 
-                return postcommentrepos.save(postcommentToEdit);
-            } else
-            {
-                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-            }
+            return postcommentrepos.save(postcommentToEdit);
+        } else {
+            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
+        }
 
     }
 }

@@ -108,7 +108,6 @@ public class UserpostController {
         }
     }
 
-    //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/post/{userpostid}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserPostById(HttpServletRequest request,
@@ -124,9 +123,8 @@ public class UserpostController {
 
     @DeleteMapping("/post/{userpostid}")
     public ResponseEntity<?> deleteUserpostById(HttpServletRequest request,
-                                                 @PathVariable
-                                                         long userpostid, Authentication authentication)
-    {
+                                                @PathVariable
+                                                        long userpostid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
@@ -137,7 +135,6 @@ public class UserpostController {
         currentPost = userpostService.findUserpostById(userpostid);
 
 
-
         if (currentPost.getUser().getUserid() == currentUser.getUserid()) {
             userpostService.delete(userpostid);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -145,15 +142,5 @@ public class UserpostController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-
-
-
-
-
-
-
     }
-
-
 }

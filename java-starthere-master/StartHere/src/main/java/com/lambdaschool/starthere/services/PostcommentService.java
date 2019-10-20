@@ -15,8 +15,7 @@ public interface PostcommentService {
 
     //Need to find by post id?
 
-    void delete(long id,
-                boolean isAdmin);
+    void delete(long id);
 
     //may need user id also to authenticate
     Postcomment update(Postcomment postcomment, long postcommentid);

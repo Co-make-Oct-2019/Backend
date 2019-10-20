@@ -32,7 +32,7 @@ public class PostcommentController {
     @Autowired
     PostcommentService postcommentService;
 
-    @PutMapping(value = "/edit/{postcommentid}")
+    @PutMapping(value = "/comment/{postcommentid}")
     public ResponseEntity<?> updatePost(@PathVariable long postcommentid, HttpServletRequest request,
                                         @RequestBody
                                                 Postcomment updatedPostcomment, Authentication authentication) {
@@ -55,4 +55,30 @@ public class PostcommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/comment/{postcommentid}")
+    public ResponseEntity<?> deletePostcommentById(HttpServletRequest request,
+                                                @PathVariable
+                                                        long postcommentid, Authentication authentication) {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User currentUser = new User();
+        currentUser = userService.findByName(authentication.getName());
+
+        Postcomment currentPostcomment = new Postcomment();
+        currentPostcomment = postcommentService.findPostcommentById(postcommentid);
+
+
+        if (currentPostcomment.getUser().getUserid() == currentUser.getUserid()) {
+            postcommentService.delete(postcommentid);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }
