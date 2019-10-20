@@ -201,11 +201,18 @@ public class UserpostController {
             produces = {"application/json"})
     public ResponseEntity<?> getUserPostById(HttpServletRequest request,
                                              @PathVariable
-                                                     Long userpostid) {
+                                                     Long userpostid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
         Userpost up = userpostService.findUserpostById(userpostid);
+        User user = userService.findByName(authentication.getName());
+        boolean checkMatch = userpostService.checkMatch(user, up);
+        if(checkMatch == true)
+        {
+            up.setVoted(true);
+        }
+
         return new ResponseEntity<>(up,
                 HttpStatus.OK);
     }
