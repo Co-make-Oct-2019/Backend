@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @Loggable
 @RestController
@@ -26,8 +25,6 @@ import java.util.List;
 public class PostcommentController {
     private static final Logger logger = LoggerFactory.getLogger(UseremailController.class);
 
-//    @Autowired
-//    UserpostService userpostService;
 
     @Autowired
     UserService userService;
@@ -64,7 +61,6 @@ public class PostcommentController {
             if (checkMatch == true) {
                 up.setVoted(true);
             }
-
 
             return new ResponseEntity<>(returnPostcomment, HttpStatus.OK);
 
@@ -124,10 +120,7 @@ public class PostcommentController {
             up.setVoted(true);
         }
 
-
         return new ResponseEntity<>(newpostcomment,
                 HttpStatus.CREATED);
     }
-
-
 }
