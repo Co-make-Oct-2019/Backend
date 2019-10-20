@@ -1,7 +1,10 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.Role;
 import com.lambdaschool.starthere.models.User;
+import com.lambdaschool.starthere.models.UserRoles;
+import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,6 +35,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Loggable
@@ -42,6 +46,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     AuthenticationManager authManager;
@@ -183,7 +190,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+
     @PostMapping(value = "/user",
             consumes = {"application/json"},
             produces = {"application/json"})
@@ -194,8 +201,15 @@ public class UserController {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
+        Role role = roleService.findByName("admin");
+        ArrayList<UserRoles> newRoles = new ArrayList<>();
+        newRoles.add(new UserRoles(newuser,
+                role));
+        newuser.setUserroles(newRoles);
+
         newuser = userService.save(newuser);
 
+        
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()

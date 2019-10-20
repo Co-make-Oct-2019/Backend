@@ -126,7 +126,7 @@ public class SeedData implements CommandLineRunner
 
             users = new ArrayList<>();
             users.add(new UserRoles(new User(),
-                                    r2));
+                                    r1));
             fakeUser = new User(nameFaker.zelda().character(),
                                 "password",
                                 users, "Miami");

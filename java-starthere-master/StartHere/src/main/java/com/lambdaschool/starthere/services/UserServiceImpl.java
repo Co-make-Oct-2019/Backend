@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserDetailsService,
         newUser.setPasswordNoEncrypt(user.getPassword());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
+
         for (UserRoles ur : user.getUserroles()) {
             long id = ur.getRole()
                     .getRoleid();
