@@ -94,31 +94,43 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
-    public Userpost update(long userpostid, String title, String location, String line1, String imageurl, boolean isAdmin) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public Userpost update(Userpost userpost, long userpostid, boolean isAdmin) {
+
+//        Authentication authentication = SecurityContextHolder.getContext()
+//                .getAuthentication();
         if (userpostrepos.findById(userpostid)
                 .isPresent())
         {
-            if (userpostrepos.findById(userpostid)
-                    .get()
-                    .getUser()
-                    .getUsername()
-                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
-            {
-                Userpost userpost = findUserpostById(userpostid);
-                userpost.setTitle(title);
-                userpost.setLocation(location);
-                userpost.setLine1(line1);
-                userpost.setImageurl(imageurl);
-                return userpostrepos.save(userpost);
-            } else
-            {
-                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
+//            if (userpostrepos.findById(userpostid)
+//                    .get()
+//                    .getUser()
+//                    .getUsername()
+//                    .equalsIgnoreCase(authentication.getName()) || isAdmin)
+//            {
+                Userpost userpostToEdit = findUserpostById(userpostid);
+
+                if (userpost.getTitle() != null){
+                    userpostToEdit.setTitle(userpost.getTitle());
+                }
+            if (userpost.getLocation() != null){
+                userpostToEdit.setLocation(userpost.getLocation());
             }
+            if (userpost.getLine1() != null){
+                userpostToEdit.setLine1(userpost.getLine1());
+            }
+            if (userpost.getImageurl() != null){
+                userpostToEdit.setImageurl(userpost.getImageurl());
+            }
+
+
+                return userpostrepos.save(userpost);
+//            } else
+//            {
+//                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
+//            }
         } else
         {
-            throw new ResourceNotFoundException("Useremail with id " + userpostid + " Not Found!");
+            throw new ResourceNotFoundException("Userpost with id " + userpostid + " Not Found!");
         }
     }
 }

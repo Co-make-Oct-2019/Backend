@@ -31,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 
 @Loggable
@@ -223,6 +224,8 @@ public class UserController {
         User updatedUser = userService.update(updateUser,
                 id,
                 request.isUserInRole("ADMIN"));
+
+
 
 //        UsernamePasswordAuthenticationToken authReq
 //                = new UsernamePasswordAuthenticationToken(updatedUser.getUsername(), updatedUser.getPassword(), updatedUser.getAuthority());

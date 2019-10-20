@@ -122,12 +122,12 @@ public class UserServiceImpl implements UserDetailsService,
     public User update(User user,
                        long id,
                        boolean isAdmin) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+//        Authentication authentication = SecurityContextHolder.getContext()
+//                .getAuthentication();
 
-        User authenticatedUser = userrepos.findByUsername(authentication.getName());
+//        User authenticatedUser = userrepos.findByUsername(authentication.getName());
 
-        if (id == authenticatedUser.getUserid() || isAdmin) {
+//        if (id == authenticatedUser.getUserid() || isAdmin) {
             User currentUser = findUserById(id);
 
 //            if (user.getUsername() != null) {
@@ -149,9 +149,9 @@ public class UserServiceImpl implements UserDetailsService,
             }
 
             return userrepos.save(currentUser);
-        } else {
-            throw new ResourceNotFoundException(id + " Not current user");
-        }
+//        } else {
+//            throw new ResourceNotFoundException(id + " Not current user");
+//        }
     }
 
     @Transactional

@@ -22,10 +22,5 @@ public interface UserpostService {
     void delete(long id,
                 boolean isAdmin);
 //    User user, String title, long zip, String line1, String imageurl
-    Userpost update(long userpostid,
-                     String title,
-                     String location,
-                     String line1,
-                     String imageurl,
-                     boolean isAdmin);
+    Userpost update(Userpost userpost, long userpostid, boolean isAdmin);
 }

@@ -14,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -89,6 +86,32 @@ public class UserpostController {
         List<Userpost> userposts = userpostService.findByNotUserid(id);
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/post/{userpostid}")
+    public ResponseEntity<?> updatePost(@PathVariable long userpostid, HttpServletRequest request,
+                                        @RequestBody
+                                                Userpost updatedPost, Authentication authentication) {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User currentUser = new User();
+        Userpost currentPost = new Userpost();
+        currentPost = userpostService.findUserpostById(userpostid);
+        currentUser = userService.findByName(authentication.getName());
+
+        if(currentPost.getUser().getUserid()==currentUser.getUserid())
+        {
+            Userpost returnPost = userpostService.update(updatedPost, userpostid, request.isUserInRole("ADMIN"));
+
+            return new ResponseEntity<>(returnPost, HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+
     }
 
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
