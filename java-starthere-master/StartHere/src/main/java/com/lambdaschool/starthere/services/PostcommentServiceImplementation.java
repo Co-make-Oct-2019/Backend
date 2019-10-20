@@ -3,6 +3,7 @@ package com.lambdaschool.starthere.services;
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
 import com.lambdaschool.starthere.logging.Loggable;
 import com.lambdaschool.starthere.models.Postcomment;
+import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.repository.PostcommentRepository;
 import com.lambdaschool.starthere.repository.UserpostRepository;
@@ -80,6 +81,17 @@ public class PostcommentServiceImplementation implements PostcommentService {
         } else {
             throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
         }
+    }
 
+    @Override
+    public Postcomment save(Postcomment postcomment, User user, Userpost userpost) {
+        Postcomment newPostcomment = new Postcomment();
+        newPostcomment.setLine1(postcomment.getLine1());
+        newPostcomment.setImageurl(postcomment.getImageurl());
+        newPostcomment.setTitle(postcomment.getTitle());
+        newPostcomment.setUser(user);
+        newPostcomment.setUserpost(userpost);
+
+        return postcommentrepos.save(newPostcomment);
     }
 }

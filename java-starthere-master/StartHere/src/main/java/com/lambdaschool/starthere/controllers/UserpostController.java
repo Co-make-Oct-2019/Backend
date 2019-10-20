@@ -165,13 +165,6 @@ public class UserpostController {
 
         newuserpost = userpostService.save(newuserpost, user);
 
-        // set the location header for the newly created resource
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{userid}")
-//                .buildAndExpand(newuser.getUserid())
-//                .toUri();
-//        responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(newuserpost,
                 HttpStatus.CREATED);

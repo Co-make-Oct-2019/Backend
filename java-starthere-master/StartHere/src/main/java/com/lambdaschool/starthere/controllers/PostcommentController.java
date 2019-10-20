@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.net.URISyntaxException;
 
 @Loggable
 @RestController
@@ -31,6 +33,9 @@ public class PostcommentController {
 
     @Autowired
     PostcommentService postcommentService;
+
+    @Autowired
+    UserpostService userpostService;
 
     @PutMapping(value = "/comment/{postcommentid}")
     public ResponseEntity<?> updatePost(@PathVariable long postcommentid, HttpServletRequest request,
@@ -58,8 +63,8 @@ public class PostcommentController {
 
     @DeleteMapping("/comment/{postcommentid}")
     public ResponseEntity<?> deletePostcommentById(HttpServletRequest request,
-                                                @PathVariable
-                                                        long postcommentid, Authentication authentication) {
+                                                   @PathVariable
+                                                           long postcommentid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
@@ -79,6 +84,27 @@ public class PostcommentController {
         }
     }
 
+    @PostMapping(value = "/comment/{userpostid}",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewPostcomment(@PathVariable long userpostid, HttpServletRequest request,
+                                               @Valid
+                                               @RequestBody
+                                                       Postcomment newpostcomment, Authentication authentication) throws URISyntaxException {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User user = new User();
+        user = userService.findByName(authentication.getName());
+
+        Userpost userpost = new Userpost();
+        userpost = userpostService.findUserpostById(userpostid);
+
+        newpostcomment = postcommentService.save(newpostcomment, user, userpost);
+
+        return new ResponseEntity<>(newpostcomment,
+                HttpStatus.CREATED);
+    }
 
 
 }
