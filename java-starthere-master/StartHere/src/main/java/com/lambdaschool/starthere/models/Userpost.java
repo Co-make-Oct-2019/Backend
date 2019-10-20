@@ -47,9 +47,9 @@ public class Userpost extends Auditable {
     private User user;
 
 
-    @ApiModelProperty(name = "zip", value = "Zip code", example = "96021")
+    @ApiModelProperty(name = "location", value = "City", example = "Los Angeles")
     @Column(nullable = false)
-    private long zip;
+    private String location;
 //
 //    @ApiModelProperty(name = "votes", value = "Number of votes", example = "12")
 //    private long votes;
@@ -58,20 +58,20 @@ public class Userpost extends Auditable {
 
     }
 
-    public Userpost(User user, String title, long zip, String line1, String imageurl) {
+    public Userpost(User user, String title, String location, String line1, String imageurl) {
 
         this.user = user;
         this.title = title;
-        this.zip = zip;
+        this.location = location;
         this.line1 = line1;
         this.imageurl = imageurl;
 
     }
 
-    public Userpost(User user, String title, long zip, String line1) {
+    public Userpost(User user, String title, String location, String line1) {
         this.user = user;
         this.title = title;
-        this.zip = zip;
+        this.location = location;
         this.line1 = line1;
     }
 
@@ -123,12 +123,12 @@ public class Userpost extends Auditable {
         this.line1 = line1;
     }
 
-    public long getZip() {
-        return zip;
+    public String getLocation() {
+        return location;
     }
 
-    public void setZip(long zip) {
-        this.zip = zip;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
 //    public long getVotes() {

@@ -26,38 +26,9 @@ public class UserpostServiceImplementation implements UserpostService{
         Userpost newUserpost = new Userpost();
         newUserpost.setImageurl(userpost.getImageurl());
         newUserpost.setLine1(userpost.getLine1());
-        newUserpost.setZip(userpost.getZip());
+        newUserpost.setLocation(userpost.getLocation());
         newUserpost.setTitle(userpost.getTitle());
-//        newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
 
-//        ArrayList<UserRoles> newRoles = new ArrayList<>();
-//        for (UserRoles ur : user.getUserroles()) {
-//            long id = ur.getRole()
-//                    .getRoleid();
-//            Role role = rolerepos.findById(id)
-//                    .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
-//            newRoles.add(new UserRoles(newUser,
-//                    ur.getRole()));
-//        }
-//        newUser.setUserroles(newRoles);
-
-//        for (Userpost up : user.getUserposts()) {
-//
-//            newUser.getUserposts()
-//                    .add(new Userpost(newUser,
-//                            up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
-//        }
-
-//        for (Useremail ue : user.getUseremails())
-//        {
-//            newUser.getUseremails()
-//                   .add(new Useremail(newUser,
-//                                      ue.getUseremail()));
-//        }
-        System.out.println("MEOW MOEW *********************************************************");
-        System.out.println("MEOW MOEW *********************************************************");
-        System.out.println("MEOW MOEW *********************************************************");
-        System.out.println("MEOW MOEW *********************************************************");
         return userpostrepos.save(newUserpost);
     }
 
@@ -77,16 +48,20 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
+    public List<Userpost> findByCurrentLocation(String location) {
+//        return userpostrepos.findAllByLocation(location);
+        List<Userpost> list = new ArrayList<>();
+        userpostrepos.findAllByLocation(location)
+                .iterator()
+                .forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
     public List<Userpost> findByUserName(String username) {
-//        Authentication authentication = SecurityContextHolder.getContext()
-//                .getAuthentication();
-//        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin)
-//        {
+
             return userpostrepos.findAllByUser_Username(username.toLowerCase());
-//        } else
-//        {
-//            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-//        }
+
     }
 
     @Override
@@ -119,7 +94,7 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
-    public Userpost update(long userpostid, String title, long zip, String line1, String imageurl, boolean isAdmin) {
+    public Userpost update(long userpostid, String title, String location, String line1, String imageurl, boolean isAdmin) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (userpostrepos.findById(userpostid)
@@ -133,7 +108,7 @@ public class UserpostServiceImplementation implements UserpostService{
             {
                 Userpost userpost = findUserpostById(userpostid);
                 userpost.setTitle(title);
-                userpost.setZip(zip);
+                userpost.setLocation(location);
                 userpost.setLine1(line1);
                 userpost.setImageurl(imageurl);
                 return userpostrepos.save(userpost);

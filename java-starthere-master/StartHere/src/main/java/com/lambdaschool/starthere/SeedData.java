@@ -58,10 +58,10 @@ public class SeedData implements CommandLineRunner
                            admins, "Miami");
                 u1.getUserposts()
           .add(new Userpost(u1,
-                             "We have too many potholes!", 97222, "Someone please help fix these potholes", nameFaker.internet().avatar()));
+                             "We have too many potholes!", "Miami", "Someone please help fix these potholes", nameFaker.internet().avatar()));
         u1.getUserposts()
                 .add(new Userpost(u1,
-            "The park is too muddy", 97222, "If we planted grass, it would help with all the mud. Then it would be fun to play there.", nameFaker.internet().avatar()));
+            "The park is too muddy", "Miami", "If we planted grass, it would help with all the mud. Then it would be fun to play there.", nameFaker.internet().avatar()));
 //        User user, String title, long zip, String line1, String imageurl
 
 
@@ -97,10 +97,10 @@ public class SeedData implements CommandLineRunner
 
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", 97222, "I think he fell in a pothole"));
+                        "I lost my dog!", "Miami", "I think he fell in a pothole"));
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", 97222, "His name is Joe"));
+                        "I lost my dog!", "Miami", "His name is Joe"));
 //        u2.getUseremails()
 //          .add(new Useremail(u2,
 //                             "cinnamon@mymail.local"));
@@ -123,7 +123,7 @@ public class SeedData implements CommandLineRunner
 
         u3.getUserposts()
                 .add(new Userpost(u3,
-                        "Town center mural", 97222, "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().avatar()));
+                        "Town center mural", "Miami", "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().avatar()));
 //        u3.getUseremails()
 //          .add(new Useremail(u3,
 //                             "barnbarn@email.local"));
@@ -167,7 +167,7 @@ public class SeedData implements CommandLineRunner
 
             fakeUser.getUserposts()
                     .add(new Userpost(fakeUser,
-                            nameFaker.chuckNorris().fact(), 97222, nameFaker.gameOfThrones().quote(), nameFaker.internet().avatar()));
+                            nameFaker.chuckNorris().fact(), "Portland", nameFaker.gameOfThrones().quote(), nameFaker.internet().avatar()));
             User newUser = new User();
 
             newUser = userService.save(fakeUser);

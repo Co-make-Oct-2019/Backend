@@ -61,20 +61,20 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/myposts",
-//            produces = {"application/json"})
-//    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication) {
-//        String name;
-//        name = authentication.getName();
-//        logger.trace(request.getMethod()
-//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-//        User currentUser = userService.findByName(name);
-////        long zipcode = currentUser.getUserid()
-//
-//        List<Userpost> userposts = userpostService.findByUserName(name);
-//        return new ResponseEntity<>(userposts,
-//                HttpStatus.OK);
-//    }
+    @GetMapping(value = "/currentlocation",
+            produces = {"application/json"})
+    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication) {
+        String name;
+        name = authentication.getName();
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+        User currentUser = userService.findByName(name);
+        String location = currentUser.getLocation();
+
+        List<Userpost> userposts = userpostService.findByCurrentLocation(location);
+        return new ResponseEntity<>(userposts,
+                HttpStatus.OK);
+    }
 
     @GetMapping(value = "/otherposts",
             produces = {"application/json"})

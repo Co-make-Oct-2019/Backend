@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserDetailsService,
 
             newUser.getUserposts()
                     .add(new Userpost(newUser,
-                            up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+                            up.getTitle(), up.getLocation(), up.getLine1(), up.getImageurl()));
         }
 
 //        for (Useremail ue : user.getUseremails())
@@ -162,26 +162,11 @@ public class UserServiceImpl implements UserDetailsService,
 
                     currentUser.getUserposts()
                             .add(new Userpost(currentUser,
-                                    up.getTitle(), up.getZip(), up.getLine1(), up.getImageurl()));
+                                    up.getTitle(), up.getLocation(), up.getLine1(), up.getImageurl()));
                 }
             } else {
-                System.out.println("NOPE");
-                System.out.println("NOPE");
-                System.out.println("NOPE");
-                System.out.println("NOPE");
-                System.out.println("NOPE");
-            }
 
-//            if (user.getUseremails()
-//                    .size() > 0)
-//            {
-//                for (Useremail ue : user.getUseremails())
-//                {
-//                    currentUser.getUseremails()
-//                               .add(new Useremail(currentUser,
-//                                                  ue.getUseremail()));
-//                }
-//            }
+            }
 
             return userrepos.save(currentUser);
         } else {

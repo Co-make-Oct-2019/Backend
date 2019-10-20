@@ -15,6 +15,8 @@ public interface UserpostService {
 
     List<Userpost> findByUserName(String username);
 
+    List<Userpost> findByCurrentLocation(String location);
+
     List<Userpost> findByNotUserid(long id);
 
     void delete(long id,
@@ -22,7 +24,7 @@ public interface UserpostService {
 //    User user, String title, long zip, String line1, String imageurl
     Userpost update(long userpostid,
                      String title,
-                     long zip,
+                     String location,
                      String line1,
                      String imageurl,
                      boolean isAdmin);

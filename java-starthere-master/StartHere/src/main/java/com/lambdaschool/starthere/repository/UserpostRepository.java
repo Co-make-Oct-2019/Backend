@@ -11,6 +11,9 @@ public interface UserpostRepository extends PagingAndSortingRepository<Userpost,
 
     List<Userpost> findAllByUser_Username(String name);
 
+    @Query(value = "SELECT * FROM userposts WHERE location = :location", nativeQuery = true)
+    List<Userpost> findAllByLocation(String location);
+
     @Query(value = "SELECT * FROM userposts WHERE userid IS NOT :userid",
             nativeQuery = true)
     List <Userpost> findByNotUserid(long userid);
