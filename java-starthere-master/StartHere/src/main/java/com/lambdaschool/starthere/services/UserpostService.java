@@ -21,6 +21,8 @@ public interface UserpostService {
 
     Userpost increment(User user, Userpost userpost);
 
+    Userpost decrement(User user, Userpost userpost);
+
     boolean checkMatch(User user, Userpost userpost);
 
     int getCount(Userpost userpost);

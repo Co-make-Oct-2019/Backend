@@ -137,6 +137,25 @@ public class UserpostServiceImplementation implements UserpostService {
     }
 
     @Override
+    public Userpost decrement(User user, Userpost userpost)
+    {
+        boolean matching = checkMatch(user, userpost);
+        System.out.println("Matching from increment: " + matching);
+        if(matching == true)
+        {
+            userpostrepos.removeVote(user.getUserid(), userpost.getUserpostid());
+            System.out.println("Vote removed");
+
+        } else {
+            System.out.println("You haven't upvoted this yet");
+        }
+        int myCount = getCount(userpost);
+        userpost.setCount(myCount);
+        userpost.setVoted(false);
+        return userpost;
+    }
+
+    @Override
     public int getCount(Userpost userpost) {
         int myCount =  userpostrepos.getCount(userpost.getUserpostid());
         System.out.println("COUNT: " + myCount);
