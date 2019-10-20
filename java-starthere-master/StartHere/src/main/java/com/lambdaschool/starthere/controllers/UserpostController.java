@@ -39,8 +39,7 @@ public class UserpostController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/allposts",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllUserposts(HttpServletRequest request)
-    {
+    public ResponseEntity<?> listAllUserposts(HttpServletRequest request) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
@@ -51,24 +50,20 @@ public class UserpostController {
 
     @GetMapping(value = "/myposts",
             produces = {"application/json"})
-    public ResponseEntity<?> findUserpostsByUserName(HttpServletRequest request, Authentication authentication)
-    {
+    public ResponseEntity<?> findUserpostsByUserName(HttpServletRequest request, Authentication authentication) {
         String name;
         name = authentication.getName();
-//        System.out.println(name);
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        List<Userpost> userposts = userpostService.findByUserName(name,
-                request.isUserInRole("ADMIN"));
+        List<Userpost> userposts = userpostService.findByUserName(name);
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
 
     @GetMapping(value = "/otherposts",
             produces = {"application/json"})
-    public ResponseEntity<?> findAllOtherUserpostsExceptMine(HttpServletRequest request, Authentication authentication)
-    {
+    public ResponseEntity<?> findAllOtherUserpostsExceptMine(HttpServletRequest request, Authentication authentication) {
 //        String name;
 //        long id = authentication.getName();
         User currentUser = new User();

@@ -78,24 +78,20 @@ public class UserpostServiceImplementation implements UserpostService{
     }
 
     @Override
-    public List<Userpost> findByUserName(String username, boolean isAdmin) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin)
-        {
+    public List<Userpost> findByUserName(String username) {
+//        Authentication authentication = SecurityContextHolder.getContext()
+//                .getAuthentication();
+//        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin)
+//        {
             return userpostrepos.findAllByUser_Username(username.toLowerCase());
-        } else
-        {
-            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-        }
+//        } else
+//        {
+//            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
+//        }
     }
 
     @Override
     public List<Userpost> findByNotUserid(long id) {
-        System.out.println("*****************************************************");
-        System.out.println("*****************************************************");
-        System.out.println("*****************************************************");
-        System.out.println(id);
         return userpostrepos.findByNotUserid(id);
     }
 

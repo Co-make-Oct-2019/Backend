@@ -13,8 +13,7 @@ public interface UserpostService {
 
     Userpost findUserpostById(long id);
 
-    List<Userpost> findByUserName(String username,
-                              boolean isAdmin);
+    List<Userpost> findByUserName(String username);
 
     List<Userpost> findByNotUserid(long id);
 
