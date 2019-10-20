@@ -123,7 +123,9 @@ public class UserpostServiceImplementation implements UserpostService{
             }
 
 
-                return userpostrepos.save(userpost);
+
+                return userpostrepos.save(userpostToEdit);
+
 //            } else
 //            {
 //                throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");

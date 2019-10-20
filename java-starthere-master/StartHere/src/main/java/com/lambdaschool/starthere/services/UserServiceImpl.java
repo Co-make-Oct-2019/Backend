@@ -122,36 +122,24 @@ public class UserServiceImpl implements UserDetailsService,
     public User update(User user,
                        long id,
                        boolean isAdmin) {
-//        Authentication authentication = SecurityContextHolder.getContext()
-//                .getAuthentication();
+        User currentUser = findUserById(id);
 
-//        User authenticatedUser = userrepos.findByUsername(authentication.getName());
+        if (user.getLocation() != null) {
+            currentUser.setLocation(user.getLocation());
+        }
+        if (user.getLine1() != null) {
+            currentUser.setLine1(user.getLine1());
+        }
+        if (user.getImageurl() != null) {
+            currentUser.setImageurl(user.getImageurl());
+        }
 
-//        if (id == authenticatedUser.getUserid() || isAdmin) {
-            User currentUser = findUserById(id);
+        if (user.getPassword() != null) {
+            currentUser.setPasswordNoEncrypt(user.getPassword());
+        }
 
-//            if (user.getUsername() != null) {
-//                currentUser.setUsername(user.getUsername().toLowerCase());
-//            }
-            if (user.getLocation() != null) {
-                currentUser.setLocation(user.getLocation());
-            }
-            if(user.getLine1() != null){
-                currentUser.setLine1(user.getLine1());
-            }
-            if(user.getImageurl() != null)
-            {
-                currentUser.setImageurl(user.getImageurl());
-            }
+        return userrepos.save(currentUser);
 
-            if (user.getPassword() != null) {
-                currentUser.setPasswordNoEncrypt(user.getPassword());
-            }
-
-            return userrepos.save(currentUser);
-//        } else {
-//            throw new ResourceNotFoundException(id + " Not current user");
-//        }
     }
 
     @Transactional
