@@ -32,7 +32,7 @@ public class PostcommentController {
     @Autowired
     PostcommentService postcommentService;
 
-    @PutMapping(value = "/post/{postcommentid}")
+    @PutMapping(value = "/edit/{postcommentid}")
     public ResponseEntity<?> updatePost(@PathVariable long postcommentid, HttpServletRequest request,
                                         @RequestBody
                                                 Postcomment updatedPostcomment, Authentication authentication) {
