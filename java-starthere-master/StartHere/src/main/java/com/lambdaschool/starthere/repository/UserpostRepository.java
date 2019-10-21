@@ -17,7 +17,7 @@ public interface UserpostRepository extends PagingAndSortingRepository<Userpost,
 //    @Query(value = "SELECT * FROM userposts WHERE location = :location", nativeQuery = true)
     List<Userpost> findAllByLocationContainingIgnoreCase(String location);
 
-    @Query(value = "SELECT * FROM userposts WHERE userid IS NOT :userid",
+    @Query(value = "SELECT * FROM userposts WHERE userid <> :userid",
             nativeQuery = true)
     List <Userpost> findByNotUserid(long userid);
 

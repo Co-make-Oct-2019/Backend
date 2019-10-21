@@ -62,6 +62,7 @@ public class UserpostServiceImplementation implements UserpostService {
 
     @Override
     public List<Userpost> findByNotUserid(long id) {
+        System.out.println("HERE");
         return userpostrepos.findByNotUserid(id);
     }
 
