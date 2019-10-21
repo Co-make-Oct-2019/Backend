@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,8 +29,9 @@ public class Userpost extends Auditable {
     private List<Postcomment> postcomments = new ArrayList<>();
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
-    @Column(nullable = false, length = 10_000)
+    @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
+    @Type(type = "text")
     private String title;
 
     @ApiModelProperty(name = "imageurl", value = "Link to image", example = "http://example.com/img.jpg")
@@ -37,8 +39,9 @@ public class Userpost extends Auditable {
     private String imageurl;
 
     @ApiModelProperty(name = "line1", value = "First line of post", example = "It is a big pothole")
-    @Column(nullable = false, length = 10_000)
+    @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
+    @Type(type = "text")
     private String line1;
 
     @ManyToOne

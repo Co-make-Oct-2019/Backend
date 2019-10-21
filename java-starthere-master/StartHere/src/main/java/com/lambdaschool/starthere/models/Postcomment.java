@@ -3,6 +3,7 @@ package com.lambdaschool.starthere.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -18,8 +19,9 @@ public class Postcomment extends Auditable{
     private long postcommentid;
 
     @ApiModelProperty(name = "title", value = "Title of post", example = "That's a good point")
-    @Column(nullable = false, length = 10_000)
+    @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
+    @Type(type = "text")
     private String title;
 
     @ApiModelProperty(name = "imageurl", value = "Link to image", example = "http://example.com/img.jpg")
@@ -28,8 +30,9 @@ public class Postcomment extends Auditable{
 
 
     @ApiModelProperty(name = "line1", value = "First line of comment", example = "You're right, we should do something!")
-    @Column(nullable = false, length = 10_000)
+    @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
+    @Type(type = "text")
     private String line1;
 
     @ManyToOne
