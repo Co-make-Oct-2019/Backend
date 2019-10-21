@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
@@ -248,6 +249,13 @@ public class UserController {
 
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        User authenticatedUser = userService.findByName(userDetails.getUsername());
+
+//        System.out.println(userDetails.getUsername());
+
+
         User u = userService.findByName(authentication.getName());
 
         List<Userpost> userposts = u.getUserposts();
