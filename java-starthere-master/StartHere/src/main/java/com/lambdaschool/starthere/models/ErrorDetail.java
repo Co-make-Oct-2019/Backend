@@ -3,6 +3,7 @@ package com.lambdaschool.starthere.models;
 
 import com.lambdaschool.starthere.exceptions.ValidationError;
 import com.lambdaschool.starthere.logging.Loggable;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

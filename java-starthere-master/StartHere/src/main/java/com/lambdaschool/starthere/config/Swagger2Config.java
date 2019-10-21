@@ -40,21 +40,21 @@ public class Swagger2Config
                                                       .ignoredParameterTypes(Pageable.class) // allows only my paging parameter list
                                                       .apiInfo(apiEndPointsInfo())
                                                       .pathMapping("/")
-                                                      .additionalModels(resolver.resolve(TokenModel.class),
-                                                                        resolver.resolve(ErrorDetail.class))
+//                                                      .additionalModels(resolver.resolve(TokenModel.class),
+//                                                                        resolver.resolve(ErrorDetail.class))
                                                       .ignoredParameterTypes(SimpleGrantedAuthority.class);
     }
 
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("Java Spring Back End Starting Project")
-                                   .description("A starting application for developing Java Spring Back End Projects")
-                                   .contact(new Contact("John Mitchell",
-                                                        "http://www.lambdaschool.com",
-                                                        "john@lambdaschool.com"))
-                                   .license("MIT")
-                                   .licenseUrl("https://github.com/LambdaSchool/java-starthere/blob/master/LICENSE")
-                                   .version("1.0.0")
+        return new ApiInfoBuilder().title("Java Spring Back End Build Week Project - Co-Make")
+                                   .description("A database to for a Lambda School project.")
+                                   .contact(new Contact("Krishan Nattar",
+                                                        "https://www.krishannattar.com",
+                                                        "krishan.nattar@gmail.com"))
+//                                   .license("MIT")
+//                                   .licenseUrl("https://github.com/LambdaSchool/java-starthere/blob/master/LICENSE")
+//                                   .version("1.0.0")
                                    .build();
     }
 }

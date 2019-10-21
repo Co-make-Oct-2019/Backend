@@ -152,6 +152,8 @@ public class UserController {
     }
 
     // http://localhost:2019/users/user/name/cinnamon
+    @ApiOperation(value = "Returns a user of given name",
+            response = User.class)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/users/user/name/{userName}",
             produces = {"application/json"})

@@ -20,7 +20,8 @@ import java.util.List;
 @Table(name = "users")
 public class User extends Auditable {
 
-    @ApiModelProperty(name = "userid", value = "primary key for a user", required = true, example = "1")
+//    @ApiModelProperty(name = "userid", value = "primary key for a user", required = true, example = "1")
+    @ApiModelProperty(position = 1, required = true, hidden=true, notes = "Primary key for user")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
@@ -68,6 +69,7 @@ public class User extends Auditable {
     private List<Postvotes> postvotes = new ArrayList<>();
 
 
+    @ApiModelProperty(hidden=true)
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
@@ -127,6 +129,7 @@ public class User extends Auditable {
         this.password = passwordEncoder.encode(password);
     }
 
+    @ApiModelProperty(hidden=true)
     public void setPasswordNoEncrypt(String password) {
         this.password = password;
     }

@@ -17,11 +17,13 @@ import java.util.List;
 
 public class Userpost extends Auditable {
 
-    @ApiModelProperty(name = "postid", value = "primary key for a post", required = true, example = "1")
+//    @ApiModelProperty(name = "postid", value = "primary key for a post", required = true, example = "1")
+@ApiModelProperty(hidden=true)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userpostid;
 
+    @ApiModelProperty(hidden=true)
     @OneToMany(mappedBy = "userpost",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
@@ -44,6 +46,7 @@ public class Userpost extends Auditable {
     @Type(type = "text")
     private String line1;
 
+    @ApiModelProperty(hidden=true)
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
@@ -55,10 +58,12 @@ public class Userpost extends Auditable {
     @Column(nullable = false)
     private String location;
 
-    @ApiModelProperty(name = "count", value = "Current count of votes", required = false, example = "1")
+//    @ApiModelProperty(name = "count", value = "Current count of votes", required = false, example = "1")
+@ApiModelProperty(hidden=true)
     @Column(nullable = false)
     private Integer count;
 
+    @ApiModelProperty(hidden=true)
     @Column(nullable = false)
     private boolean voted;
 

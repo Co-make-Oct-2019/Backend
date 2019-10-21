@@ -40,7 +40,7 @@ public class PostcommentController {
 
     @ApiOperation(value = "Update a comment with given id",
             response = Postcomment.class)
-    @GetMapping(value = "/comment/{postcommentid}")
+    @GetMapping(value = "/comment/{postcommentid}", produces = {"application/json"})
     public ResponseEntity<?> getPostComment(@ApiParam(value = "Comment Id", required = true, example = "12") @PathVariable long postcommentid, HttpServletRequest request,
                                             Authentication authentication) {
         logger.trace(request.getMethod()

@@ -13,7 +13,8 @@ import javax.persistence.*;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userpostid", "postcommentid"})})
 public class Postcomment extends Auditable{
 
-    @ApiModelProperty(name = "postcommentid", value = "primary key for a comment", required = true, example = "1")
+//    @ApiModelProperty(name = "postcommentid", value = "primary key for a comment", required = true, example = "1")
+    @ApiModelProperty(hidden=true)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long postcommentid;
@@ -35,12 +36,14 @@ public class Postcomment extends Auditable{
     @Type(type = "text")
     private String line1;
 
+    @ApiModelProperty(hidden=true)
     @ManyToOne
     @JoinColumn(name = "userpostid",
             nullable = false)
     @JsonIgnoreProperties("postcomments")
     private Userpost userpost;
 
+    @ApiModelProperty(hidden=true)
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
