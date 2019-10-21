@@ -56,8 +56,8 @@ public class OpenController
                                                 boolean getaccess,
                                         @Valid
                                         @RequestBody
-                                                UserMinimum newminuser) throws URISyntaxException
-    {
+                                                User newminuser) throws URISyntaxException
+    {                                              //formerly Minuser newminuser
         logger.trace(httpServletRequest.getMethod()
                                        .toUpperCase() + " " + httpServletRequest.getRequestURI() + " accessed");
 
@@ -66,12 +66,15 @@ public class OpenController
 
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
+        newuser.setLocation(newminuser.getLocation());
+        newuser.setLine1(newminuser.getLine1());
+        newuser.setImageurl(newminuser.getImageurl());
 
 //        newuser.setPrimaryemail(newminuser.getPrimaryemail());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
         newRoles.add(new UserRoles(newuser,
-                                   roleService.findByName("user")));
+                                   roleService.findByName("admin")));
         newuser.setUserroles(newRoles);
 
         newuser = userService.save(newuser);
