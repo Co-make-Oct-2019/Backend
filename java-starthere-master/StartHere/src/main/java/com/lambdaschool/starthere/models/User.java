@@ -146,13 +146,13 @@ public class User extends Auditable {
         this.userroles = userroles;
     }
 
-    public String getdescription() {
-        return description;
-    }
-
-    public void setdescription(String description) {
-        this.description = description;
-    }
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
 
 
     public String getImageurl() {
@@ -177,6 +177,15 @@ public class User extends Auditable {
 
     public void setPostvotes(List<Postvotes> postvotes) {
         this.postvotes = postvotes;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @JsonIgnore

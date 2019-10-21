@@ -160,13 +160,13 @@ public class Userpost extends Auditable {
         this.imageurl = imageurl;
     }
 
-    public String getdescription() {
-        return description;
-    }
-
-    public void setdescription(String description) {
-        this.description = description;
-    }
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
 
     public String getLocation() {
         return location;
@@ -182,6 +182,14 @@ public class Userpost extends Auditable {
 
     public void setPostvotes(List<Postvotes> postvotes) {
         this.postvotes = postvotes;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     //    public long getVotes() {

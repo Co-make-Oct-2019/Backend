@@ -109,13 +109,13 @@ public class Postcomment extends Auditable{
         this.imageurl = imageurl;
     }
 
-    public String getdescription() {
-        return description;
-    }
-
-    public void setdescription(String description) {
-        this.description = description;
-    }
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
 
     public Userpost getUserpost() {
         return userpost;
@@ -123,5 +123,13 @@ public class Postcomment extends Auditable{
 
     public void setUserpost(Userpost userpost) {
         this.userpost = userpost;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

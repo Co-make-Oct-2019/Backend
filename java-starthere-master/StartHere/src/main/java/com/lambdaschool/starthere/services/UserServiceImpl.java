@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserDetailsService,
         newUser.setUsername(user.getUsername().toLowerCase());
         newUser.setLocation(user.getLocation());
         newUser.setPasswordNoEncrypt(user.getPassword());
-        newUser.setdescription(user.getdescription());
+        newUser.setDescription(user.getDescription());
         newUser.setImageurl(user.getImageurl());
 
 
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserDetailsService,
 
             newUser.getUserposts()
                     .add(new Userpost(newUser,
-                            up.getTitle(), up.getLocation(), up.getdescription(), up.getImageurl()));
+                            up.getTitle(), up.getLocation(), up.getDescription(), up.getImageurl()));
         }
 
         return userrepos.save(newUser);
@@ -131,8 +131,8 @@ public class UserServiceImpl implements UserDetailsService,
         if (user.getLocation() != null) {
             currentUser.setLocation(user.getLocation());
         }
-        if (user.getdescription() != null) {
-            currentUser.setdescription(user.getdescription());
+        if (user.getDescription() != null) {
+            currentUser.setDescription(user.getDescription());
         }
         if (user.getImageurl() != null) {
             currentUser.setImageurl(user.getImageurl());
