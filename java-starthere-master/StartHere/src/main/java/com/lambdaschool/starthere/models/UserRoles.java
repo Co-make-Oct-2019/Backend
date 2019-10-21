@@ -13,6 +13,7 @@ import java.util.Objects;
        uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roleid"})})
 public class UserRoles extends Auditable implements Serializable
 {
+
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")

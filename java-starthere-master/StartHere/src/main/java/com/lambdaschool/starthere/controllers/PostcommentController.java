@@ -37,12 +37,41 @@ public class PostcommentController {
     @Autowired
     UserpostService userpostService;
 
-    @ApiOperation(value = "Retrieve a comment with given id",
+
+    @ApiOperation(value = "Update a comment with given id",
+            response = Postcomment.class)
+    @GetMapping(value = "/comment/{postcommentid}")
+    public ResponseEntity<?> getPostComment(@ApiParam(value = "Comment Id", required = true, example = "12") @PathVariable long postcommentid, HttpServletRequest request,
+                                            Authentication authentication) {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+
+        User currentUser = userService.findByName(authentication.getName());
+
+
+        Postcomment currentPostcomment = postcommentService.findPostcommentById(postcommentid);
+
+
+        Userpost up = currentPostcomment.getUserpost();
+
+
+        boolean checkMatch = userpostService.checkMatch(currentUser, up);
+
+        if (checkMatch == true) {
+            up.setVoted(true);
+        }
+
+        return new ResponseEntity<>(currentPostcomment, HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "Update a comment with given id",
             response = Postcomment.class)
     @PutMapping(value = "/comment/{postcommentid}")
-    public ResponseEntity<?> updatePost(@ApiParam(value = "Comment Id", required = true, example = "12")@PathVariable long postcommentid, HttpServletRequest request,
-                                        @RequestBody
-                                                Postcomment updatedPostcomment, Authentication authentication) {
+    public ResponseEntity<?> updatePostComment(@ApiParam(value = "Comment Id", required = true, example = "12") @PathVariable long postcommentid, HttpServletRequest request,
+                                               @RequestBody
+                                                       Postcomment updatedPostcomment, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
@@ -82,7 +111,7 @@ public class PostcommentController {
     })
     @DeleteMapping("/comment/{postcommentid}")
     public ResponseEntity<?> deletePostcommentById(HttpServletRequest request,
-                                                   @ApiParam(value = "Comment Id", required = true, example = "12")@PathVariable
+                                                   @ApiParam(value = "Comment Id", required = true, example = "12") @PathVariable
                                                            long postcommentid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");

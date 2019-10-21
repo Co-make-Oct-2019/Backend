@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -18,25 +19,32 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends Auditable {
+
+    @ApiModelProperty(name = "userid", value = "primary key for a user", required = true, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
+    @ApiModelProperty(name = "username", value = "username for a user", required = true, example = "johnny22")
     @Column(nullable = false,
             unique = true)
     private String username;
 
+    @ApiModelProperty(name = "userid", value = "primary key for a user", required = false, example = "Seattle")
     @Column(nullable = false)
     private String location;
 
+    @ApiModelProperty(name = "line1", value = "Content line for user profile", required = false, example = "I've lived here for 5 years")
     @Column(nullable = true,
             unique = false)
     private String line1;
 
+    @ApiModelProperty(name = "imageurl", value = "Link to image for user profile", required = false, example = "http://example.com/image.jpg")
     @Column(nullable = true,
             unique = false)
     private String imageurl;
 
+    @ApiModelProperty(name = "password", value = "primary key for a user", required = true, example = "password1234")
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;

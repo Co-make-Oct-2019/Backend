@@ -52,6 +52,7 @@ public class Userpost extends Auditable {
     @Column(nullable = false)
     private String location;
 
+    @ApiModelProperty(name = "count", value = "Current count of votes", required = false, example = "1")
     @Column(nullable = false)
     private Integer count;
 

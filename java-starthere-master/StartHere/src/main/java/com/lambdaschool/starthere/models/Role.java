@@ -2,6 +2,7 @@ package com.lambdaschool.starthere.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,10 +13,12 @@ import java.util.List;
 @Table(name = "roles")
 public class Role extends Auditable
 {
+    @ApiModelProperty(name = "roleid", value = "Primary key for a role", required = false, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roleid;
 
+    @ApiModelProperty(name = "name", value = "Name of current role", required = false, example = "admin")
     @Column(nullable = false,
             unique = true)
     private String name;
