@@ -28,7 +28,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@ApiIgnore
+@ApiIgnore
 @Loggable
 @RestController
 public class OpenController

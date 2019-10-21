@@ -389,84 +389,84 @@ public class UserController {
 //    }
 
 //
-//    @ApiOperation(value = "Create a new user",
-//            response = void.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 201, message = "User Created successfully", response = void.class),
-//            @ApiResponse(code = 500, message = "Error creating user", response = ErrorDetail.class)
-//    })
-//    @PostMapping(value = "/newuser/createnewuser",
-//            consumes = {"application/json"},
-//            produces = {"application/json"})
-//    public ResponseEntity<?> addNewUser(HttpServletRequest request,
-////                                        @RequestParam(defaultValue = "true")
-////                                                boolean getaccess,
-//                                        @Valid
-//                                        @RequestBody
-//                                                User newuser) throws URISyntaxException {
-//        logger.trace(request.getMethod()
-//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+    @ApiOperation(value = "Create a new user",
+            response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User Created successfully", response = void.class),
+            @ApiResponse(code = 500, message = "Error creating user", response = ErrorDetail.class)
+    })
+    @PostMapping(value = "/newuser/createnewuser",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewUser(HttpServletRequest request,
+//                                        @RequestParam(defaultValue = "true")
+//                                                boolean getaccess,
+                                        @Valid
+                                        @RequestBody
+                                                User newuser) throws URISyntaxException {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        Role role = roleService.findByName("admin");
+        ArrayList<UserRoles> newRoles = new ArrayList<>();
+        newRoles.add(new UserRoles(newuser,
+                role));
+        newuser.setUserroles(newRoles);
+
+        newuser = userService.save(newuser);
+
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+
+//        String theToken = "";
+//        if (getaccess) {
 //
-//        Role role = roleService.findByName("admin");
-//        ArrayList<UserRoles> newRoles = new ArrayList<>();
-//        newRoles.add(new UserRoles(newuser,
-//                role));
-//        newuser.setUserroles(newRoles);
+//            RestTemplate restTemplate = new RestTemplate();
+//            String requestURI = "http://" + request.getServerName() + ":" + request.getLocalPort() + "/login";
 //
-//        newuser = userService.save(newuser);
-//
-////        HttpHeaders responseHeaders = new HttpHeaders();
-////        URI newUserURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
-////                .buildAndExpand(newuser.getUserid())
-////                .toUri();
-////        responseHeaders.setLocation(newUserURI);
-//
-////        String theToken = "";
-////        if (getaccess) {
-////
-////            RestTemplate restTemplate = new RestTemplate();
-////            String requestURI = "http://" + request.getServerName() + ":" + request.getLocalPort() + "/login";
-////
-////            List<MediaType> acceptableMediaTypes = new ArrayList<>();
-////            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
-////            HttpHeaders headers = new HttpHeaders();
-////            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-////            headers.setAccept(acceptableMediaTypes);
-////            headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
-////                    System.getenv("OAUTHCLIENTSECRET"));
-//////            headers.setBearerAuth(theToken);
-////            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-////            map.add("grant_type",
-////                    "password");
-////            map.add("scope",
-////                    "read write trust");
-////            map.add("username",
-////                    newuser.getUsername());
-////            map.add("password",
-////                    newuser.getPassword());
-////            HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(map,
-////                    headers);
-////            System.out.println(4);
-////            System.out.println(requestURI);
-////            System.out.println(request2);
-////            theToken = restTemplate.postForObject(requestURI,
-////                    request2,
-////                    String.class);
-////            System.out.println(5);
-////        } else {
-////            // nothing;
-////            System.out.println(6);
-////        }
-////        // set the location header for the newly created resource
-////        HttpHeaders responseHeaders = new HttpHeaders();
-////        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-////                .path("/{userid}")
-////                .buildAndExpand(newuser.getUserid())
-////                .toUri();
-////        responseHeaders.setLocation(newUserURI);
-//
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
+//            List<MediaType> acceptableMediaTypes = new ArrayList<>();
+//            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//            headers.setAccept(acceptableMediaTypes);
+//            headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+//                    System.getenv("OAUTHCLIENTSECRET"));
+////            headers.setBearerAuth(theToken);
+//            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+//            map.add("grant_type",
+//                    "password");
+//            map.add("scope",
+//                    "read write trust");
+//            map.add("username",
+//                    newuser.getUsername());
+//            map.add("password",
+//                    newuser.getPassword());
+//            HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(map,
+//                    headers);
+//            System.out.println(4);
+//            System.out.println(requestURI);
+//            System.out.println(request2);
+//            theToken = restTemplate.postForObject(requestURI,
+//                    request2,
+//                    String.class);
+//            System.out.println(5);
+//        } else {
+//            // nothing;
+//            System.out.println(6);
+//        }
+//        // set the location header for the newly created resource
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{userid}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 
 }
