@@ -1,24 +1,17 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.UserRoles;
-import com.lambdaschool.starthere.models.Userpost;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
 import com.lambdaschool.starthere.services.UserpostService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +23,10 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,9 +124,11 @@ public class UserController {
 
     // http://localhost:2019/users/user/7
 //    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @ApiOperation(value = "Returns a user of given userid",
+            response = User.class)
     @GetMapping(value = "/users/user/{userId}",
             produces = {"application/json"})
-    public ResponseEntity<?> getUserById(HttpServletRequest request,
+    public ResponseEntity<?> getUserById(HttpServletRequest request,@ApiParam(value = "User Id", required = true, example = "12")
                                          @PathVariable
                                                  Long userId, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -157,7 +155,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/users/user/name/{userName}",
             produces = {"application/json"})
-    public ResponseEntity<?> getUserByName(HttpServletRequest request,
+    public ResponseEntity<?> getUserByName(HttpServletRequest request,@ApiParam(value = "Exact Username", required = true, example = "john22")
                                            @PathVariable
                                                    String userName, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -197,11 +195,11 @@ public class UserController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/users/user/name/like/{userName}",
             produces = {"application/json"})
-    public ResponseEntity<?> getUserLikeName(HttpServletRequest request,
+    public ResponseEntity<?> getUserLikeName(HttpServletRequest request,@ApiParam(value = "Username", required = true, example = "john")
                                              @PathVariable
                                                      String userName,
                                              @PageableDefault(page = 0,
-                                                     size = 5)
+                                                     size = 10_000)
                                                      Pageable pageable, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
@@ -239,6 +237,8 @@ public class UserController {
 //    }
 
     // http://localhost:2019/users/getuserinfo
+    @ApiOperation(value = "returns info for current",
+            response = User.class)
     @GetMapping(value = "/users/getuserinfo",
             produces = {"application/json"})
     public ResponseEntity<?> getCurrentUserInfo(HttpServletRequest request,
@@ -262,38 +262,14 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/newuser/createnewuser",
-            consumes = {"application/json"},
-            produces = {"application/json"})
-    public ResponseEntity<?> addNewUser(HttpServletRequest request,
-                                        @Valid
-                                        @RequestBody
-                                                User newuser) throws URISyntaxException {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        Role role = roleService.findByName("admin");
-        ArrayList<UserRoles> newRoles = new ArrayList<>();
-        newRoles.add(new UserRoles(newuser,
-                role));
-        newuser.setUserroles(newRoles);
-
-        newuser = userService.save(newuser);
-
-        // set the location header for the newly created resource
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{userid}")
-                .buildAndExpand(newuser.getUserid())
-                .toUri();
-        responseHeaders.setLocation(newUserURI);
-
-        return new ResponseEntity<>(null,
-                responseHeaders,
-                HttpStatus.CREATED);
-    }
 
 
+    @ApiOperation(value = "Update and return info for current user",
+            response = User.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "User updated successfully", response = User.class),
+            @ApiResponse(code = 500, message = "Error updating user", response = ErrorDetail.class)
+    })
     @PutMapping(value = "/users/user/profile/edit")
     public ResponseEntity<?> updateUser(HttpServletRequest request,
                                         @RequestBody
@@ -340,6 +316,12 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "Delete current user",
+            response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "User deleted successfully", response = void.class),
+            @ApiResponse(code = 500, message = "Error deleting user", response = ErrorDetail.class)
+    })
     @DeleteMapping("/users/user")
     public ResponseEntity<?> deleteCurrentUser(HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -361,21 +343,22 @@ public class UserController {
     }
 
     // http://localhost:2019/users/user/15/role/2
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/users/user/{userid}/role/{roleid}")
-    public ResponseEntity<?> deleteUserRoleByIds(HttpServletRequest request,
-                                                 @PathVariable
-                                                         long userid,
-                                                 @PathVariable
-                                                         long roleid) {
-        logger.trace(request.getMethod()
-                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-
-        userService.deleteUserRole(userid,
-                roleid);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//
+//    @DeleteMapping("/users/user/{userid}/role/{roleid}")
+//    public ResponseEntity<?> deleteUserRoleByIds(HttpServletRequest request,
+//                                                 @PathVariable
+//                                                         long userid,
+//                                                 @PathVariable
+//                                                         long roleid) {
+//        logger.trace(request.getMethod()
+//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+//
+//        userService.deleteUserRole(userid,
+//                roleid);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
 
     // http://localhost:2019/users/user/15/role/2
@@ -394,4 +377,86 @@ public class UserController {
 //
 //        return new ResponseEntity<>(HttpStatus.CREATED);
 //    }
+
+
+    @ApiOperation(value = "Create a new user",
+            response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User Created successfully", response = void.class),
+            @ApiResponse(code = 500, message = "Error creating user", response = ErrorDetail.class)
+    })
+    @PostMapping(value = "/newuser/createnewuser",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewUser(HttpServletRequest request,
+//                                        @RequestParam(defaultValue = "true")
+//                                                boolean getaccess,
+                                        @Valid
+                                        @RequestBody
+                                                User newuser) throws URISyntaxException {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        Role role = roleService.findByName("admin");
+        ArrayList<UserRoles> newRoles = new ArrayList<>();
+        newRoles.add(new UserRoles(newuser,
+                role));
+        newuser.setUserroles(newRoles);
+
+        newuser = userService.save(newuser);
+
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+
+//        String theToken = "";
+//        if (getaccess) {
+//
+//            RestTemplate restTemplate = new RestTemplate();
+//            String requestURI = "http://" + request.getServerName() + ":" + request.getLocalPort() + "/login";
+//
+//            List<MediaType> acceptableMediaTypes = new ArrayList<>();
+//            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//            headers.setAccept(acceptableMediaTypes);
+//            headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+//                    System.getenv("OAUTHCLIENTSECRET"));
+////            headers.setBearerAuth(theToken);
+//            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+//            map.add("grant_type",
+//                    "password");
+//            map.add("scope",
+//                    "read write trust");
+//            map.add("username",
+//                    newuser.getUsername());
+//            map.add("password",
+//                    newuser.getPassword());
+//            HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(map,
+//                    headers);
+//            System.out.println(4);
+//            System.out.println(requestURI);
+//            System.out.println(request2);
+//            theToken = restTemplate.postForObject(requestURI,
+//                    request2,
+//                    String.class);
+//            System.out.println(5);
+//        } else {
+//            // nothing;
+//            System.out.println(6);
+//        }
+//        // set the location header for the newly created resource
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{userid}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
 }

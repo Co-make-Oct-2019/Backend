@@ -26,6 +26,7 @@ public class UserpostServiceImplementation implements UserpostService {
         newUserpost.setLocation(userpost.getLocation());
         newUserpost.setTitle(userpost.getTitle());
         newUserpost.setUser(user);
+        newUserpost.setCount(0);
 
         return userpostrepos.save(newUserpost);
     }

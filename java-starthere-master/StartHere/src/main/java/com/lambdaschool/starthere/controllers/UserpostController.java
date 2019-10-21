@@ -1,11 +1,16 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.ErrorDetail;
 import com.lambdaschool.starthere.models.Postcomment;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.services.UserService;
 import com.lambdaschool.starthere.services.UserpostService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +39,9 @@ public class UserpostController {
     UserService userService;
 
     // http://localhost:2019/posts/allposts
+    @ApiOperation(value = "Returns all Posts",
+            response = Userpost.class,
+            responseContainer = "List")
     @GetMapping(value = "/allposts",
             produces = {"application/json"})
     public ResponseEntity<?> listAllUserposts(HttpServletRequest request, Authentication authentication) {
@@ -55,6 +63,9 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns all Posts made by current user",
+            response = Userpost.class,
+            responseContainer = "List")
     @GetMapping(value = "/myposts",
             produces = {"application/json"})
     public ResponseEntity<?> findUserpostsByUserName(HttpServletRequest request, Authentication authentication) {
@@ -77,6 +88,9 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns all Posts filtered by the location the current user is registered as",
+            response = Userpost.class,
+            responseContainer = "List")
     @GetMapping(value = "/currentlocation",
             produces = {"application/json"})
     public ResponseEntity<?> findUserpostsByCurrentLocation(HttpServletRequest request, Authentication authentication) {
@@ -101,9 +115,12 @@ public class UserpostController {
     }
 
 
+    @ApiOperation(value = "Returns all Posts of a given location",
+            response = Userpost.class,
+            responseContainer = "List")
     @GetMapping(value = "/location/{location}",
             produces = {"application/json"})
-    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication, @PathVariable String location) {
+    public ResponseEntity<?> findUserpostsByLocation(HttpServletRequest request, Authentication authentication, @ApiParam(value = "Location", required = true, example = "Jacksonville")@PathVariable String location) {
         String name;
         name = authentication.getName();
         logger.trace(request.getMethod()
@@ -124,6 +141,9 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns all Posts not created by current user",
+            response = Userpost.class,
+            responseContainer = "List")
     @GetMapping(value = "/otherposts",
             produces = {"application/json"})
     public ResponseEntity<?> findAllOtherUserpostsExceptMine(HttpServletRequest request, Authentication authentication) {
@@ -148,8 +168,10 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns post of given id",
+            response = Userpost.class)
     @PutMapping(value = "/post/{userpostid}")
-    public ResponseEntity<?> updatePost(@PathVariable long userpostid, HttpServletRequest request,
+    public ResponseEntity<?> updatePost(@ApiParam(value = "Post Id", required = true, example = "14")@PathVariable long userpostid, HttpServletRequest request,
                                         @RequestBody
                                                 Userpost updatedPost, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -177,8 +199,10 @@ public class UserpostController {
         }
     }
 
+    @ApiOperation(value = "Increments the vote count of a given post and returns updated post",
+            response = Userpost.class)
     @PutMapping(value = "/post/increment/{userpostid}")
-    public ResponseEntity<?> incrementPostCount(@PathVariable long userpostid, HttpServletRequest request, Authentication authentication) {
+    public ResponseEntity<?> incrementPostCount(@ApiParam(value = "Post Id", required = true, example = "12")@PathVariable long userpostid, HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
         User currentUser = new User();
@@ -192,8 +216,10 @@ public class UserpostController {
         return new ResponseEntity<>(currentPost, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Decrements the vote count of a given post and returns updated post",
+            response = Userpost.class)
     @PutMapping(value = "/post/decrement/{userpostid}")
-    public ResponseEntity<?> decrementPostCount(@PathVariable long userpostid,
+    public ResponseEntity<?> decrementPostCount(@ApiParam(value = "Post Id", required = true, example = "12")@PathVariable long userpostid,
                                                 HttpServletRequest request,
                                                 Authentication authentication) {
         logger.trace(request.getMethod()
@@ -210,10 +236,12 @@ public class UserpostController {
         return new ResponseEntity<>(currentPost, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Return post of given id",
+            response = Userpost.class)
     @GetMapping(value = "/post/{userpostid}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserPostById(HttpServletRequest request,
-                                             @PathVariable
+                                             @ApiParam(value = "Post Id", required = true, example = "12")@PathVariable
                                                      Long userpostid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
@@ -229,9 +257,11 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete a post of given id",
+            response = void.class)
     @DeleteMapping("/post/{userpostid}")
     public ResponseEntity<?> deleteUserpostById(HttpServletRequest request,
-                                                @PathVariable
+                                                @ApiParam(value = "Post Id", required = true, example = "12")@PathVariable
                                                         long userpostid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
@@ -252,6 +282,13 @@ public class UserpostController {
         }
     }
 
+    @ApiOperation(value = "Create a new post",
+            response = Userpost.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Post created successfully", response = Userpost.class),
+            @ApiResponse(code = 500, message = "Error creating post", response = ErrorDetail.class),
+            @ApiResponse(code = 400, message = "Error creating post", response = ErrorDetail.class)
+    })
     @PostMapping(value = "/post",
             consumes = {"application/json"},
             produces = {"application/json"})
