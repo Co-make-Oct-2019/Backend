@@ -3,6 +3,7 @@ package com.lambdaschool.starthere.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Type;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApiModel(value = "Userpost", description = "This model defines how posts are created")
 @Loggable
 @Entity
 @Table(name = "userposts",
@@ -30,7 +32,7 @@ public class Userpost extends Auditable {
     @JsonIgnoreProperties({"userpost", "postvotes"})
     private List<Postcomment> postcomments = new ArrayList<>();
 
-    @ApiModelProperty(name = "title", value = "Title of post", example = "There is a pothole on 42nd Street")
+    @ApiModelProperty(name = "title", value = "This is the title of the post", example = "There is a pothole on 42nd Street", required = true)
     @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
     @Type(type = "text")
@@ -40,7 +42,7 @@ public class Userpost extends Auditable {
     @Column(nullable = true)
     private String imageurl;
 
-    @ApiModelProperty(name = "line1", value = "First line of post", example = "It is a big pothole")
+    @ApiModelProperty(name = "line1", value = "The main text body of the post", example = "It is a big pothole", required = true)
     @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
     @Type(type = "text")
@@ -54,7 +56,7 @@ public class Userpost extends Auditable {
     private User user;
 
 
-    @ApiModelProperty(name = "location", value = "City", example = "Los Angeles")
+    @ApiModelProperty(name = "location", value = "City", example = "Los Angeles", required = true)
     @Column(nullable = false)
     private String location;
 

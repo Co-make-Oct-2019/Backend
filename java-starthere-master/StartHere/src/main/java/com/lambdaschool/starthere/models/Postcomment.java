@@ -2,11 +2,13 @@ package com.lambdaschool.starthere.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+@ApiModel(value = "Postcomment", description = "This model defines how comments are created")
 @Loggable
 @Entity
 @Table(name = "postcomments",

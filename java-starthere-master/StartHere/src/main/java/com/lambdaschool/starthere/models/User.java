@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,9 @@ import java.util.List;
 
 // User is considered the parent entity
 
+@ApiModel(value = "User", description = "This model defines how users are created\n" +
+        "Note that once a username is created, it cannot be modified via PUT\n" +
+        "imageurl and line1 cannot be created upon initial POST request. They can only be modified via PUT")
 @Loggable
 @Entity
 @Table(name = "users")
@@ -31,7 +35,7 @@ public class User extends Auditable {
             unique = true)
     private String username;
 
-    @ApiModelProperty(name = "userid", value = "primary key for a user", required = false, example = "Seattle")
+    @ApiModelProperty(name = "userid", value = "primary key for a user", required = true, example = "Seattle")
     @Column(nullable = false)
     private String location;
 
