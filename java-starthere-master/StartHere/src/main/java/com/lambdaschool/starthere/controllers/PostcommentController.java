@@ -38,7 +38,7 @@ public class PostcommentController {
     UserpostService userpostService;
 
 
-    @ApiOperation(value = "Update a comment with given id",
+    @ApiOperation(value = "View a comment with given id",
             response = Postcomment.class)
     @GetMapping(value = "/comment/{postcommentid}", produces = {"application/json"})
     public ResponseEntity<?> getPostComment(@ApiParam(value = "Comment Id", required = true, example = "12") @PathVariable long postcommentid, HttpServletRequest request,
@@ -103,7 +103,7 @@ public class PostcommentController {
     }
 
     @ApiOperation(value = "Delete a comment",
-            response = Postcomment.class)
+            response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Comment deleted successfully", response = Postcomment.class),
             @ApiResponse(code = 500, message = "Error deleting comment", response = ErrorDetail.class),
