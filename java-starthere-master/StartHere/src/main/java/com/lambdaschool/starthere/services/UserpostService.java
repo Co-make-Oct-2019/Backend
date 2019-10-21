@@ -40,7 +40,7 @@ public interface UserpostService {
 
 
     void delete(long id);
-//    User user, String title, long zip, String line1, String imageurl
+//    User user, String title, long zip, String description, String imageurl
 
     Userpost update(Userpost userpost, long userpostid, boolean isAdmin);
 }

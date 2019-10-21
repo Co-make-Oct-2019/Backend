@@ -18,7 +18,7 @@ import java.util.List;
 
 @ApiModel(value = "User", description = "This model defines how users are created\n" +
         "Note that once a username is created, it cannot be modified via PUT\n" +
-        "imageurl and line1 cannot be created upon initial POST request. They can only be modified via PUT")
+        "imageurl and description cannot be created upon initial POST request. They can only be modified via PUT")
 @Loggable
 @Entity
 @Table(name = "users")
@@ -39,10 +39,10 @@ public class User extends Auditable {
     @Column(nullable = false)
     private String location;
 
-    @ApiModelProperty(name = "line1", value = "Content line for user profile", required = false, example = "I've lived here for 5 years")
+    @ApiModelProperty(name = "description", value = "Content line for user profile", required = false, example = "I've lived here for 5 years")
     @Column(nullable = true,
             unique = false)
-    private String line1;
+    private String description;
 
     @ApiModelProperty(name = "imageurl", value = "Link to image for user profile", required = false, example = "http://example.com/image.jpg")
     @Column(nullable = true,
@@ -146,12 +146,12 @@ public class User extends Auditable {
         this.userroles = userroles;
     }
 
-    public String getLine1() {
-        return line1;
+    public String getdescription() {
+        return description;
     }
 
-    public void setLine1(String line1) {
-        this.line1 = line1;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
 

@@ -42,11 +42,11 @@ public class Userpost extends Auditable {
     @Column(nullable = true)
     private String imageurl;
 
-    @ApiModelProperty(name = "line1", value = "The main text body of the post", example = "It is a big pothole", required = true)
+    @ApiModelProperty(name = "description", value = "The main text body of the post", example = "It is a big pothole", required = true)
     @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
     @Type(type = "text")
-    private String line1;
+    private String description;
 
     @ApiModelProperty(hidden=true)
     @ManyToOne
@@ -83,23 +83,23 @@ public class Userpost extends Auditable {
 
     }
 
-    public Userpost(User user, String title, String location, String line1, String imageurl) {
+    public Userpost(User user, String title, String location, String description, String imageurl) {
 
         this.user = user;
         this.title = title;
         this.location = location;
-        this.line1 = line1;
+        this.description = description;
         this.imageurl = imageurl;
         this.count = 0;
         this.voted = false;
 
     }
 
-    public Userpost(User user, String title, String location, String line1) {
+    public Userpost(User user, String title, String location, String description) {
         this.user = user;
         this.title = title;
         this.location = location;
-        this.line1 = line1;
+        this.description = description;
         this.count = 0;
         this.voted = false;
     }
@@ -160,12 +160,12 @@ public class Userpost extends Auditable {
         this.imageurl = imageurl;
     }
 
-    public String getLine1() {
-        return line1;
+    public String getdescription() {
+        return description;
     }
 
-    public void setLine1(String line1) {
-        this.line1 = line1;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public String getLocation() {

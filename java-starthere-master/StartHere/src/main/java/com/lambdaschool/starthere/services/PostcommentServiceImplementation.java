@@ -73,8 +73,8 @@ public class PostcommentServiceImplementation implements PostcommentService {
             if (newPostcomment.getImageurl() != null) {
                 postcommentToEdit.setImageurl(newPostcomment.getImageurl());
             }
-            if (newPostcomment.getLine1() != null) {
-                postcommentToEdit.setLine1(newPostcomment.getLine1());
+            if (newPostcomment.getdescription() != null) {
+                postcommentToEdit.setdescription(newPostcomment.getdescription());
             }
 
             return postcommentrepos.save(postcommentToEdit);
@@ -86,7 +86,7 @@ public class PostcommentServiceImplementation implements PostcommentService {
     @Override
     public Postcomment save(Postcomment postcomment, User user, Userpost userpost) {
         Postcomment newPostcomment = new Postcomment();
-        newPostcomment.setLine1(postcomment.getLine1());
+        newPostcomment.setdescription(postcomment.getdescription());
         newPostcomment.setImageurl(postcomment.getImageurl());
         newPostcomment.setTitle(postcomment.getTitle());
         newPostcomment.setUser(user);

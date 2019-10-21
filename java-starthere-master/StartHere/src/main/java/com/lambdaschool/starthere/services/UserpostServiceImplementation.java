@@ -22,7 +22,7 @@ public class UserpostServiceImplementation implements UserpostService {
 
         Userpost newUserpost = new Userpost();
         newUserpost.setImageurl(userpost.getImageurl());
-        newUserpost.setLine1(userpost.getLine1());
+        newUserpost.setdescription(userpost.getdescription());
         newUserpost.setLocation(userpost.getLocation());
         newUserpost.setTitle(userpost.getTitle());
         newUserpost.setUser(user);
@@ -90,8 +90,8 @@ public class UserpostServiceImplementation implements UserpostService {
             if (userpost.getLocation() != null) {
                 userpostToEdit.setLocation(userpost.getLocation());
             }
-            if (userpost.getLine1() != null) {
-                userpostToEdit.setLine1(userpost.getLine1());
+            if (userpost.getdescription() != null) {
+                userpostToEdit.setdescription(userpost.getdescription());
             }
             if (userpost.getImageurl() != null) {
                 userpostToEdit.setImageurl(userpost.getImageurl());

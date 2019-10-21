@@ -78,7 +78,7 @@ public class OpenController
         newuser.setUsername(newminuser.getUsername());
         newuser.setPassword(newminuser.getPassword());
         newuser.setLocation(newminuser.getLocation());
-        newuser.setLine1(newminuser.getLine1());
+        newuser.setdescription(newminuser.getdescription());
         newuser.setImageurl(newminuser.getImageurl());
 
 //        newuser.setPrimaryemail(newminuser.getPrimaryemail());

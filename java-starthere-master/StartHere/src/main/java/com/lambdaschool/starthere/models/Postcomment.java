@@ -32,11 +32,11 @@ public class Postcomment extends Auditable{
     private String imageurl;
 
 
-    @ApiModelProperty(name = "line1", value = "First line of comment", example = "You're right, we should do something!")
+    @ApiModelProperty(name = "description", value = "First line of comment", example = "You're right, we should do something!")
     @Column(nullable = false, length = 10_000, columnDefinition = "text")
     @Lob
     @Type(type = "text")
-    private String line1;
+    private String description;
 
     @ApiModelProperty(hidden=true)
     @ManyToOne
@@ -58,19 +58,19 @@ public class Postcomment extends Auditable{
 
     }
 
-    public Postcomment(User user, Userpost userpost, String title, String line1, String imageurl) {
+    public Postcomment(User user, Userpost userpost, String title, String description, String imageurl) {
         this.user = user;
         this.title = title;
         this.imageurl = imageurl;
-        this.line1 = line1;
+        this.description = description;
         this.userpost = userpost;
 
     }
 
-    public Postcomment(User user, Userpost userpost, String title, String line1) {
+    public Postcomment(User user, Userpost userpost, String title, String description) {
         this.user = user;
         this.title = title;
-        this.line1 = line1;
+        this.description = description;
         this.userpost = userpost;
 
     }
@@ -109,12 +109,12 @@ public class Postcomment extends Auditable{
         this.imageurl = imageurl;
     }
 
-    public String getLine1() {
-        return line1;
+    public String getdescription() {
+        return description;
     }
 
-    public void setLine1(String line1) {
-        this.line1 = line1;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public Userpost getUserpost() {
