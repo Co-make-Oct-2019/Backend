@@ -1,12 +1,14 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
-import com.lambdaschool.starthere.models.Postcomment;
-import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.Userpost;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.services.PostcommentService;
 import com.lambdaschool.starthere.services.UserService;
 import com.lambdaschool.starthere.services.UserpostService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,10 @@ public class PostcommentController {
     @Autowired
     UserpostService userpostService;
 
+    @ApiOperation(value = "Retrieve a comment with given id",
+            response = Postcomment.class)
     @PutMapping(value = "/comment/{postcommentid}")
-    public ResponseEntity<?> updatePost(@PathVariable long postcommentid, HttpServletRequest request,
+    public ResponseEntity<?> updatePost(@ApiParam(value = "Comment Id", required = true, example = "12")@PathVariable long postcommentid, HttpServletRequest request,
                                         @RequestBody
                                                 Postcomment updatedPostcomment, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -69,9 +73,16 @@ public class PostcommentController {
         }
     }
 
+    @ApiOperation(value = "Delete a comment",
+            response = Postcomment.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Comment deleted successfully", response = Postcomment.class),
+            @ApiResponse(code = 500, message = "Error deleting comment", response = ErrorDetail.class),
+            @ApiResponse(code = 400, message = "Error deleting comment", response = ErrorDetail.class)
+    })
     @DeleteMapping("/comment/{postcommentid}")
     public ResponseEntity<?> deletePostcommentById(HttpServletRequest request,
-                                                   @PathVariable
+                                                   @ApiParam(value = "Comment Id", required = true, example = "12")@PathVariable
                                                            long postcommentid, Authentication authentication) {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
@@ -92,6 +103,13 @@ public class PostcommentController {
         }
     }
 
+    @ApiOperation(value = "Create a new comment",
+            response = Postcomment.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Comment created successfully", response = Postcomment.class),
+            @ApiResponse(code = 500, message = "Error creating comment", response = ErrorDetail.class),
+            @ApiResponse(code = 400, message = "Error creating comment", response = ErrorDetail.class)
+    })
     @PostMapping(value = "/comment/{userpostid}",
             consumes = {"application/json"},
             produces = {"application/json"})

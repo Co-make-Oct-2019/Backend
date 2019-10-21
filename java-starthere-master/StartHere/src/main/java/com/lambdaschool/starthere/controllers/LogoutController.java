@@ -1,6 +1,8 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.Postcomment;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class LogoutController
     @Autowired
     private TokenStore tokenStore;
 
+    @ApiOperation(value = "Revoke token to log out of system",
+            response = void.class)
     @RequestMapping(value = {"/oauth/revoke-token", "/logout"},
                     method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)

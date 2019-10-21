@@ -168,8 +168,12 @@ public class UserpostController {
                 HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Returns post of given id",
+    @ApiOperation(value = "Updates and returns post of given id",
             response = Userpost.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Post updated successfully", response = Userpost.class),
+            @ApiResponse(code = 500, message = "Error creating post", response = ErrorDetail.class)
+    })
     @PutMapping(value = "/post/{userpostid}")
     public ResponseEntity<?> updatePost(@ApiParam(value = "Post Id", required = true, example = "14")@PathVariable long userpostid, HttpServletRequest request,
                                         @RequestBody
@@ -201,6 +205,10 @@ public class UserpostController {
 
     @ApiOperation(value = "Increments the vote count of a given post and returns updated post",
             response = Userpost.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Post vote count incremented successfully", response = Userpost.class),
+            @ApiResponse(code = 404, message = "Post does not exist", response = ErrorDetail.class)
+    })
     @PutMapping(value = "/post/increment/{userpostid}")
     public ResponseEntity<?> incrementPostCount(@ApiParam(value = "Post Id", required = true, example = "12")@PathVariable long userpostid, HttpServletRequest request, Authentication authentication) {
         logger.trace(request.getMethod()
@@ -218,6 +226,10 @@ public class UserpostController {
 
     @ApiOperation(value = "Decrements the vote count of a given post and returns updated post",
             response = Userpost.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Post vote count decremented successfully", response = Userpost.class),
+            @ApiResponse(code = 404, message = "Post does not exist", response = ErrorDetail.class)
+    })
     @PutMapping(value = "/post/decrement/{userpostid}")
     public ResponseEntity<?> decrementPostCount(@ApiParam(value = "Post Id", required = true, example = "12")@PathVariable long userpostid,
                                                 HttpServletRequest request,
