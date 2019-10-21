@@ -1,11 +1,15 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.logging.Loggable;
+import com.lambdaschool.starthere.models.ErrorDetail;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserMinimum;
 import com.lambdaschool.starthere.models.UserRoles;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApiIgnore
+//@ApiIgnore
 @Loggable
 @RestController
 public class OpenController
@@ -48,6 +52,13 @@ public class OpenController
     //     "primaryemail" : "home@local.house"
     // }
 
+
+    @ApiOperation(value = "Create a new user",
+            response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "User Created successfully", response = void.class),
+            @ApiResponse(code = 500, message = "Error creating user", response = ErrorDetail.class)
+    })
     @PostMapping(value = "/createnewuser",
                  consumes = {"application/json"},
                  produces = {"application/json"})
