@@ -38,14 +38,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
                     "newuser/**")
             .permitAll()
             .antMatchers("/users/**",
-                         "/useremails/**",
+//                         "/useremails/**",
                          "/oauth/revoke-token",
                          "/logout")
             .authenticated()
             // restrict application data...
-                .antMatchers("/books/**", "/authors/**", "/sections/**").hasAnyRole("ADMIN", "USER", "DATA")
+//                .antMatchers("/books/**", "/authors/**", "/sections/**").hasAnyRole("ADMIN", "USER", "DATA")
                 .antMatchers("/data/**").hasAnyRole("ADMIN", "DATA")
-                .antMatchers("/users/**", "useremails/**").hasAnyRole("ADMIN")
+                .antMatchers("/users/**").hasAnyRole("ADMIN")
             //
             // restrict based on HttpMethod and endpoint
             // .antMatchers(HttpMethod.GET, "/users/user/**").hasAnyRole("USER")

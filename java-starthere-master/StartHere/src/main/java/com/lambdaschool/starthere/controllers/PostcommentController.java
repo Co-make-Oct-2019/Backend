@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
 @RestController
 @RequestMapping("/comments")
 public class PostcommentController {
-    private static final Logger logger = LoggerFactory.getLogger(UseremailController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostcommentController.class);
 
 
     @Autowired

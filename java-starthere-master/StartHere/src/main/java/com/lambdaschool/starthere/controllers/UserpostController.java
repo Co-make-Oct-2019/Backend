@@ -30,7 +30,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class UserpostController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UseremailController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserpostController.class);
 
     @Autowired
     UserpostService userpostService;

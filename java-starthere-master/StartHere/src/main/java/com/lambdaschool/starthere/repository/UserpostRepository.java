@@ -1,7 +1,7 @@
 package com.lambdaschool.starthere.repository;
 
 import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.Useremail;
+
 import com.lambdaschool.starthere.models.Userpost;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
