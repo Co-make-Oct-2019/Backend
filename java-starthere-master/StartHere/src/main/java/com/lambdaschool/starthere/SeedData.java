@@ -57,36 +57,37 @@ public class SeedData implements CommandLineRunner
                            admins, "Miami");
                 u1.getUserposts()
           .add(new Userpost(u1,
-                             "We have too many potholes!", "Miami", "Someone please help fix these potholes", nameFaker.internet().avatar()));
+                             "We have too many potholes!", "Miami", "Someone please help fix these potholes", nameFaker.internet().image()));
         u1.getUserposts()
                 .add(new Userpost(u1,
             "The park is too muddy", "Miami", "If we planted grass, it would help with all the mud. Then it would be fun to play there.", nameFaker.internet().avatar()));
 
         User firstUser = new User();
+        u1.setImageurl(nameFaker.internet().avatar());
         firstUser = userService.save(u1);
 
 
         firstUser.getUserposts().get(0)
-        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().avatar()));
+        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()));
 
 
 
         ArrayList<UserRoles> datas = new ArrayList<>();
         datas.add(new UserRoles(new User(),
-                                r3));
-        datas.add(new UserRoles(new User(),
-                                r2));
+                                r1));
+//        datas.add(new UserRoles(new User(),
+//                                r2));
         User u2 = new User("cinnamon",
                            "1234567",
                            datas, "Miami");
 
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", "Miami", "I think he fell in a pothole"));
+                        "I lost my dog!", "Miami", "I think he fell in a pothole", nameFaker.internet().image()));
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", "Miami", "His name is Joe"));
-
+                        "I lost my dog!", "Miami", "His name is Joe", nameFaker.internet().image()));
+        u2.setImageurl(nameFaker.internet().avatar());
         userService.save(u2);
 
         // user
@@ -99,7 +100,8 @@ public class SeedData implements CommandLineRunner
 
         u3.getUserposts()
                 .add(new Userpost(u3,
-                        "Town center mural", "Miami", "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().avatar()));
+                        "Town center mural", "Miami", "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().image()));
+        u3.setImageurl(nameFaker.internet().avatar());
         userService.save(u3);
 
         users = new ArrayList<>();
@@ -108,14 +110,17 @@ public class SeedData implements CommandLineRunner
         User u4 = new User("puttat",
                            "password",
                            users, "Miami");
+        u4.setImageurl(nameFaker.internet().avatar());
         userService.save(u4);
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(),
                                 r2));
+
         User u5 = new User("misskitty",
                            "password",
                            users, "New York");
+        u5.setImageurl(nameFaker.internet().avatar());
         userService.save(u5);
 
 
@@ -133,14 +138,14 @@ public class SeedData implements CommandLineRunner
 
             fakeUser.getUserposts()
                     .add(new Userpost(fakeUser,
-                            nameFaker.chuckNorris().fact(), "Portland", nameFaker.gameOfThrones().quote(), nameFaker.internet().avatar()));
+                            nameFaker.chuckNorris().fact(), "Portland", nameFaker.gameOfThrones().quote(), nameFaker.internet().image()));
             User newUser = new User();
-
+            fakeUser.setImageurl(nameFaker.internet().avatar());
             newUser = userService.save(fakeUser);
             newUser.getUserposts()
                     .get(0)
                     .getPostcomments()
-                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().avatar()));
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image()));
         }
     }
 }
