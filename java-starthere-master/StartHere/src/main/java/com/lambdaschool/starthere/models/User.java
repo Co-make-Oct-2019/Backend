@@ -64,7 +64,7 @@ public class User extends Auditable {
 //    private String primaryemail;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"user", "userroles", "userrole"})
     @JsonIgnore
     private List<UserRoles> userroles = new ArrayList<>();
