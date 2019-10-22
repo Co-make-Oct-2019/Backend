@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService
 {
-//    UserDetails loadUserByUsername(String username);
+    UserDetails loadUserByUsername(String username);
 
     List<User> findAll(Pageable pageable);
 
