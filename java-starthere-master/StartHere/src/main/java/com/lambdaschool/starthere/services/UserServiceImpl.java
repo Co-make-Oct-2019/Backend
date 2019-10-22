@@ -97,6 +97,7 @@ public class UserServiceImpl implements UserDetailsService,
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setDescription(user.getDescription());
         newUser.setImageurl(user.getImageurl());
+        newUser.setReputation(0);
 
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
@@ -143,6 +144,9 @@ public class UserServiceImpl implements UserDetailsService,
         }
         if (user.getUsername() != null) {
             currentUser.setUsername(user.getUsername());
+        }
+        if(user.getReputation() != null){
+            currentUser.setReputation(user.getReputation());
         }
 
         return userrepos.save(currentUser);

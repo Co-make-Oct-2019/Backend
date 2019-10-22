@@ -17,6 +17,9 @@ public class UserpostServiceImplementation implements UserpostService {
     @Autowired
     private UserpostRepository userpostrepos;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public Userpost save(Userpost userpost, User user) {
 
@@ -122,6 +125,9 @@ public class UserpostServiceImplementation implements UserpostService {
         if (matching != true) {
             userpostrepos.addVote(user.getUserid(), userpost.getUserpostid());
             System.out.println("Vote added");
+            User updateUser = new User();
+            updateUser.setReputation(userpost.getUser().getReputation() + 1);
+            userService.update(updateUser, userpost.getUser().getUserid(), true);
         } else {
             System.out.println("You already upvoted this post");
         }
@@ -139,6 +145,9 @@ public class UserpostServiceImplementation implements UserpostService {
         if (matching == true) {
             userpostrepos.removeVote(user.getUserid(), userpost.getUserpostid());
             System.out.println("Vote removed");
+            User updateUser = new User();
+            updateUser.setReputation(userpost.getUser().getReputation() - 1);
+            userService.update(updateUser, userpost.getUser().getUserid(), true);
         } else {
             System.out.println("You haven't upvoted this yet");
         }
@@ -156,6 +165,11 @@ public class UserpostServiceImplementation implements UserpostService {
         return myCount;
     }
 
+//    @Override
+//    public int getReputation(User user) {
+//        int reputationCount = userpostrepos.getReputation(user.getUserid());
+//        return reputationCount;
+//    }
 
     @Override
     public List<Userpost> findByNameContaining(String titlestring) {

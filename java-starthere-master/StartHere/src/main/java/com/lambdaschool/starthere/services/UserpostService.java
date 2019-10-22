@@ -40,6 +40,8 @@ public interface UserpostService {
 
     int getCount(Userpost userpost);
 
+//    int getReputation(User user);
+
 
     void delete(long id);
 //    User user, String title, long zip, String description, String imageurl

@@ -35,6 +35,10 @@ public class User extends Auditable {
             unique = true)
     private String username;
 
+    @ApiModelProperty(hidden=true)
+    @Column(nullable = false)
+    private Integer reputation;
+
     @ApiModelProperty(name = "userid", value = "primary key for a user", required = true, example = "Seattle")
     @Column(nullable = false)
     private String location;
@@ -89,10 +93,19 @@ public class User extends Auditable {
         setUsername(username);
         setPassword(password);
         setLocation(location);
+        setReputation(0);
         for (UserRoles ur : userRoles) {
             ur.setUser(this);
         }
         this.userroles = userRoles;
+    }
+
+    public Integer getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(Integer reputation) {
+        this.reputation = reputation;
     }
 
     public String getLocation() {

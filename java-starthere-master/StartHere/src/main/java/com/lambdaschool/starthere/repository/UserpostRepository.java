@@ -35,8 +35,11 @@ public interface UserpostRepository extends PagingAndSortingRepository<Userpost,
     @Query(value = "DELETE FROM postvotes where userpostid = :userpostid and userid = :userid", nativeQuery = true)
     void removeVote(long userid, long userpostid);
 
-    @Query(value = "SELECT COUNT(*) FROM postvotes\n WHERE userpostid = :userpostid", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM postvotes WHERE userpostid = :userpostid", nativeQuery = true)
     int getCount(long userpostid);
+
+//    @Query(value = "SELECT COUNT(*) FROM postvotes WHERE userid = :userid", nativeQuery = true)
+//    int getReputation(long userid);
 
     List<Userpost> findByTitleContainingIgnoreCase(String name);
 }
