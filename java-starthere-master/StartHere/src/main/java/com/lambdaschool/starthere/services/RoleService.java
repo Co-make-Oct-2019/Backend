@@ -10,11 +10,11 @@ public interface RoleService
 
     Role findRoleById(long id);
 
-    void delete(long id);
+//    void delete(long id);
 
     Role save(Role role);
 
     Role findByName(String name);
 
-    Role update(long id, Role role);
+//    Role update(long id, Role role);
 }

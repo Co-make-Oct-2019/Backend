@@ -49,7 +49,7 @@ public class PostcommentServiceImplementationTest {
 
     @Test
     public void findAll() {
-        assertEquals(11, postcommentService.findAll().size());
+        assertEquals(12, postcommentService.findAll().size());
     }
 
     @Test
@@ -74,9 +74,9 @@ public class PostcommentServiceImplementationTest {
         Postcomment pc2 = postcommentService.save(pc, saveU2, saveup);
         assertNotNull(pc2);
 //        assertEquals("guy", pc2.getUser().getUsername());
-        assertEquals(12, postcommentService.findAll().size());
+        assertEquals(13, postcommentService.findAll().size());
         postcommentService.delete(pc2.getPostcommentid());
-        assertEquals(11, postcommentService.findAll().size());
+        assertEquals(12, postcommentService.findAll().size());
     }
 
     @Test

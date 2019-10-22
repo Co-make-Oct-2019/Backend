@@ -44,11 +44,20 @@ public class UserpostServiceImplementationTest {
 
     @Test
     public void save() {
+
+        User user = userService.findByName("admin");
+        user.setUsername("admin233");
+        List<Userpost> ups = new ArrayList<>();
+        user.setUserposts(ups);
+        User u2 = userService.save(user);
+        Userpost newPost = userpostService.save(new Userpost(u2, "something else", "something else", "something else", "something else"), u2);
+
+        assertNotNull(newPost);
     }
 
     @Test
     public void findAll() {
-        assertEquals(15, userpostService.findAll().size());
+        assertEquals(16, userpostService.findAll().size());
     }
 
     @Test
@@ -60,30 +69,38 @@ public class UserpostServiceImplementationTest {
     @Test
     public void findByCurrentLocation() {
         List<Userpost> mylist = userpostService.findByCurrentLocation("Miami");
-        assertEquals(5, mylist.size());
+        assertEquals(4, mylist.size());
     }
 
     @Test
     public void findByUserName() {
         List<Userpost> mylist = userpostService.findByUserName("admin");
-        assertEquals(2, mylist.size());
+        assertEquals(1, mylist.size());
     }
 
     @Test
     public void findByNotUserid() {
         List<Userpost> mylist = userpostService.findByNotUserid(4);
-        assertEquals(13, mylist.size());
+        assertEquals(15, mylist.size());
     }
 
     @Test
     public void delete() {
-
         userpostService.delete(6);
-        assertEquals(14, userpostService.findAll().size());
+        assertEquals(16, userpostService.findAll().size());
     }
 
     @Test
     public void update() {
+        User user = userService.findByName("admin");
+        user.setUsername("admin2212");
+        List<Userpost> ups = new ArrayList<>();
+        user.setUserposts(ups);
+        User u2 = userService.save(user);
+        Userpost newPost = userpostService.save(new Userpost(u2, "something else", "something else", "something else", "something else"), u2);
+        newPost.setTitle("Moo");
+        Userpost u3 = userpostService.update(newPost, newPost.getUserpostid(), true);
+        System.out.println(u3.getTitle());
     }
 
     @Test
@@ -100,17 +117,63 @@ public class UserpostServiceImplementationTest {
 
     @Test
     public void increment() {
+        User user = userService.findByName("admin");
+        user.setUsername("admin244");
+        List<Userpost> ups = new ArrayList<>();
+        user.setUserposts(ups);
+        User u2 = userService.save(user);
+        Userpost newPost = userpostService.save(new Userpost(u2, "something else", "something else", "something else", "something else"), u2);
+
+        Userpost u3 = userpostService.increment(user, newPost);
+//        System.out.println(u3.getCount());
+        assertTrue(1 == u3.getCount());
+//        assertEquals(1, u3.getCount());
+
+//        boolean matching = userpostService.checkMatch(u2, newPost);
+//        assertEquals(false, matching);
+
     }
 
     @Test
     public void decrement() {
+
+        User user = userService.findByName("admin");
+        user.setUsername("admin23");
+        List<Userpost> ups = new ArrayList<>();
+        user.setUserposts(ups);
+        User u2 = userService.save(user);
+        Userpost newPost = userpostService.save(new Userpost(u2, "something else", "something else", "something else", "something else"), u2);
+
+        Userpost u3 = userpostService.increment(user, newPost);
+//        System.out.println(u3.getCount());
+        assertTrue(1 == u3.getCount());
+        Userpost u4 = userpostService.decrement(user, newPost);
+        assertTrue(0 == u4.getCount());
     }
 
     @Test
     public void getCount() {
+
+        User user = userService.findByName("admin");
+        user.setUsername("admin255");
+        List<Userpost> ups = new ArrayList<>();
+        user.setUserposts(ups);
+        User u2 = userService.save(user);
+        Userpost newPost = userpostService.save(new Userpost(u2, "something else", "something else", "something else", "something else"), u2);
+
+        Userpost u3 = userpostService.increment(user, newPost);
+
+        assertTrue(userpostService.getCount(u3) == 1);
+//        System.out.println(u3.getCount());
+//        assertTrue(1 == u3.getCount());
+
+
     }
 
     @Test
     public void findByNameContaining() {
+
+        List<Userpost> mylist = userpostService.findByNameContaining("TEST");
+        assertTrue(mylist.size()> 1);
     }
 }

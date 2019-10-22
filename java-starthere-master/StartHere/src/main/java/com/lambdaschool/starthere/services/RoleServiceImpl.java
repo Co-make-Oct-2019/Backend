@@ -57,36 +57,36 @@ public class RoleServiceImpl implements RoleService
         }
     }
 
-    @Transactional
-    @Override
-    public void delete(long id)
-    {
-        rolerepos.findById(id)
-                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
-        rolerepos.deleteById(id);
-    }
+//    @Transactional
+//    @Override
+//    public void delete(long id)
+//    {
+//        rolerepos.findById(id)
+//                 .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
+//        rolerepos.deleteById(id);
+//    }
 
 
-    @Transactional
-    @Override
-    public Role update(long id, Role role)
-    {
-        if (role.getName() == null)
-        {
-            throw new ResourceNotFoundException("No role name found to update!");
-        }
-
-        if (role.getUserroles()
-                .size() > 0)
-        {
-            throw new ResourceFoundException("User Roles are not updated through Role. See endpoint POST: users/user/{userid}/role/{roleid}");
-        }
-
-        Role newRole = findRoleById(id); // see if id exists
-
-        rolerepos.updateRoleName(id, role.getName());
-        return findRoleById(id);
-    }
+//    @Transactional
+//    @Override
+//    public Role update(long id, Role role)
+//    {
+//        if (role.getName() == null)
+//        {
+//            throw new ResourceNotFoundException("No role name found to update!");
+//        }
+//
+//        if (role.getUserroles()
+//                .size() > 0)
+//        {
+//            throw new ResourceFoundException("User Roles are not updated through Role. See endpoint POST: users/user/{userid}/role/{roleid}");
+//        }
+//
+//        Role newRole = findRoleById(id); // see if id exists
+//
+//        rolerepos.updateRoleName(id, role.getName());
+//        return findRoleById(id);
+//    }
 
 
 
