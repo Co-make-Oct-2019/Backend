@@ -7,13 +7,12 @@ import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
 import com.lambdaschool.starthere.services.UserService;
 import com.lambdaschool.starthere.services.UserpostService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -319,5 +318,37 @@ public class UserpostController {
 
         return new ResponseEntity<>(newuserpost,
                 HttpStatus.CREATED);
+    }
+
+
+    // http://localhost:2019/users/user/name/like/da?sort=username
+    @ApiOperation(value = "returns all Posts with titles containing a given string",
+            response = Userpost.class,
+            responseContainer = "List")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping(value = "/post/like/{titlestring}",
+            produces = {"application/json"})
+    public ResponseEntity<?> getUserLikeName(HttpServletRequest request, @ApiParam(value = "titlestring", required = true, example = "john")
+    @PathVariable
+            String titlestring, Authentication authentication) {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+//        List<User> u = userService.findByNameContaining(titlestring);
+        List<Userpost> ups = userpostService.findByNameContaining(titlestring);
+
+        User currentUser = userService.findByName(authentication.getName());
+//        for (User u1 : u) {
+//            List<Userpost> userposts = u1.getUserposts();
+            for (Userpost up : ups) {
+                boolean checkMatch = userpostService.checkMatch(currentUser, up);
+                if (checkMatch == true) {
+                    up.setVoted(true);
+                }
+            }
+//        }
+
+        return new ResponseEntity<>(ups,
+                HttpStatus.OK);
     }
 }

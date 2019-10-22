@@ -2,6 +2,7 @@ package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.Userpost;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public interface UserpostService {
 
     List<Userpost> findByCurrentLocation(String location);
 
+    List<Userpost> findByNameContaining(String titlestring);
 
     List<Userpost> findByNotUserid(long id);
 

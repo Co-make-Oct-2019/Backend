@@ -155,4 +155,10 @@ public class UserpostServiceImplementation implements UserpostService {
         System.out.println("COUNT: " + myCount);
         return myCount;
     }
+
+
+    @Override
+    public List<Userpost> findByNameContaining(String titlestring) {
+        return userpostrepos.findByTitleContainingIgnoreCase(titlestring.toLowerCase());
+    }
 }

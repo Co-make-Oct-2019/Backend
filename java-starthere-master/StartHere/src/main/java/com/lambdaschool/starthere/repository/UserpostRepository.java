@@ -3,6 +3,7 @@ package com.lambdaschool.starthere.repository;
 import com.lambdaschool.starthere.models.User;
 
 import com.lambdaschool.starthere.models.Userpost;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -36,4 +37,6 @@ public interface UserpostRepository extends PagingAndSortingRepository<Userpost,
 
     @Query(value = "SELECT COUNT(*) FROM postvotes\n WHERE userpostid = :userpostid", nativeQuery = true)
     int getCount(long userpostid);
+
+    List<Userpost> findByTitleContainingIgnoreCase(String name);
 }
