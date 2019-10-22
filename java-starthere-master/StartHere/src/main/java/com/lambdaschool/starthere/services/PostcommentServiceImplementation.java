@@ -37,16 +37,16 @@ public class PostcommentServiceImplementation implements PostcommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Postcomment with id " + id + " Not Found!"));
     }
 
-    @Override
-    public List<Postcomment> findByUserName(String username, boolean isAdmin) {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin) {
-            return postcommentrepos.findAllByUser_Username(username.toLowerCase());
-        } else {
-            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
-        }
-    }
+//    @Override
+//    public List<Postcomment> findByUserName(String username, boolean isAdmin) {
+//        Authentication authentication = SecurityContextHolder.getContext()
+//                .getAuthentication();
+//        if (username.equalsIgnoreCase(authentication.getName().toLowerCase()) || isAdmin) {
+//            return postcommentrepos.findAllByUser_Username(username.toLowerCase());
+//        } else {
+//            throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
+//        }
+//    }
 
     @Override
     public void delete(long id) {

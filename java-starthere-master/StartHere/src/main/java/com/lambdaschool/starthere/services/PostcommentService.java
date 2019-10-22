@@ -13,8 +13,8 @@ public interface PostcommentService {
 
     Postcomment findPostcommentById(long id);
 
-    List<Postcomment> findByUserName(String username,
-                                  boolean isAdmin);
+//    List<Postcomment> findByUserName(String username,
+//                                  boolean isAdmin);
 
     //Need to find by post id?
 
