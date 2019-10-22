@@ -8,8 +8,10 @@ import com.lambdaschool.starthere.models.UserRoles;
 import com.lambdaschool.starthere.models.Userpost;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +24,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartHereApplicationTest.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PostcommentServiceImplementationTest {
 
 
@@ -61,7 +64,19 @@ public class PostcommentServiceImplementationTest {
 //    }
 
     @Test
-    public void delete() {
+    public void Z_delete() {
+        ArrayList<UserRoles> datas = new ArrayList<>();
+        User user = new User("guy2", "password", datas, "location");
+        user.setUserid(101);
+        User saveU2 = userService.save(user);
+        Userpost saveup = userpostService.save(new Userpost(saveU2, "title", "location", "descritption", "url"), saveU2);
+        Postcomment pc = new Postcomment(saveU2, saveup, "TITLE", "DESC", "IMAGE");
+        Postcomment pc2 = postcommentService.save(pc, saveU2, saveup);
+        assertNotNull(pc2);
+//        assertEquals("guy", pc2.getUser().getUsername());
+        assertEquals(12, postcommentService.findAll().size());
+        postcommentService.delete(pc2.getPostcommentid());
+        assertEquals(11, postcommentService.findAll().size());
     }
 
     @Test
@@ -81,7 +96,7 @@ public class PostcommentServiceImplementationTest {
     @Test
     public void save() {
         ArrayList<UserRoles> datas = new ArrayList<>();
-        User user = new User("guy","password",datas, "location");
+        User user = new User("guy", "password", datas, "location");
         user.setUserid(100);
         User saveU2 = userService.save(user);
         Userpost saveup = userpostService.save(new Userpost(saveU2, "title", "location", "descritption", "url"), saveU2);
