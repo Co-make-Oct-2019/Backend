@@ -152,42 +152,42 @@ public class UserServiceImpl implements UserDetailsService,
         return userrepos.save(currentUser);
 
     }
-
-    @Transactional
-    @Override
-    public void deleteUserRole(long userid,
-                               long roleid) {
-        userrepos.findById(userid)
-                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
-        rolerepos.findById(roleid)
-                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
-
-        if (rolerepos.checkUserRolesCombo(userid,
-                roleid)
-                .getCount() > 0) {
-            rolerepos.deleteUserRoles(userid,
-                    roleid);
-        } else {
-            throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
-        }
-    }
-
-    @Transactional
-    @Override
-    public void addUserRole(long userid,
-                            long roleid) {
-        userrepos.findById(userid)
-                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
-        rolerepos.findById(roleid)
-                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
-
-        if (rolerepos.checkUserRolesCombo(userid,
-                roleid)
-                .getCount() <= 0) {
-            rolerepos.insertUserRoles(userid,
-                    roleid);
-        } else {
-            throw new ResourceFoundException("Role and User Combination Already Exists");
-        }
-    }
+//
+//    @Transactional
+//    @Override
+//    public void deleteUserRole(long userid,
+//                               long roleid) {
+//        userrepos.findById(userid)
+//                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
+//        rolerepos.findById(roleid)
+//                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
+//
+//        if (rolerepos.checkUserRolesCombo(userid,
+//                roleid)
+//                .getCount() > 0) {
+//            rolerepos.deleteUserRoles(userid,
+//                    roleid);
+//        } else {
+//            throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
+//        }
+//    }
+//
+//    @Transactional
+//    @Override
+//    public void addUserRole(long userid,
+//                            long roleid) {
+//        userrepos.findById(userid)
+//                .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
+//        rolerepos.findById(roleid)
+//                .orElseThrow(() -> new ResourceNotFoundException("Role id " + roleid + " not found!"));
+//
+//        if (rolerepos.checkUserRolesCombo(userid,
+//                roleid)
+//                .getCount() <= 0) {
+//            rolerepos.insertUserRoles(userid,
+//                    roleid);
+//        } else {
+//            throw new ResourceFoundException("Role and User Combination Already Exists");
+//        }
+//    }
 }

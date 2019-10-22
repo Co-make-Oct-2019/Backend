@@ -99,7 +99,9 @@ public class SeedData implements CommandLineRunner
                 .add(new Userpost(u2,
                         "TEST I lost my dog!", "Miami", "TEST His name is Joe", nameFaker.internet().image()));
         u2.setImageurl(nameFaker.internet().avatar());
-        userService.save(u2);
+        User cin = userService.save(u2);
+        System.out.println(cin.getUserid());
+        System.out.println(cin.getUsername());
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();

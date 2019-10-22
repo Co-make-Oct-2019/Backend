@@ -66,11 +66,21 @@ public class UserServiceImplTest {
     @Test
     public void findAll() {
         List<User> mylist = userService.findAll(Pageable.unpaged());
-        assertEquals(15, mylist.size());
+        assertEquals(14, mylist.size());
     }
 
     @Test
     public void delete() {
+        User user = userService.findUserById(8);
+//        user.setUsername("admin3");
+//        List<Userpost> up = new ArrayList<>();
+//        user.setUserposts(up);
+//        User u2 = userService.save(user);
+        List<User> mylist = userService.findAll(Pageable.unpaged());
+//        assertEquals(16, mylist.size());
+        userService.delete(user.getUserid());
+//        assertNull(u2);
+        assertEquals(15, mylist.size());
     }
 
     @Test
@@ -87,7 +97,7 @@ public class UserServiceImplTest {
         user.setUserposts(up);
         User u2 = userService.save(user);
         List<User> mylist = userService.findAll(Pageable.unpaged());
-        assertEquals(16, mylist.size());
+        assertEquals(15, mylist.size());
         userService.delete(u2.getUserid());
     }
 
@@ -105,11 +115,11 @@ public class UserServiceImplTest {
 
     }
 
-    @Test
-    public void deleteUserRole() {
-    }
-
-    @Test
-    public void addUserRole() {
-    }
+//    @Test
+//    public void deleteUserRole() {
+//    }
+//
+//    @Test
+//    public void addUserRole() {
+//    }
 }
