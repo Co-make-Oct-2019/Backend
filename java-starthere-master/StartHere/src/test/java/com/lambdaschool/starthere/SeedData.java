@@ -76,10 +76,17 @@ public class SeedData implements CommandLineRunner
 //        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "TEST There's more in front of my house too!", "TEST You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()));
 
         Postcomment pc = postcommentService.save(new Postcomment(firstUser, firstUser.getUserposts().get(0), "TEST There's more in front of my house too!", "TEST You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()), firstUser, firstUser.getUserposts().get(0));
+        Postcomment pc2 = postcommentService.save(new Postcomment(firstUser, firstUser.getUserposts().get(0), "TEST There's more in front of my house too!", "TEST You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()), firstUser, firstUser.getUserposts().get(1));
+
+
 
 //        Postcomment pc = firstUser.getUserposts().get(0).getPostcomments().get(0);
-        System.out.println(firstUser.getUserid());
+
 //        System.out.println(pc.getTitle());
+        System.out.println(pc.getUserpost().getUserpostid());
+        System.out.println("**************************");
+        System.out.println("**************************");
+        System.out.println(pc2.getUserpost().getUserpostid());
         System.out.println("**************************");
         System.out.println("**************************");
 
@@ -100,8 +107,6 @@ public class SeedData implements CommandLineRunner
                         "TEST I lost my dog!", "Miami", "TEST His name is Joe", nameFaker.internet().image()));
         u2.setImageurl(nameFaker.internet().avatar());
         User cin = userService.save(u2);
-        System.out.println(cin.getUserid());
-        System.out.println(cin.getUsername());
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
