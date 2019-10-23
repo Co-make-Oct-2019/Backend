@@ -1,6 +1,7 @@
 package com.lambdaschool.starthere;
 
 
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 //@EnableJpaAuditing
+//@RunWith(SpringRunner.class)
+//@ContextConfiguration(classes=StartHereApplicationTest.class)
 @SpringBootApplication
 public class StartHereApplicationTest
 {

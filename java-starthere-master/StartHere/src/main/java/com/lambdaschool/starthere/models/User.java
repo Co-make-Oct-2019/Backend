@@ -58,13 +58,11 @@ public class User extends Auditable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-//    @Column(nullable = false,
-//            unique = true)
-//    @Email
-//    private String primaryemail;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+            cascade = CascadeType.ALL
+            , fetch = FetchType.EAGER
+    )
     @JsonIgnoreProperties({"user", "userroles", "userrole"})
     @JsonIgnore
     private List<UserRoles> userroles = new ArrayList<>();

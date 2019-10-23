@@ -40,7 +40,7 @@ public class Swagger2Config
                                                       .ignoredParameterTypes(Pageable.class) // allows only my paging parameter list
                                                       .apiInfo(apiEndPointsInfo())
                                                       .pathMapping("/")
-//                                                      .additionalModels(resolver.resolve(TokenModel.class),
+                                                      .additionalModels(resolver.resolve(TokenModel.class))
 //                                                                        resolver.resolve(ErrorDetail.class))
                                                       .ignoredParameterTypes(SimpleGrantedAuthority.class);
     }

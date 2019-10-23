@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserDetailsService,
     @Override
     public List<User> findByNameContaining(String username,
                                            Pageable pageable) {
+
+//        User user = new User();
+
         return userrepos.findByUsernameContainingIgnoreCase(username.toLowerCase(),
                 pageable);
     }
