@@ -1,51 +1,80 @@
-//package com.lambdaschool.starthere.controller;
-//
-//import com.lambdaschool.starthere.StartHereApplicationTest;
-//import com.lambdaschool.starthere.controllers.UserpostController;
-//import com.lambdaschool.starthere.models.Userpost;
-//import com.lambdaschool.starthere.services.UserpostService;
-//import org.junit.After;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit4.SpringRunner;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import java.util.List;
-//
-//@RunWith(SpringRunner.class)
-//@WebMvcTest(value = UserpostController.class, secure = false)
-////@ContextConfiguration(classes= StartHereApplicationTest.class)
-//public class UserpostControllerTest {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private UserpostService userpostService;
-//
-//    private List<Userpost> userpostList;
-//
-//    @Before
-//    public void setUp()
-//    {
-//
-//    }
-//
-//    @After
-//    public void tearDown()
-//    {
-//
-//    }
-//
-//    @Test
-//    public void doNothing()
-//    {
-//
-//    }
-//
-//}
+package com.lambdaschool.starthere.controller;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class UserpostControllerTest {
+
+    @Before
+    public void setUp() throws Exception {
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+    }
+
+    @Test
+    public void listAllUserposts() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void findUserpostsByUserName() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void findUserpostsByCurrentLocation() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void findUserpostsByLocation() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void findAllOtherUserpostsExceptMine() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void updatePost() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void incrementPostCount() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void decrementPostCount() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void getUserPostById() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void deleteUserpostById() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void addNewUserpost() {
+        //Not testing because requires authentication
+    }
+
+    @Test
+    public void getUserLikeName() {
+        //Not testing because requires authentication
+    }
+}
