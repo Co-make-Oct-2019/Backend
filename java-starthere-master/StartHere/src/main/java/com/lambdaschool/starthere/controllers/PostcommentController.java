@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 public class PostcommentController {
     private static final Logger logger = LoggerFactory.getLogger(PostcommentController.class);
 
-
     @Autowired
     UserService userService;
 
@@ -37,7 +36,6 @@ public class PostcommentController {
     @Autowired
     UserpostService userpostService;
 
-
     @ApiOperation(value = "View a comment with given id",
             response = Postcomment.class)
     @GetMapping(value = "/comment/{postcommentid}", produces = {"application/json"})
@@ -46,23 +44,17 @@ public class PostcommentController {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-
         User currentUser = userService.findByName(authentication.getName());
-
 
         Postcomment currentPostcomment = postcommentService.findPostcommentById(postcommentid);
 
-
         Userpost up = currentPostcomment.getUserpost();
-
 
         boolean checkMatch = userpostService.checkMatch(currentUser, up);
 
         if (checkMatch == true) {
             up.setVoted(true);
         }
-
-
 
         return new ResponseEntity<>(currentPostcomment, HttpStatus.OK);
     }
