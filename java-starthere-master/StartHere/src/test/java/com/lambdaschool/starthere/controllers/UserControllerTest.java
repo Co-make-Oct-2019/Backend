@@ -1,9 +1,7 @@
-package com.lambdaschool.starthere.controller;
+package com.lambdaschool.starthere.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lambdaschool.starthere.StartHereApplication;
 import com.lambdaschool.starthere.StartHereApplicationTest;
-import com.lambdaschool.starthere.controllers.UserController;
 import com.lambdaschool.starthere.models.Role;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserRoles;
@@ -19,18 +17,15 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.lambdaschool.starthere.controller;
+package com.lambdaschool.starthere.controllers;
 
 
 import com.lambdaschool.starthere.StartHereApplicationTest;
@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
@@ -132,10 +131,6 @@ public class UserpostControllerIntegrationTest {
 
         Userpost up1 = new Userpost(u1,
                 "TEST We have too many potholes!", "Miami", "TEST Someone please help fix these potholes");
-//        ArrayList<RestaurantPayments> thisPay = new ArrayList<>();
-//        String rest3Name = "Number 1 Test Eats";
-//        Restaurant r3 = new Restaurant(rest3Name, "565 Side Test Avenue", "Village", "ST", "555-123-1555", thisPay);
-//        r3.getMenus().add(new Menu("Pizza", 15.15, r3));
 
         com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         String stringR3 = mapper.writeValueAsString(up1);

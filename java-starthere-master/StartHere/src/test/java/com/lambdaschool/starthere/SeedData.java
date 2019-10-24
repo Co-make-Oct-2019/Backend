@@ -77,6 +77,10 @@ public class SeedData implements CommandLineRunner
 
         Postcomment pc = postcommentService.save(new Postcomment(firstUser, firstUser.getUserposts().get(0), "TEST There's more in front of my house too!", "TEST You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()), firstUser, firstUser.getUserposts().get(0));
         Postcomment pc2 = postcommentService.save(new Postcomment(firstUser, firstUser.getUserposts().get(0), "TEST There's more in front of my house too!", "TEST You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()), firstUser, firstUser.getUserposts().get(1));
+        System.out.println(pc2.getPostcommentid());
+        System.out.println(pc2.getPostcommentid());
+        System.out.println(pc.getPostcommentid());
+        System.out.println(pc.getPostcommentid());
 
 
 
