@@ -1,5 +1,6 @@
 package com.lambdaschool.starthere.controller;
 
+import com.lambdaschool.starthere.StartHereApplicationTest;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.After;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,7 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(secure = false)
+@ContextConfiguration(classes= StartHereApplicationTest.class)
 public class UserControllerIntegrationTests
 {
     @Autowired
@@ -68,7 +71,7 @@ public class UserControllerIntegrationTests
     {
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void A_whenMeasuredResponseTime()
     {
@@ -78,68 +81,49 @@ public class UserControllerIntegrationTests
                 .time(lessThan(5000L));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void B_getAllUsers() throws Exception
     {
         this.mockMvc.perform(get("/users/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testbarn")));
+                .andExpect(content().string(containsString("admin")));
     }
 
-    @WithUserDetails("testbarn")
-    @Test
-    public void BA_getReallyAllUsers() throws Exception
-    {
-        this.mockMvc.perform(get("/users/users/all"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testbarn")));
-    }
 
-    @WithUserDetails("testbarn")
-    @Test
-    public void BB_getUserName() throws Exception
-    {
-        this.mockMvc.perform(get("/users/getusername"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testbarn")));
-    }
-
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void BC_getUserInfo() throws Exception
     {
         this.mockMvc.perform(get("/users/getuserinfo"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testbarn")));
+                .andExpect(content().string(containsString("admin")));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void BD_getUserLikeName() throws Exception
     {
         this.mockMvc.perform(get("/users/user/name/like/{userName}", "test"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testbarn")));
+                .andExpect(content().string(containsString("test")));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void C_getUserById() throws Exception
     {
         this.mockMvc.perform(get("/users/user/{userid}",
-                14))
+                28))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testdog")));
+                .andExpect(content().string(containsString("test")));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void CA_getUserByIdNotFound() throws Exception
     {
@@ -150,18 +134,18 @@ public class UserControllerIntegrationTests
                 .andExpect(content().string(containsString("ResourceNotFoundException")));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void D_getUserByName() throws Exception
     {
         this.mockMvc.perform(get("/users/user/name/{userName}",
-                "testcat"))
+                "admin"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testcat")));
+                .andExpect(content().string(containsString("admin")));
     }
 
-    @WithUserDetails("testbarn")
+    @WithUserDetails("admin")
     @Test
     public void DA_getUserByNameNotFound() throws Exception
     {
@@ -172,82 +156,12 @@ public class UserControllerIntegrationTests
                 .andExpect(content().string(containsString("ResourceNotFoundException")));
     }
 
-    @WithUserDetails("testdog")
-    @Test
-    public void E_getCurrentUserName() throws Exception
-    {
-        this.mockMvc.perform(get("/users/getusername"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("testdog")));
-    }
 
-    @WithUserDetails("testbarn")
-    @Test
-    public void F_givenPostAUser() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/user")
-                .content("{\"username\": \"Ginger\", \"password\": \"EATEATEAT\", \"primaryemail\" : \"ginger@home.local\"}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.header()
-                        .exists("location"));
-    }
 
-    @WithUserDetails("admin")
-    @Test
-    public void G_deleteUserById() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/user/{id}",
-                13))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
 
-    @WithUserDetails("admin")
-    @Test
-    public void GA_deleteUserByIdNotFound() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/user/{id}",
-                100))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
 
-    @WithUserDetails("admin")
-    @Test
-    public void H_UpdateUser() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/user/{userid}",
-                7)
-                .content("{\"password\": \"EATEATEAT\"}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
 
-    @WithUserDetails("admin")
-    @Test
-    public void I_deleteUserRoleByIds() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/user/{userid}/role/{roleid}",
-                7,
-                2))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
 
-    @WithUserDetails("admin")
-    @Test
-    public void J_postUserRoleByIds() throws Exception
-    {
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/user/{userid}/role/{roleid}",
-                7,
-                1))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
-    }
+
+
 }

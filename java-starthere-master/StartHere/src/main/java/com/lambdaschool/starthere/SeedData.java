@@ -57,7 +57,7 @@ public class SeedData implements CommandLineRunner
                            admins, "Miami");
                 u1.getUserposts()
           .add(new Userpost(u1,
-                             "We have too many potholes!", "Miami", "Someone please help fix these potholes", nameFaker.internet().image()));
+                             "NEED MORE BAO", "Miami", "Someone please open up a bao shop. Those are delicious", nameFaker.internet().image(300,300,false, "co-make")));
         u1.getUserposts()
                 .add(new Userpost(u1,
             "The park is too muddy", "Miami", "If we planted grass, it would help with all the mud. Then it would be fun to play there.", nameFaker.internet().avatar()));
@@ -68,25 +68,26 @@ public class SeedData implements CommandLineRunner
 
 
         firstUser.getUserposts().get(0)
-        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "There's more in front of my house too!", "You're right. This is a big problem! Let's talk to the mayor.", nameFaker.internet().image()));
+        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "Yea! Bao is soooo tasty!", "WHAT DO WE WANT?! BAO! WHEN DO WANT IT?! BAO!", nameFaker.internet().image(300,300,false, "co-make")));
 
-
+        firstUser.getUserposts().get(0)
+                .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "I'mma say it one more time...", "I want some bao right meow!", nameFaker.internet().image(300,300,false, "co-make")));
 
         ArrayList<UserRoles> datas = new ArrayList<>();
         datas.add(new UserRoles(new User(),
                                 r1));
 //        datas.add(new UserRoles(new User(),
 //                                r2));
-        User u2 = new User("cinnamon",
+        User u2 = new User("Bao",
                            "1234567",
                            datas, "Miami");
 
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", "Miami", "I think he fell in a pothole", nameFaker.internet().image()));
+                        "I lost my dog!", "Miami", "I think he fell in a pothole", nameFaker.internet().image(300,300,false, "co-make")));
         u2.getUserposts()
                 .add(new Userpost(u2,
-                        "I lost my dog!", "Miami", "His name is Joe", nameFaker.internet().image()));
+                        "I lost my dog!", "Miami", "His name is Joe", nameFaker.internet().image(300,300,false, "co-make")));
         u2.setImageurl(nameFaker.internet().avatar());
         userService.save(u2);
 
@@ -100,7 +101,7 @@ public class SeedData implements CommandLineRunner
 
         u3.getUserposts()
                 .add(new Userpost(u3,
-                        "Town center mural", "Miami", "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().image()));
+                        "Town center mural", "Miami", "The mural is old and faded. Let's get a group together to repaint it.", nameFaker.internet().image(300,300,false, "co-make")));
         u3.setImageurl(nameFaker.internet().avatar());
         userService.save(u3);
 
@@ -124,7 +125,7 @@ public class SeedData implements CommandLineRunner
         userService.save(u5);
 
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             new User();
             User fakeUser;
@@ -132,20 +133,238 @@ public class SeedData implements CommandLineRunner
             users = new ArrayList<>();
             users.add(new UserRoles(new User(),
                                     r1));
-            fakeUser = new User(nameFaker.zelda().character(),
+            fakeUser = new User(nameFaker.gameOfThrones().character(),
                                 "password",
                                 users, "Miami");
 
             fakeUser.getUserposts()
                     .add(new Userpost(fakeUser,
-                            nameFaker.chuckNorris().fact(), "Portland", nameFaker.gameOfThrones().quote(), nameFaker.internet().image()));
+                            nameFaker.chuckNorris().fact(), "Miami", nameFaker.gameOfThrones().quote(), nameFaker.internet().image(300,300,false, "co-make")));
             User newUser = new User();
             fakeUser.setImageurl(nameFaker.internet().avatar());
             newUser = userService.save(fakeUser);
             newUser.getUserposts()
                     .get(0)
                     .getPostcomments()
-                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image()));
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
         }
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            new User();
+            User fakeUser;
+
+            users = new ArrayList<>();
+            users.add(new UserRoles(new User(),
+                    r1));
+            fakeUser = new User(nameFaker.zelda().character(),
+                    "password",
+                    users, "Portland");
+
+            fakeUser.getUserposts()
+                    .add(new Userpost(fakeUser,
+                            nameFaker.chuckNorris().fact(), "Portland", nameFaker.gameOfThrones().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            User newUser = new User();
+            fakeUser.setImageurl(nameFaker.internet().avatar());
+            newUser = userService.save(fakeUser);
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            new User();
+            User fakeUser;
+
+            users = new ArrayList<>();
+            users.add(new UserRoles(new User(),
+                    r1));
+            fakeUser = new User(nameFaker.internet().emailAddress(),
+                    "password",
+                    users, "Chicago");
+
+            fakeUser.getUserposts()
+                    .add(new Userpost(fakeUser,
+                            nameFaker.chuckNorris().fact(), "Chicago", nameFaker.gameOfThrones().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            User newUser = new User();
+            fakeUser.setImageurl(nameFaker.internet().avatar());
+            newUser = userService.save(fakeUser);
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            new User();
+            User fakeUser;
+
+            users = new ArrayList<>();
+            users.add(new UserRoles(new User(),
+                    r1));
+            fakeUser = new User(nameFaker.artist().name(),
+                    "password",
+                    users, "Boston");
+
+            fakeUser.getUserposts()
+                    .add(new Userpost(fakeUser,
+                            nameFaker.chuckNorris().fact(), "Boston", nameFaker.gameOfThrones().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            User newUser = new User();
+            fakeUser.setImageurl(nameFaker.internet().avatar());
+            newUser = userService.save(fakeUser);
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+            newUser.getUserposts()
+                    .get(0)
+                    .getPostcomments()
+                    .add(new Postcomment(newUser, newUser.getUserposts().get(0), nameFaker.company().bs(), nameFaker.rickAndMorty().quote(), nameFaker.internet().image(300,300,false, "co-make")));
+        }
+
     }
 }

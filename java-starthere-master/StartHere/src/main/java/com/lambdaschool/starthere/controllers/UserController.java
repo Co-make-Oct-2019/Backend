@@ -37,6 +37,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Loggable
@@ -98,6 +100,9 @@ public class UserController {
                     up.setVoted(true);
                 }
             }
+            Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+            Collections.sort(userposts, compareByCount);
 
         }
 
@@ -146,6 +151,9 @@ public class UserController {
                 up.setVoted(true);
             }
         }
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
 
         return new ResponseEntity<>(u,
@@ -175,6 +183,9 @@ public class UserController {
                 up.setVoted(true);
             }
         }
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
         return new ResponseEntity<>(u,
                 HttpStatus.OK);
@@ -220,6 +231,9 @@ public class UserController {
                     up.setVoted(true);
                 }
             }
+            Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+            Collections.sort(userposts, compareByCount);
         }
 
         return new ResponseEntity<>(u,
@@ -265,6 +279,10 @@ public class UserController {
                 up.setVoted(true);
             }
         }
+
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
 
         return new ResponseEntity<>(u,
@@ -320,6 +338,10 @@ public class UserController {
                 up.setVoted(true);
             }
         }
+
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
 
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);

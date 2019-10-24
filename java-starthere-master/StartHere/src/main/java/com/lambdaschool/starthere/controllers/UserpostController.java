@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Loggable
@@ -58,6 +60,10 @@ public class UserpostController {
             }
         }
 
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(allUserposts, compareByCount);
+
         return new ResponseEntity<>(allUserposts,
                 HttpStatus.OK);
     }
@@ -83,6 +89,11 @@ public class UserpostController {
             }
         }
 
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
+
+//        userposts.sort();
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
@@ -108,6 +119,10 @@ public class UserpostController {
                 up.setVoted(true);
             }
         }
+
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
@@ -136,6 +151,11 @@ public class UserpostController {
             }
         }
 
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
+
+
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
     }
@@ -162,6 +182,10 @@ public class UserpostController {
                 up.setVoted(true);
             }
         }
+
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+
+        Collections.sort(userposts, compareByCount);
 
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);

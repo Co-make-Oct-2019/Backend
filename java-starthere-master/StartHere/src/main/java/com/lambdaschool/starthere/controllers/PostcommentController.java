@@ -62,6 +62,8 @@ public class PostcommentController {
             up.setVoted(true);
         }
 
+
+
         return new ResponseEntity<>(currentPostcomment, HttpStatus.OK);
     }
 
