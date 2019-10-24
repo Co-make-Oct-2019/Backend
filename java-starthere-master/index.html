@@ -1,0 +1,1620 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Java Spring Back End Build Week Project - Co-Make</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>Java Spring Back End Build Week Project - Co-Make</h1>
+    <div class="app-desc">A database to for a Lambda School project.</div>
+    <div class="app-desc">More information: <a href="https://www.krishannattar.com">https://www.krishannattar.com</a></div>
+    <div class="app-desc">Contact Info: <a href="krishan.nattar@gmail.com">krishan.nattar@gmail.com</a></div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Default">Default</a></h4>
+  <ul>
+  <li><a href="#userLogin"><code><span class="http-method">post</span> /login</code></a></li>
+  </ul>
+  <h4><a href="#LogoutController">LogoutController</a></h4>
+  <ul>
+  <li><a href="#logoutUsingGET"><code><span class="http-method">get</span> /logout</code></a></li>
+  <li><a href="#logoutUsingGET1"><code><span class="http-method">get</span> /oauth/revoke-token</code></a></li>
+  </ul>
+  <h4><a href="#PostcommentController">PostcommentController</a></h4>
+  <ul>
+  <li><a href="#addNewPostcommentUsingPOST"><code><span class="http-method">post</span> /comments/comment/{userpostid}</code></a></li>
+  <li><a href="#deletePostcommentByIdUsingDELETE"><code><span class="http-method">delete</span> /comments/comment/{postcommentid}</code></a></li>
+  <li><a href="#getPostCommentUsingGET"><code><span class="http-method">get</span> /comments/comment/{postcommentid}</code></a></li>
+  <li><a href="#updatePostCommentUsingPUT"><code><span class="http-method">put</span> /comments/comment/{postcommentid}</code></a></li>
+  </ul>
+  <h4><a href="#UserController">UserController</a></h4>
+  <ul>
+  <li><a href="#addNewUserUsingPOST"><code><span class="http-method">post</span> /newuser/createnewuser</code></a></li>
+  <li><a href="#deleteCurrentUserUsingDELETE"><code><span class="http-method">delete</span> /users/user</code></a></li>
+  <li><a href="#getCurrentUserInfoUsingGET"><code><span class="http-method">get</span> /users/getuserinfo</code></a></li>
+  <li><a href="#getUserByIdUsingGET"><code><span class="http-method">get</span> /users/user/{userId}</code></a></li>
+  <li><a href="#getUserByNameUsingGET"><code><span class="http-method">get</span> /users/user/name/{userName}</code></a></li>
+  <li><a href="#getUserLikeNameUsingGET"><code><span class="http-method">get</span> /users/user/name/like/{userName}</code></a></li>
+  <li><a href="#listAllUsersUsingGET"><code><span class="http-method">get</span> /users/users</code></a></li>
+  <li><a href="#updateUserUsingPUT"><code><span class="http-method">put</span> /users/user/profile/edit</code></a></li>
+  </ul>
+  <h4><a href="#UserpostController">UserpostController</a></h4>
+  <ul>
+  <li><a href="#addNewUserpostUsingPOST"><code><span class="http-method">post</span> /posts/post</code></a></li>
+  <li><a href="#decrementPostCountUsingPUT"><code><span class="http-method">put</span> /posts/post/decrement/{userpostid}</code></a></li>
+  <li><a href="#deleteUserpostByIdUsingDELETE"><code><span class="http-method">delete</span> /posts/post/{userpostid}</code></a></li>
+  <li><a href="#findAllOtherUserpostsExceptMineUsingGET"><code><span class="http-method">get</span> /posts/otherposts</code></a></li>
+  <li><a href="#findUserpostsByCurrentLocationUsingGET"><code><span class="http-method">get</span> /posts/currentlocation</code></a></li>
+  <li><a href="#findUserpostsByLocationUsingGET"><code><span class="http-method">get</span> /posts/location/{location}</code></a></li>
+  <li><a href="#findUserpostsByUserNameUsingGET"><code><span class="http-method">get</span> /posts/myposts</code></a></li>
+  <li><a href="#getUserPostByIdUsingGET"><code><span class="http-method">get</span> /posts/post/{userpostid}</code></a></li>
+  <li><a href="#incrementPostCountUsingPUT"><code><span class="http-method">put</span> /posts/post/increment/{userpostid}</code></a></li>
+  <li><a href="#listAllUserpostsUsingGET"><code><span class="http-method">get</span> /posts/allposts</code></a></li>
+  <li><a href="#updatePostUsingPUT"><code><span class="http-method">put</span> /posts/post/{userpostid}</code></a></li>
+  </ul>
+
+  <h1><a name="Default">Default</a></h1>
+  <div class="method"><a name="userLogin"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /login</code></pre></div>
+    <div class="method-summary">login (<span class="nickname">userLogin</span>)</div>
+    <div class="method-notes">This is the login endpoint to request an authentication token</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">userLogin <a href="#UserLogin">UserLogin</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Login Parameter </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      TokenModel
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#TokenModel">TokenModel</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="LogoutController">LogoutController</a></h1>
+  <div class="method"><a name="logoutUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /logout</code></pre></div>
+    <div class="method-summary">Revoke token to log out of system (<span class="nickname">logoutUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="logoutUsingGET1"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /oauth/revoke-token</code></pre></div>
+    <div class="method-summary">Revoke token to log out of system (<span class="nickname">logoutUsingGET1</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="PostcommentController">PostcommentController</a></h1>
+  <div class="method"><a name="addNewPostcommentUsingPOST"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /comments/comment/{userpostid}</code></pre></div>
+    <div class="method-summary">Create a new comment (<span class="nickname">addNewPostcommentUsingPOST</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; userpostid format: int64</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newpostcomment <a href="#Postcomment">Postcomment</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; newpostcomment </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Postcomment">Postcomment</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "title" : "That's a good point",
+  "line1" : "You're right, we should do something!"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Comment created successfully
+        <a href="#Postcomment">Postcomment</a>
+    <h4 class="field-label">400</h4>
+    Error creating comment
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deletePostcommentByIdUsingDELETE"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /comments/comment/{postcommentid}</code></pre></div>
+    <div class="method-summary">Delete a comment (<span class="nickname">deletePostcommentByIdUsingDELETE</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">postcommentid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Comment Id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Comment deleted successfully
+        <a href="#Object">Object</a>
+    <h4 class="field-label">400</h4>
+    Error deleting comment
+        <a href="#ErrorDetail">ErrorDetail</a>
+    <h4 class="field-label">500</h4>
+    Error deleting comment
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getPostCommentUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /comments/comment/{postcommentid}</code></pre></div>
+    <div class="method-summary">View a comment with given id (<span class="nickname">getPostCommentUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">postcommentid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Comment Id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Postcomment">Postcomment</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "title" : "That's a good point",
+  "line1" : "You're right, we should do something!"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Postcomment">Postcomment</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updatePostCommentUsingPUT"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /comments/comment/{postcommentid}</code></pre></div>
+    <div class="method-summary">Update a comment with given id (<span class="nickname">updatePostCommentUsingPUT</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">postcommentid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Comment Id format: int64</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">updatedPostcomment <a href="#Postcomment">Postcomment</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; updatedPostcomment </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Postcomment">Postcomment</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "title" : "That's a good point",
+  "line1" : "You're right, we should do something!"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Postcomment">Postcomment</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="UserController">UserController</a></h1>
+  <div class="method"><a name="addNewUserUsingPOST"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /newuser/createnewuser</code></pre></div>
+    <div class="method-summary">Create a new user (<span class="nickname">addNewUserUsingPOST</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newuser <a href="#User">User</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; newuser </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "password" : "password1234",
+  "location" : "Seattle",
+  "username" : "johnny24"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Object">Object</a>
+    <h4 class="field-label">201</h4>
+    User Created successfully
+        <a href="#Object">Object</a>
+    <h4 class="field-label">500</h4>
+    Error creating user
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteCurrentUserUsingDELETE"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/user</code></pre></div>
+    <div class="method-summary">Delete current user (<span class="nickname">deleteCurrentUserUsingDELETE</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    User deleted successfully
+        <a href="#Object">Object</a>
+    <h4 class="field-label">500</h4>
+    Error deleting user
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getCurrentUserInfoUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getuserinfo</code></pre></div>
+    <div class="method-summary">returns info for current (<span class="nickname">getCurrentUserInfoUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years",
+  "username" : "johnny24"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#User">User</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getUserByIdUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/user/{userId}</code></pre></div>
+    <div class="method-summary">Returns a user of given userid (<span class="nickname">getUserByIdUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; User Id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years",
+  "username" : "johnny24"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#User">User</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getUserByNameUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/user/name/{userName}</code></pre></div>
+    <div class="method-summary">Returns a user of given name (<span class="nickname">getUserByNameUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userName (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Exact Username </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years",
+  "username" : "johnny24"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#User">User</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getUserLikeNameUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/user/name/like/{userName}</code></pre></div>
+    <div class="method-summary">returns all Users with names containing a given string (<span class="nickname">getUserLikeNameUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userName (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Username </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#User">User</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Maine",
+  "line1" : "I've lived here for 5 years",
+  "username" : "John doe"
+}, {
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I like cheese",
+  "username" : "johnny24"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listAllUsersUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/users</code></pre></div>
+    <div class="method-summary">returns all Users (<span class="nickname">listAllUsersUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">page (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Results page you want to retrieve (0..N) </div><div class="param">size (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of records per page. </div><div class="param">sort (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported. </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#User">User</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years",
+  "username" : "johnny24"
+}, {
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years",
+  "username" : "johnny24"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateUserUsingPUT"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /users/user/profile/edit</code></pre></div>
+    <div class="method-summary">Update and return info for current user (<span class="nickname">updateUserUsingPUT</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">updateUser <a href="#User">User</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; updateUser </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code>{
+  "password" : "password1234",
+  "imageurl" : "http://example.com/image.jpg",
+  "location" : "Seattle",
+  "line1" : "I've lived here for 5 years"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    User updated successfully
+        <a href="#User">User</a>
+    <h4 class="field-label">500</h4>
+    Error updating user
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="UserpostController">UserpostController</a></h1>
+  <div class="method"><a name="addNewUserpostUsingPOST"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /posts/post</code></pre></div>
+    <div class="method-summary">Create a new post (<span class="nickname">addNewUserpostUsingPOST</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newuserpost <a href="#Userpost">Userpost</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; newuserpost </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Userpost">Userpost</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">201</h4>
+    Post created successfully
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">400</h4>
+    Error creating post
+        <a href="#ErrorDetail">ErrorDetail</a>
+    <h4 class="field-label">500</h4>
+    Error creating post
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="decrementPostCountUsingPUT"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /posts/post/decrement/{userpostid}</code></pre></div>
+    <div class="method-summary">Decrements the vote count of a given post and returns updated post (<span class="nickname">decrementPostCountUsingPUT</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Post Id format: int64</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Userpost">Userpost</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">201</h4>
+    Post vote count decremented successfully
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">404</h4>
+    Post does not exist
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteUserpostByIdUsingDELETE"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /posts/post/{userpostid}</code></pre></div>
+    <div class="method-summary">Delete a post of given id (<span class="nickname">deleteUserpostByIdUsingDELETE</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Post Id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Object
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Object">Object</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="findAllOtherUserpostsExceptMineUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/otherposts</code></pre></div>
+    <div class="method-summary">Returns all Posts not created by current user (<span class="nickname">findAllOtherUserpostsExceptMineUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Userpost">Userpost</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}, {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Santa Cruz",
+  "title" : "There's too many people",
+  "line1" : "I want to leave"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="findUserpostsByCurrentLocationUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/currentlocation</code></pre></div>
+    <div class="method-summary">Returns all Posts filtered by the location the current user is registered as (<span class="nickname">findUserpostsByCurrentLocationUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Userpost">Userpost</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}, {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "Let's organize a party",
+  "line1" : "I can host"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="findUserpostsByLocationUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/location/{location}</code></pre></div>
+    <div class="method-summary">Returns all Posts of a given location (<span class="nickname">findUserpostsByLocationUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">location (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Location </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Userpost">Userpost</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}, {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "My neighbors are very loud",
+  "line1" : "They always play music late at night"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="findUserpostsByUserNameUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/myposts</code></pre></div>
+    <div class="method-summary">Returns all Posts made by current user (<span class="nickname">findUserpostsByUserNameUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Userpost">Userpost</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}, {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getUserPostByIdUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/post/{userpostid}</code></pre></div>
+    <div class="method-summary">Return post of given id (<span class="nickname">getUserPostByIdUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Post Id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Userpost">Userpost</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Userpost">Userpost</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="incrementPostCountUsingPUT"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /posts/post/increment/{userpostid}</code></pre></div>
+    <div class="method-summary">Increments the vote count of a given post and returns updated post (<span class="nickname">incrementPostCountUsingPUT</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Post Id format: int64</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Userpost">Userpost</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">201</h4>
+    Post vote count incremented successfully
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">404</h4>
+    Post does not exist
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listAllUserpostsUsingGET"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /posts/allposts</code></pre></div>
+    <div class="method-summary">Returns all Posts (<span class="nickname">listAllUserpostsUsingGET</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Userpost">Userpost</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+}, {
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "There is a pothole on 42nd Street",
+  "line1" : "It is a big pothole"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updatePostUsingPUT"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /posts/post/{userpostid}</code></pre></div>
+    <div class="method-summary">Updates and returns post of given id (<span class="nickname">updatePostUsingPUT</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userpostid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Post Id format: int64</div>
+    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">updatedPost <a href="#Userpost">Userpost</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; updatedPost </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Userpost">Userpost</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: </div>
+    <pre class="example"><code>{
+  "imageurl" : "http://example.com/img.jpg",
+  "location" : "Los Angeles",
+  "title" : "My neighbors are very loud",
+  "line1" : "They always play music late at night"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>*/*</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Post updated successfully
+        <a href="#Userpost">Userpost</a>
+    <h4 class="field-label">500</h4>
+    Error creating post
+        <a href="#ErrorDetail">ErrorDetail</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#ErrorDetail"><code>ErrorDetail</code> - ErrorDetail</a></li>
+    <li><a href="#Postcomment"><code>Postcomment</code> - Postcomment</a></li>
+    <li><a href="#User"><code>User</code> - User</a></li>
+    <li><a href="#Userpost"><code>Userpost</code> - Userpost</a></li>
+    <li><a href="#ValidationError"><code>ValidationError</code> - ValidationError</a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="ErrorDetail"><code>ErrorDetail</code> - ErrorDetail</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">detail (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">developerMessage (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">errors (optional)</div><div class="param-desc"><span class="param-type"><a href="#array">map[String, array[ValidationError]]</a></span>  </div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">timestamp (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Postcomment"><code>Postcomment</code> - Postcomment</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>This model defines how comments are created</div>
+    <div class="field-items">
+      <div class="param">imageurl </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Link to image </div>
+<div class="param">line1 </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> First line of comment </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Title of post </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="User"><code>User</code> - User</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>This model defines how users are created
+Note that once a username is created, it cannot be modified via PUT
+imageurl and line1 cannot be created upon initial POST request. They can only be modified via PUT</div>
+    <div class="field-items">
+      <div class="param">imageurl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Link to image for user profile </div>
+<div class="param">line1 (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Content line for user profile </div>
+<div class="param">location </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> primary key for a user </div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> primary key for a user </div>
+<div class="param">username </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> username for a user </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Userpost"><code>Userpost</code> - Userpost</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>This model defines how posts are created</div>
+    <div class="field-items">
+      <div class="param">imageurl (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Link to image </div>
+<div class="param">line1 </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The main text body of the post </div>
+<div class="param">location </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> City </div>
+<div class="param">title </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> This is the title of the post </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ValidationError"><code>ValidationError</code> - ValidationError</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
