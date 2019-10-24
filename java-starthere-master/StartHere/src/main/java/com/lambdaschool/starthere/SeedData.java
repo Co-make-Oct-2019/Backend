@@ -68,10 +68,10 @@ public class SeedData implements CommandLineRunner
 
 
         firstUser.getUserposts().get(0)
-        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "Yea! Bao is soooo tasty!", "WHAT DO WE WANT?! BAO! WHEN DO WANT IT?! BAO!", nameFaker.internet().image(300,300,false, "co-make")));
+        .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "Yea! Bao is soooo tasty!", "WHAT DO WE WANT?! BAO! WHEN DO WANT IT?! BAO!", "https://steamykitchen.com/wp-content/uploads/2010/03/xiao-long-bao.jpg"));
 
         firstUser.getUserposts().get(0)
-                .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "I'mma say it one more time...", "I want some bao right meow!", nameFaker.internet().image(300,300,false, "co-make")));
+                .getPostcomments().add(new Postcomment(firstUser, firstUser.getUserposts().get(0), "I'mma say it one more time...", "I want some bao right meow!", "https://steamykitchen.com/wp-content/uploads/2010/03/dumplings.jpg"));
 
         ArrayList<UserRoles> datas = new ArrayList<>();
         datas.add(new UserRoles(new User(),
