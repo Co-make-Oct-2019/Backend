@@ -61,8 +61,8 @@ public class UserpostController {
         }
 
         Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
-
-        Collections.sort(allUserposts, compareByCount);
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(allUserposts, compareByCount.thenComparing(compareByModifiedDate));
 
         return new ResponseEntity<>(allUserposts,
                 HttpStatus.OK);
@@ -90,8 +90,8 @@ public class UserpostController {
         }
 
         Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
-
-        Collections.sort(userposts, compareByCount);
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(userposts, compareByCount.thenComparing(compareByModifiedDate));
 
 //        userposts.sort();
         return new ResponseEntity<>(userposts,
@@ -121,8 +121,8 @@ public class UserpostController {
         }
 
         Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
-
-        Collections.sort(userposts, compareByCount);
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(userposts, compareByCount.thenComparing(compareByModifiedDate));
 
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
@@ -152,8 +152,8 @@ public class UserpostController {
         }
 
         Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
-
-        Collections.sort(userposts, compareByCount);
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(userposts, compareByCount.thenComparing(compareByModifiedDate));
 
 
         return new ResponseEntity<>(userposts,
@@ -184,8 +184,8 @@ public class UserpostController {
         }
 
         Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
-
-        Collections.sort(userposts, compareByCount);
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(userposts, compareByCount.thenComparing(compareByModifiedDate));
 
         return new ResponseEntity<>(userposts,
                 HttpStatus.OK);
@@ -371,6 +371,10 @@ public class UserpostController {
                 }
             }
 //        }
+
+        Comparator<Userpost> compareByCount = (Userpost o1, Userpost o2) -> o2.getCount().compareTo( o1.getCount() );
+        Comparator<Userpost> compareByModifiedDate = (Userpost o1, Userpost o2) -> o2.getLastModifiedDate().compareTo( o1.getLastModifiedDate() );
+        Collections.sort(ups, compareByCount.thenComparing(compareByModifiedDate));
 
         return new ResponseEntity<>(ups,
                 HttpStatus.OK);
